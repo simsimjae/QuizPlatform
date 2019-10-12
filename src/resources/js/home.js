@@ -1,3 +1,8 @@
+import './common';
+import Constants from './constant';
+import './leanModal';
+import './jsrender';
+
 var ssj = ssj || {};
 ssj.view = ssj.view || {};
 
@@ -13,7 +18,7 @@ function createWrite(){
   }
   plusBtn.prop('disabled', true);
   var data = { fir_writ_content, sec_writ_content, content}
-  oAjax.sendRequest(URL_CREATE_VOTE,data, ID_TMPL_MAIN_CARD,'POST',null).then( html => {
+  oAjax.sendRequest(Constants.URL_CREATE_VOTE,data, Constants.ID_TMPL_MAIN_CARD,'POST',null).then( html => {
     var cardList = $('.main-sec__list');
     $($('.home_header_navlist').children().eq(1)).click();
     if(cardList.children().length > 0) cardList.prepend(html);
@@ -35,7 +40,7 @@ function resetBottomNavbar(){
 }
 
 function isLogin() {
-  return oAjax.sendRequest(URL_READ_USERINFO, null, null, 'GET', null).then(json => {
+  return oAjax.sendRequest(Constants.URL_READ_USERINFO, null, null, 'GET', null).then(json => {
     console.log(json);
     return json.login;
   });
@@ -47,7 +52,7 @@ function setLoginIcon(login) {
 }
 
 function requestLogin(sendData) {
-  oAjax.sendRequest(URL_CREATE_SESSION, sendData, null, 'POST', null).then(json => {
+  oAjax.sendRequest(Constants.URL_CREATE_SESSION, sendData, null, 'POST', null).then(json => {
     if (json.login) {
       oToast.show(json.nickname + "님 환영합니다");
       loginForm.find('.modal_close').click();
@@ -60,7 +65,7 @@ function requestLogin(sendData) {
 }
 
 function createMember(data) {
-  oAjax.sendRequest(URL_CREATE_MEMBER, data, null, 'POST', null).then(json => {
+  oAjax.sendRequest(Constants.URL_CREATE_MEMBER, data, null, 'POST', null).then(json => {
     if (json.login) {
       joinClose.click();
       var user_id = joinInpGroup.eq(1).val();
@@ -145,7 +150,7 @@ $('#_searchbar').on('click','.search',function(e){
   var srch_type_div_cd = 0;
   var data = {page_num : 1,srch_word,srch_type_div_cd};
   console.log(data);
-  oAjax.sendRequest(URL_READ_SEARCH_CARD_DATA,data, ID_TMPL_MAIN_CARD,'GET').then( html => { 
+  oAjax.sendRequest(Constants.URL_READ_SEARCH_CARD_DATA,data, Constants.ID_TMPL_MAIN_CARD,'GET').then( html => { 
     if(!html.length){
       oToast.show('검색 결과가 없습니다');
       return;
@@ -158,7 +163,7 @@ $('#_searchbar').on('click','.search',function(e){
 })
 
 $('.person').on('click', function () {
-  oAjax.sendRequest(URL_REMOVE_SESSION, null, null, 'POST', null).then(json => {
+  oAjax.sendRequest(Constants.URL_REMOVE_SESSION, null, null, 'POST', null).then(json => {
     if (!json.login) {
       oToast.show('로그아웃 되었습니다');
       setLoginIcon(json.login);
@@ -192,7 +197,7 @@ $('.write_inp').on('blur',function(e){
 
 $('#login .modal_header_tittx').on('click',function(){
   $('#join').find('.modal_close').click();
-  oAjax.sendRequest(URL_READ_NICKNAME,null,null,'GET',null).then( json => {
+  oAjax.sendRequest(Constants.URL_READ_NICKNAME,null,null,'GET',null).then( json => {
     console.log(json);
     $('.modal_inp.nickname').val(json.nickname).addClass('on');
     $('#join_trigger').click();
@@ -324,19 +329,82 @@ $(function () {
     e.preventDefault();
   });
 
-  window.onpopstate = function (e) {
-    var $body = $('body');
-    $body.find('.iframe_wrapper').remove();
-    $body.find('header').show();
-    $body.find('.wrapper').show();
-    $body.find('footer').show();
-    isLogin().then(login => {
-      setLoginIcon(login);
-    })
+  ssj.view.infiniteScroll = function (options) {
+    $.extend(this, options);
+    this.init();
   }
 
+  ssj.view.infiniteScroll.prototype = {
+    init() {
+      this._assignElements();
+      this._attachEventHandler();
+      this._initVar();
+    },
+    _initVar() {
+      this.loading = false;
+      this.URL = Constants.URL_READ_MAIN_CARD_DATA;
+      this.tmplId = Constants.ID_TMPL_MAIN_CARD;
+      this.page = 1;
+    },
+    _assignElements() {
+      this.$cardList = $('.crdlst');
+    },
+    _attachEventHandler() {
+      $(window).scroll(this.onScroll.bind(this));
+    },
+    onScroll() {
+      if (this.shouldTrigger() && !this.loading && !this.bEnded) {
+        this.loading = true;
+        const data = this._makeRequestData();
+
+        this.loadData(this.URL, data)
+          .then(cardData => {
+            
+              if(!cardData.length) {
+                this._setFull();
+                return;
+              }
+
+              this.appendCard(cardData);
+              this.loading = false;
+
+          }).catch(e => {
+              console.log(e);
+          });
+
+      }
+    },
+    _makeRequestData() {
+      return { mainCategory: 1, page: this.page };
+    },
+    loadData(url, data) {
+      return new Promise((resolve, reject) => {
+        $.get({
+          url, data,
+          success: function (data) { resolve(data) },
+          error: function (e) { reject(e) }
+        });
+      });
+    },
+    appendCard(json) {
+      console.log(json);
+      var tmpl = $.templates(this.tmplId);
+      var html = tmpl.render(json);
+      this.$cardList.append(html);
+      this.page++;
+    },
+    shouldTrigger() {
+      var winH = $(window).height();
+      var docH = $(document).height();
+      var winTop = $(window).scrollTop();
+      return Math.ceil(winTop) >= docH - winH;
+    },
+    _setFull() {
+      this.bEnded = true;
+    }
+  }
   oSsjViewInfinite = new ssj.view.infiniteScroll();
-  //인피니티 스크롤 : 탭 전환시 스크롤 위치 기억
+  
   $('.home_header_navlist').on('click', '.home_header_navitem', function (e) {
     $('.main-sec__list').show();
     $('.main-sec__searchlist').hide();
@@ -369,7 +437,7 @@ $(function () {
     var data = {page : 1, mainCategory: cateNum};
     console.log(data);
     var cardList = $('.main-sec__list');
-    oAjax.sendRequest(URL_READ_MAIN_CARD_DATA,data,ID_TMPL_MAIN_CARD,'GET').then( html => {
+    oAjax.sendRequest(Constants.URL_READ_MAIN_CARD_DATA,data,Constants.ID_TMPL_MAIN_CARD,'GET').then( html => {
       cardList.empty().append(html);
     })
   });
@@ -378,8 +446,8 @@ $(function () {
     $(e.currentTarget).toggleClass('on');
   })
 
-  isLogin().then( login => {
-    setLoginIcon(login);
-  })
+  // isLogin().then( login => {
+  //   setLoginIcon(login);
+  // })
 
 });

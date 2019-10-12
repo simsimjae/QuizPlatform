@@ -100,26 +100,6 @@ textarea {
   background: white;
 }
 
-.home_header_navlist {
-  display: flex;
-}
-
-.home_header_navitem {
-  font-size: 20px;
-  padding: 5px 0 8px;
-  color: #b5b5b5;
-}
-
-.home_header_navitem.on {
-  font-weight: bold;
-  color: black;
-  border-bottom: 3px solid black;
-}
-
-.home_header_navitem + .home_header_navitem {
-  margin-left: 35px;
-}
-
 .header_wrap {
   display: block;
   padding: 9px 18px 9px 22px;
@@ -145,21 +125,6 @@ textarea {
   padding:15px 0;
   padding-left:15px;
   -webkit-overflow-scrolling: touch;
-}
-
-.row_scroll{
-  position:relative;
-  overflow:hidden;
-}
-
-.row_scroll:after{
-  content:'';
-  display:block;
-  position:absolute;
-  width:100%;
-  bottom:0;
-  height:15px;
-  background:white;
 }
 
 .mypage::-webkit-scrollbar, 
@@ -1447,38 +1412,6 @@ input:-webkit-autofill.modal_inp.wrong {
   animation-fill-mode: both;
   animation-duration: 0.7s;
   animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
-.bottom_navbar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 52px;
-  padding: 0 43px;
-  background: white;
-}
-
-.bottom_navbar.on button{
-  opacity: 0.4;
-}
-
-.bottom_navbar.on .on{
-  opacity:1;
-}
-
-.bottom_navbar:before{
-  content:"";
-  position:absolute;
-  top:-8px;
-  left:0;
-  right:0;
-  height:8px;
-  display:block;
-  background-image:linear-gradient(to top,rgba(0,0,0,0.05),rgba(0,0,0,0));
 }
 
 /* sprite 규격 없음 */

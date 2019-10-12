@@ -1,0 +1,204 @@
+/* reset */
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block
+}
+
+body {
+  line-height: 1
+}
+
+ol,
+ul {
+  list-style: none
+}
+
+blockquote,
+q {
+  quotes: none
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: none
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0
+}
+
+html,
+body {
+  font-family: 'Noto Sans KR', 'Roboto', sans-serif;
+  min-height: 100%;
+  box-sizing: border-box;
+  color: black;
+}
+
+a {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+textarea:focus,
+input:focus {
+  outline: none;
+}
+
+button {
+  padding: 0;
+  outline: 0;
+  background-color: inherit;
+  border: 0;
+}
+
+/* input 기본 스타일 초기화 */
+input {
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+input,
+label,
+select,
+button,
+textarea
+{
+	margin:0;
+	border:0;
+	padding:0;
+	display:inline-block;
+	vertical-align:middle;
+	white-space:normal;
+	background:none;
+	line-height:1;
+	
+	/* Browsers have different default form fonts */
+	font-size:13px;
+}
+
+.main-sec{background-color:hsl(0, 0%, 94%);}
+/* icon */
+.ic_sm{display:inline-block;width:38px;height:18px;vertical-align:middle;}
+.ic_sm.ic_hot{background:url(/resources/img/hot@2x.png) no-repeat;}
+.ic_sm.ic_new{background:url(/resources/img/new@2x.png) no-repeat;}
+
+/* card */
+.crd{position:relative;display:block;width:340px;border-radius:16px;box-shadow: 0 8px 22px 0 rgba(0, 0, 0, 0.12);background:white;overflow:hidden;line-height:1.3;margin:auto;}
+.crd + .crd {margin-top:28px;}
+.crd_stat{display:flex;flex-direction: column;justify-content: flex-start;align-items: center;position:absolute;left:10px;top:7.5px;z-index:1;}
+.crd_stat .ic_sm + .ic_sm{margin-top:6px;}
+.crd_img{position:relative;width:340px;height:340px;overflow:hidden;}
+.crd_img .img{display:block;background-size:cover;height:100%;background-position:50% 50%;}
+.crd_conts{padding:10px 25px;}
+.crd_infos{display:flex;justify-content:space-between;color:#c7c7c7;font-size:13px;}
+.crd_infos .right .crd_comment + .crd_vote{margin-left:8px;}
+.crd_tit{font-size:22px;color:#181818;font-weight:bold;margin:9px 0 15px;word-break:keep-all;word-wrap:break-word;overflow: hidden;text-overflow: ellipsis;display:-webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;}

@@ -335,146 +335,6 @@ ssj.util.toast.prototype = {
   }
 };
 
-
-/*
-  saved : [] , 배열 내 아이템
-  {
-    'scrollTop': 0, //스크롤 탑 위치
-    'cards': null, //리스트의 카드들
-    'page': 1, //현재 보고 있는 페이지
-    'isEnded': false //카테고리의 글을 모두 불러왔는지?
-  }
-*/
-ssj.view.infiniteScroll = function (options) {
-  $.extend(this, options);
-  this.init();
-}
-
-ssj.view.infiniteScroll.prototype = {
-  init() {
-    this._assignElements();
-    this._attachEventHandler();
-    this._initVar();
-    this._setInitialCards();
-  },
-  _initVar() {
-    this.saved = [];
-    this.pending = false;
-    this.url = URL_READ_MAIN_CARD_DATA;
-    this.tmplId = ID_TMPL_MAIN_CARD;
-    this.method = 'GET';
-    this.tabcount = this.getTotalCateCount();
-    this._setInitialSavedData();
-  },
-  _assignElements() {
-    this.cardList = $('.main-sec__list');
-    this.headerWrap = $('.home_header_navlist');
-  },
-  _attachEventHandler() {
-    $(window).scroll(this.onScroll.bind(this));
-  },
-  onScroll() {
-    if (this.shouldTrigger() && !this.pending && !this.getCurrentSavedDatas().isEnded) {
-      this.pending = true;
-      var data = this._makeRequestData();
-      this.loadData(this.url, data).then( json => {
-        this.renderCards(json);
-        !json.length && this._setNoMoreData();
-        this.pending = false;
-        //hideSpinner();
-      }).catch(e => {
-        console.log(e);
-      });
-    }
-  },
-  loadData(url, data) {
-    return new Promise((resolve, reject) => {
-      $.get({
-        url, data,
-        success: function (data) { resolve(data) },
-        error: function (e) { reject(e) }
-      });
-    });
-  },
-  _setInitialCards() {
-    var data = this._makeRequestData();
-    this.loadData(this.url, data).then( json => {
-      this.renderCards(json);
-    }).catch( e => {
-      console.log(e);
-    });
-  },
-  switchCategory(){ //배열에 데이터가 있으면 복구, 없으면 요청
-    if (this.isEmptyCardList()){
-      this._setInitialCards();
-    }else{
-      this._restoreCardList();
-    }
-  },
-  saveCurrentState(){
-    var scrollTop = $(window).scrollTop();
-    var cards = this.cardList.children().detach();
-    $.extend(this.getCurrentSavedDatas(),{cards,scrollTop});
-  },
-  _restoreCardList(){
-    var current = this.getCurrentSavedDatas();
-    this.cardList.append(current.cards);
-  },
-  renderCards(json) {
-    console.log(json);
-    var tmpl = $.templates(this.tmplId);
-    var html = tmpl.render(json);
-    this.cardList.append(html);
-    this._increasePageNum();
-  },
-  shouldTrigger() {
-    var winH = $(window).height();
-    var docH = $(document).height();
-    var winTop = $(window).scrollTop();
-    return Math.ceil(winTop) >= docH - winH;
-  },
-  _setNoMoreData() {
-    this.saved[this.getCurrentCateNum()].isEnded = true;
-  },
-  _setInitialSavedData() {
-    for (var i = 0; i < this.tabcount; i++) { //카테고리 별로 필요한 데이터를 배열로 관리
-      this.saved.push({
-        'scrollTop': 0, //스크롤 탑 위치
-        'cards': null, //리스트의 카드들
-        'page': 1, //현재 보고 있는 페이지
-        'isEnded': false //카테고리의 글을 모두 불러왔는지?
-      });
-    }
-  },
-  _increasePageNum() {
-    this.saved[this.getCurrentCateNum()].page++;
-  },
-  _makeRequestData(){
-    return { page : this.getCurrentPageNum(), mainCategory : this.getCurrentCateNum()};
-  },
-  isEmptyCardList(){
-    var current = this.getCurrentSavedDatas();
-    return !current.cards || !current.cards.length;
-  },
-  getCurrentSavedDatas() {
-    var categoryNum = this.getCurrentCateNum();
-    return this.saved[categoryNum];
-  },
-  getTotalCateCount() {
-    return this.headerWrap.children().length + $('.mypage').children().length - 1;
-  },
-  getCurrentCateNum() {
-    return this.headerWrap.find('.on').val();
-  },
-  getCurrentPageNum() {
-    var category = this.getCurrentCateNum();
-    return this.saved[category].page;
-  },
-  getCurrentScrollTop() {
-    return this.getCurrentSavedDatas().scrollTop;
-  }
-}
-
 $(function () {
   var varUA = navigator.userAgent.toLowerCase(); //userAgent 값 얻기
   if (varUA.match('android') != null) {
@@ -539,8 +399,9 @@ $(function () {
           //$container.html($newContent);
         }
       }
-    },
-    smoothState = $page.smoothState(options).data("smoothState");
+    }
+    
+  //smoothState = $page.smoothState(options).data("smoothState");
 
   $(".result__write").on("keyup", function () {
     if ($(this).val().trim().length > 0) {
