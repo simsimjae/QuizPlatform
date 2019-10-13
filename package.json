@@ -5,8 +5,9 @@
   "main": "home.js",
   "scripts": {
     "workbox": "workbox injectManifest workbox-config.js",
-    "build": "webpack",
-    "start": "webpack-dev-server --mode development --hot"
+    "build-prod": "webpack --mode production",
+    "build": "webpack --mode development",
+    "start": "webpack-dev-server --open --mode development"
   },
   "repository": {
     "type": "git",

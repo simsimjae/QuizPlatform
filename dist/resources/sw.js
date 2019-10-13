@@ -1,37 +1,38 @@
-importScripts("/resources/precache-manifest.3bd8b9430c0004fd8afbf61a1c3e4957.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+importScripts("/resources/precache-manifest.b7fb9f227b07a26bb7ec4d4947c55c5b.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
-console.log("Hello From Service Worker");
 workbox.precaching.precacheAndRoute(self.__precacheManifest);
 
-const isNavMode = ({ event }) => event.request.mode === 'navigate';
+const fullPath = self.location.pathname;
+const lastIdx = fullPath.lastIndexOf('/') + 1;
+const path = fullPath.substr(0, lastIdx);
+const pageUrl = path + '/index.html';
 
-const writeCb = ({ url, event, params }) => {
-  return fetch(event.request)
-    .then((response) => {
-      alert('hi');
-      return response.text();
-    })
-    .then((responseBody) => {
-      alert('hi');
-      return new Response(`${responseBody} <!-- Look Ma. Added Content. -->`);
-    });
-}
+workbox.routing.registerRoute(
+  /^https:\/\/.+\.(jpe?g|png|gif|svg)$/i,
+  new workbox.strategies.CacheFirst({
+    cacheName: 'image-cache',
+    plugins: [
+      new workbox.expiration.Plugin({
+        maxAgeSeconds: 7 * 24 * 60 * 60,  // Only cache requests for a week
+        maxEntries: 40  // Only cache 40 requests.
+      }),
+      new workbox.cacheableResponse.Plugin({ statuses: [0, 200] }) // for CORS Image Cache
+    ]
+  })
+);
+workbox.routing.registerRoute(new RegExp(`http://pickvs.com/(DevPickVs)?`), new workbox.strategies.NetworkFirst());
 
-workbox.routing.registerRoute(new RegExp('http://pickvs.com/'), new workbox.strategies.NetworkFirst());
-//workbox.routing.registerRoute(isNavMode, writeCb, new workbox.strategies.NetworkFirst());
-// workbox.routing.registerRoute(
-//   new workbox.routing.NavigationRoute(
-//     workbox.precaching.createHandlerForURL('/index.html'),
-//     {
-//       whiteList: [ new RegExp('.+/write/') ],
-//       blackList: []
-//     }
-//   )
-// )
-// workbox.routing.registerNavigationRoute(
-//   writeCb,
-//   workbox.precaching.getCacheKeyForURL('../index.html'), {
-//     whiteList: [ new RegExp('.+/write/') ],
-//     blackList: []
-//   }
-// );
+workbox.routing.registerRoute(
+  ({ event }) => event.request.mode === 'navigate',
+  async () => {
+    return caches
+      .match(workbox.precaching.getCacheKeyForURL(pageUrl))
+      .then(response => {
+        return response || fetch(pageUrl);
+      })
+      .catch(err => {
+        return fetch(pageUrl);
+      });
+  }
+);
+

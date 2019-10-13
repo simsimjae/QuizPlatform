@@ -1,3 +1,5 @@
+importScripts("/DevPickVs/resources/precache-manifest.68a38df463a3d837a52ea1b29c3ea165.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+
 workbox.precaching.precacheAndRoute(self.__precacheManifest);
 
 const fullPath = self.location.pathname;
@@ -33,3 +35,4 @@ workbox.routing.registerRoute(
       });
   }
 );
+
