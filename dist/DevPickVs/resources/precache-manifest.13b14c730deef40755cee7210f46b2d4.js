@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ea7c3ce04ffe301ec44f",
+    "revision": "605d5918bd46cb8a4e80",
     "url": "/DevPickVs/resources/app.bundle.js"
   },
   {
-    "revision": "ea7c3ce04ffe301ec44f",
+    "revision": "605d5918bd46cb8a4e80",
     "url": "/DevPickVs/resources/app.css"
   },
   {
@@ -12,11 +12,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/DevPickVs/resources/img/hot@2x.png"
   },
   {
+    "revision": "44ae4fdb16ba192549377318d3e93784",
+    "url": "/DevPickVs/resources/img/jquery.minicolors.png"
+  },
+  {
     "revision": "eb0bf4fad6beb099f5391ebd6919357a",
     "url": "/DevPickVs/resources/img/new@2x.png"
   },
   {
-    "revision": "e602b9994a1779e02aa6",
+    "revision": "496b86e0ccf17f34d425",
     "url": "/DevPickVs/resources/vendors.bundle.js"
   }
 ]);

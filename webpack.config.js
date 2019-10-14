@@ -29,6 +29,16 @@ module.exports = (env, options) => {
     module: {
       rules: [
         {
+          test: /\.(html)$/,
+          include: path.join(__dirname, 'src/'),
+          use: {
+            loader: 'html-loader',
+            options: {
+              interpolate: true
+            }
+          }
+        },
+        {
           test: /\.js$/,
           exclude: /node_modules/,
           use: {
@@ -74,7 +84,8 @@ module.exports = (env, options) => {
     resolve: {
       modules: ['node_modules'],
       extensions: ['.js', '.json', '.jsx', '.css'],
-    }
+    },
+    target: 'web'
   }
 
   if (options.mode === 'development') { 
@@ -86,8 +97,8 @@ module.exports = (env, options) => {
 
     config.devServer = {
       hot: true, // 서버에서 HMR을 켠다.
-      host: '0.0.0.0', // 디폴트로는 "localhost" 로 잡혀있다. 외부에서 개발 서버에 접속해서 테스트하기 위해서는 '0.0.0.0'으로 설정해야 한다.
-      contentBase: './dist', // 개발서버의 루트 경로
+      //host: '0.0.0.0',  디폴트로는 "localhost" 로 잡혀있다. 외부에서 개발 서버에 접속해서 테스트하기 위해서는 '0.0.0.0'으로 설정해야 한다.
+      contentBase: './dist/DevPickVs/', // 개발서버의 루트 경로
       stats: {
         color: true
       }
@@ -109,6 +120,15 @@ module.exports = (env, options) => {
   } 
 
   if (options.mode === 'production') {  
+
+    config.devServer = {
+      hot: true, // 서버에서 HMR을 켠다.
+      //host: '0.0.0.0', // 디폴트로는 "localhost" 로 잡혀있다. 외부에서 개발 서버에 접속해서 테스트하기 위해서는 '0.0.0.0'으로 설정해야 한다.
+      contentBase: './dist/', // 개발서버의 루트 경로
+      stats: {
+        color: true
+      }
+    };
 
     config.output.path = path.resolve(__dirname, './dist/resources'),
     config.output.publicPath = "/resources/"

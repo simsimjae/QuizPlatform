@@ -1,11 +1,15 @@
 import './common'
-import './constant'
-import './squire'
+import Constants from './constant'
+import Squire from './squire'
+import minicolors from './minicolors'
+import page from 'page';
 
-$("form").submit(function (e) {
+export default $(function () {
+
+$(".write_form").submit(function (e) {
   e.preventDefault();
   var form = $(this).get(0);
-  var url = URL_CREATE_POST;
+  var url = Constants.URL_CREATE_POST;
   var btnSubmit = $('button.submit');
 
   var data = new FormData(form);
@@ -15,8 +19,6 @@ $("form").submit(function (e) {
   data.append('content_file', contentBlob);
   console.log("전송할 데이터 \n", ...data);
 
-
-
   btnSubmit.prop('disabled', true);
 
   $.ajax({
@@ -24,7 +26,7 @@ $("form").submit(function (e) {
     enctype: 'multipart/form-data',
     processData: false, contentType: false, cache: false,
     success: function (data) {
-      debugger;
+      page('/');
     },
     done: function (data) {
       btnSubmit.prop('disabled', false);
@@ -32,6 +34,7 @@ $("form").submit(function (e) {
   });
 
 });
+
 function toggleBold() {
   const bold = $(this).data('bold');
   bold ? oEditor.bold() : oEditor.removeBold();
@@ -64,20 +67,19 @@ function getImage(input) {
   }
 }
 
-$(function () {
   const $target = $('.write_cont');
-  window.oEditor = window.oEditorSum;
-  window.oEditorSum = new Squire($target.get(0),
+  const oEditorSum = new Squire($target.get(0),
     {
       blockTag: 'P',
       blockAttributes: { style: 'font-size: 16px;', class: "summary" }
-    },
-    window.oEditorConts = new Squire($target.get(1),
-      {
-        blockTag: 'P',
-        blockAttributes: { style: 'font-size: 16px;', class: "contents" }
-      })
+    }
   );
+  const oEditorConts = new Squire($target.get(1),
+  {
+    blockTag: 'P',
+    blockAttributes: { style: 'font-size: 16px;', class: "contents" }
+  })
+  let oEditor = oEditorSum;
 
   $('.write_cont').click(function (e) {
     const $target = $(e.delegateTarget);
@@ -120,9 +122,9 @@ $(function () {
     e.preventDefault();
   });
 
-  $('.underline').click(function () {
-    toggleUnderline();
-  });
+  $('.bold').click(toggleBold);
+
+  $('.underline').click(toggleUnderline);
 
   $('.ordered').click(function () {
     oEditor.makeOrderedList();

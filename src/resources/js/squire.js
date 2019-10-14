@@ -1,1 +1,4972 @@
-!function(e,t){"use strict";var n=1,o=3,i=9,r=11,a=1,s="​",d=e.defaultView,l=navigator.userAgent,c=/Android/.test(l),h=/iP(?:ad|hone|od)/.test(l),u=/Mac OS X/.test(l),f=/Windows NT/.test(l),p=/Gecko\//.test(l),g=/Trident\/[456]\./.test(l),m=!!d.opera,v=/Edge\//.test(l),C=!v&&/WebKit\//.test(l),_=/Trident\/[4567]\./.test(l),N=u?"meta-":"ctrl-",S=g||m,y=g||C,T=g,E="undefined"!=typeof MutationObserver,b="undefined"!=typeof WeakMap,x=/[^ \t\r\n]/,k=Array.prototype.indexOf;Object.create||(Object.create=function(e){var t=function(){};return t.prototype=e,new t});var A={1:1,2:2,3:4,8:128,9:256,11:1024},L=function(){return!0};function B(e,t,n){this.root=this.currentNode=e,this.nodeType=t,this.filter=n||L}B.prototype.nextNode=function(){for(var e,t=this.currentNode,n=this.root,o=this.nodeType,i=this.filter;;){for(e=t.firstChild;!e&&t&&t!==n;)(e=t.nextSibling)||(t=t.parentNode);if(!e)return null;if(A[e.nodeType]&o&&i(e))return this.currentNode=e,e;t=e}},B.prototype.previousNode=function(){for(var e,t=this.currentNode,n=this.root,o=this.nodeType,i=this.filter;;){if(t===n)return null;if(e=t.previousSibling)for(;t=e.lastChild;)e=t;else e=t.parentNode;if(!e)return null;if(A[e.nodeType]&o&&i(e))return this.currentNode=e,e;t=e}},B.prototype.previousPONode=function(){for(var e,t=this.currentNode,n=this.root,o=this.nodeType,i=this.filter;;){for(e=t.lastChild;!e&&t&&t!==n;)(e=t.previousSibling)||(t=t.parentNode);if(!e)return null;if(A[e.nodeType]&o&&i(e))return this.currentNode=e,e;t=e}};var O=/^(?:#text|A(?:BBR|CRONYM)?|B(?:R|D[IO])?|C(?:ITE|ODE)|D(?:ATA|EL|FN)|EM|FONT|HR|I(?:FRAME|MG|NPUT|NS)?|KBD|Q|R(?:P|T|UBY)|S(?:AMP|MALL|PAN|TR(?:IKE|ONG)|U[BP])?|TIME|U|VAR|WBR)$/,D={BR:1,HR:1,IFRAME:1,IMG:1,INPUT:1};var R=0,P=1,U=2,I=3,w=b?new WeakMap:null;function F(e){return e.nodeType===n&&!!D[e.nodeName]}function M(e){switch(e.nodeType){case o:return P;case n:case r:if(b&&w.has(e))return w.get(e);break;default:return R}var t;return t=function(e,t){for(var n=e.length;n--;)if(!t(e[n]))return!1;return!0}(e.childNodes,H)?O.test(e.nodeName)?P:U:I,b&&w.set(e,t),t}function H(e){return M(e)===P}function W(e){return M(e)===U}function z(e){return M(e)===I}function q(e,t){var n=new B(t,a,W);return n.currentNode=e,n}function K(e,t){return(e=q(e,t).previousNode())!==t?e:null}function G(e,t){return(e=q(e,t).nextNode())!==t?e:null}function Z(e){return!e.textContent&&!e.querySelector("IMG")}function j(e,t){return!F(e)&&e.nodeType===t.nodeType&&e.nodeName===t.nodeName&&"A"!==e.nodeName&&e.className===t.className&&(!e.style&&!t.style||e.style.cssText===t.style.cssText)}function $(e,t,n){if(e.nodeName!==t)return!1;for(var o in n)if(e.getAttribute(o)!==n[o])return!1;return!0}function Q(e,t,n,o){for(;e&&e!==t;){if($(e,n,o))return e;e=e.parentNode}return null}function V(e,t){for(;t;){if(t===e)return!0;t=t.parentNode}return!1}function Y(e){var t=e.nodeType;return t===n||t===r?e.childNodes.length:e.length||0}function X(e){var t=e.parentNode;return t&&t.removeChild(e),e}function J(e,t){var n=e.parentNode;n&&n.replaceChild(t,e)}function ee(e){for(var t=e.ownerDocument.createDocumentFragment(),n=e.childNodes,o=n?n.length:0;o--;)t.appendChild(e.firstChild);return t}function te(e,n,o,i){var r,a,s,d=e.createElement(n);if(o instanceof Array&&(i=o,o=null),o)for(r in o)o[r]!==t&&d.setAttribute(r,o[r]);if(i)for(a=0,s=i.length;a<s;a+=1)d.appendChild(i[a]);return d}function ne(e,t){var n,i,r=t.__squire__,a=e.ownerDocument,d=e;if(e===t&&((i=e.firstChild)&&"BR"!==i.nodeName||(n=r.createDefaultBlock(),i?e.replaceChild(n,i):e.appendChild(n),e=n,n=null)),e.nodeType===o)return d;if(H(e)){for(i=e.firstChild;y&&i&&i.nodeType===o&&!i.data;)e.removeChild(i),i=e.firstChild;i||(y?(n=a.createTextNode(s),r._didAddZWS()):n=a.createTextNode(""))}else if(S){for(;e.nodeType!==o&&!F(e);){if(!(i=e.firstChild)){n=a.createTextNode("");break}e=i}e.nodeType===o?/^ +$/.test(e.data)&&(e.data=""):F(e)&&e.parentNode.insertBefore(a.createTextNode(""),e)}else if(!e.querySelector("BR"))for(n=te(a,"BR");(i=e.lastElementChild)&&!H(i);)e=i;if(n)try{e.appendChild(n)}catch(t){r.didError({name:"Squire: fixCursor – "+t,message:"Parent: "+e.nodeName+"/"+e.innerHTML+" appendChild: "+n.nodeName})}return d}function oe(e,t){var n,o,i,r,a=e.childNodes,s=e.ownerDocument,d=null,l=t.__squire__._config;for(n=0,o=a.length;n<o;n+=1)!(r="BR"===(i=a[n]).nodeName)&&H(i)?(d||(d=te(s,l.blockTag,l.blockAttributes)),d.appendChild(i),n-=1,o-=1):(r||d)&&(d||(d=te(s,l.blockTag,l.blockAttributes)),ne(d,t),r?e.replaceChild(d,i):(e.insertBefore(d,i),n+=1,o+=1),d=null),z(i)&&oe(i,t);return d&&e.appendChild(ne(d,t)),e}function ie(e,t,i,r){var a,s,d,l=e.nodeType;if(l===o&&e!==i)return ie(e.parentNode,e.splitText(t),i,r);if(l===n){if("number"==typeof t&&(t=t<e.childNodes.length?e.childNodes[t]:null),e===i)return t;for(a=e.parentNode,s=e.cloneNode(!1);t;)d=t.nextSibling,s.appendChild(t),t=d;return"OL"===e.nodeName&&Q(e,r,"BLOCKQUOTE")&&(s.start=(+e.start||1)+e.childNodes.length-1),ne(e,r),ne(s,r),(d=e.nextSibling)?a.insertBefore(s,d):a.appendChild(s),ie(a,s,i,r)}return t}function re(e,t){if(e.nodeType===o&&(e=e.parentNode),e.nodeType===n){var i={startContainer:t.startContainer,startOffset:t.startOffset,endContainer:t.endContainer,endOffset:t.endOffset};!function e(t,i){for(var r,a,s,d=t.childNodes,l=d.length,c=[];l--;)if(r=d[l],a=l&&d[l-1],l&&H(r)&&j(r,a)&&!D[r.nodeName])i.startContainer===r&&(i.startContainer=a,i.startOffset+=Y(a)),i.endContainer===r&&(i.endContainer=a,i.endOffset+=Y(a)),i.startContainer===t&&(i.startOffset>l?i.startOffset-=1:i.startOffset===l&&(i.startContainer=a,i.startOffset=Y(a))),i.endContainer===t&&(i.endOffset>l?i.endOffset-=1:i.endOffset===l&&(i.endContainer=a,i.endOffset=Y(a))),X(r),r.nodeType===o?a.appendData(r.data):c.push(ee(r));else if(r.nodeType===n){for(s=c.length;s--;)r.appendChild(c.pop());e(r,i)}}(e,i),t.setStart(i.startContainer,i.startOffset),t.setEnd(i.endContainer,i.endOffset)}}function ae(e,t,o,i){for(var r,a,s,d=t;(r=d.parentNode)&&r!==i&&r.nodeType===n&&1===r.childNodes.length;)d=r;X(d),s=e.childNodes.length,(a=e.lastChild)&&"BR"===a.nodeName&&(e.removeChild(a),s-=1),e.appendChild(ee(t)),o.setStart(e,s),o.collapse(!0),re(e,o),m&&(a=e.lastChild)&&"BR"===a.nodeName&&e.removeChild(a)}function se(e,t){var n,o,i=e.previousSibling,r=e.firstChild,a=e.ownerDocument,s="LI"===e.nodeName;if(!s||r&&/^[OU]L$/.test(r.nodeName))if(i&&j(i,e)){if(!z(i)){if(!s)return;(o=te(a,"DIV")).appendChild(ee(i)),i.appendChild(o)}X(e),n=!z(e),i.appendChild(ee(e)),n&&oe(i,t),r&&se(r,t)}else s&&(i=te(a,"DIV"),e.insertBefore(i,r),ne(i,t))}var de=function(e,t){for(var o=e.childNodes;t&&e.nodeType===n;)t=(o=(e=o[t-1]).childNodes).length;return e},le=function(e,t){if(e.nodeType===n){var o=e.childNodes;if(t<o.length)e=o[t];else{for(;e&&!e.nextSibling;)e=e.parentNode;e&&(e=e.nextSibling)}}return e},ce=function(e,t){var n,i,r,a,s=e.startContainer,d=e.startOffset,l=e.endContainer,c=e.endOffset;s.nodeType===o?(i=(n=s.parentNode).childNodes,d===s.length?(d=k.call(i,s)+1,e.collapsed&&(l=n,c=d)):(d&&(a=s.splitText(d),l===s?(c-=d,l=a):l===n&&(c+=1),s=a),d=k.call(i,s)),s=n):i=s.childNodes,d===(r=i.length)?s.appendChild(t):s.insertBefore(t,i[d]),s===l&&(c+=i.length-r),e.setStart(s,d),e.setEnd(l,c)},he=function(e,t,n){var i=e.startContainer,r=e.startOffset,a=e.endContainer,s=e.endOffset;t||(t=e.commonAncestorContainer),t.nodeType===o&&(t=t.parentNode);for(var d,l,c,h,u,f=ie(a,s,t,n),p=ie(i,r,t,n),g=t.ownerDocument.createDocumentFragment();p!==f;)d=p.nextSibling,g.appendChild(p),p=d;return i=t,r=f?k.call(t.childNodes,f):t.childNodes.length,(l=(c=t.childNodes[r])&&c.previousSibling)&&l.nodeType===o&&c.nodeType===o&&(i=l,r=l.length,h=l.data,u=c.data," "===h.charAt(h.length-1)&&" "===u.charAt(0)&&(u=" "+u.slice(1)),l.appendData(u),X(c)),e.setStart(i,r),e.collapse(!0),ne(t,n),g},ue=function(e,t){var n,o,i=ve(e,t),r=Ce(e,t),a=i!==r;return ge(e),me(e,i,r,t),n=he(e,null,t),ge(e),a&&(r=Ce(e,t),i&&r&&i!==r&&ae(i,r,e,t)),i&&ne(i,t),(o=t.firstChild)&&"BR"!==o.nodeName?e.collapse(!0):(ne(t,t),e.selectNodeContents(t.firstChild)),n},fe=function(e,t,n){var o,i,r,a,s,d,l,c,h,u,f;for(oe(t,n),o=t;o=G(o,n);)ne(o,n);if(e.collapsed||ue(e,n),ge(e),e.collapse(!1),a=Q(e.endContainer,n,"BLOCKQUOTE")||n,i=ve(e,n),c=G(t,t),l=!!i&&Z(i),i&&c&&!l&&!Q(c,t,"PRE")&&!Q(c,t,"TABLE")){if(me(e,i,i,n),e.collapse(!0),s=e.endContainer,d=e.endOffset,We(i,n,!1),H(s)&&(s=(h=ie(s,d,K(s,n),n)).parentNode,d=k.call(s.childNodes,h)),d!==Y(s))for(r=n.ownerDocument.createDocumentFragment();o=s.childNodes[d];)r.appendChild(o);ae(s,c,e,n),d=k.call(s.parentNode.childNodes,s)+1,s=s.parentNode,e.setEnd(s,d)}Y(t)&&(l&&(e.setEndBefore(i),e.collapse(!1),X(i)),me(e,a,a,n),u=(h=ie(e.endContainer,e.endOffset,a,n))?h.previousSibling:a.lastChild,a.insertBefore(t,h),h?e.setEndBefore(h):e.setEnd(a,Y(a)),i=Ce(e,n),ge(e),s=e.endContainer,d=e.endOffset,h&&z(h)&&se(h,n),(h=u&&u.nextSibling)&&z(h)&&se(h,n),e.setEnd(s,d)),r&&(ae(i,r,f=e.cloneRange(),n),e.setEnd(f.endContainer,f.endOffset)),ge(e)},pe=function(e,t,n){var o=t.ownerDocument.createRange();if(o.selectNode(t),n){var i=e.compareBoundaryPoints(3,o)>-1,r=e.compareBoundaryPoints(1,o)<1;return!i&&!r}var a=e.compareBoundaryPoints(0,o)<1,s=e.compareBoundaryPoints(2,o)>-1;return a&&s},ge=function(e){for(var t,n=e.startContainer,i=e.startOffset,r=e.endContainer,a=e.endOffset,s=!0;n.nodeType!==o&&(t=n.childNodes[i])&&!F(t);)n=t,i=0;if(a)for(;r.nodeType!==o;){if(!(t=r.childNodes[a-1])||F(t)){if(s&&t&&"BR"===t.nodeName){a-=1,s=!1;continue}break}a=Y(r=t)}else for(;r.nodeType!==o&&(t=r.firstChild)&&!F(t);)r=t;e.collapsed?(e.setStart(r,a),e.setEnd(n,i)):(e.setStart(n,i),e.setEnd(r,a))},me=function(e,t,n,i){var r,a=e.startContainer,s=e.startOffset,d=e.endContainer,l=e.endOffset,c=!0;for(t||(t=e.commonAncestorContainer),n||(n=t);!s&&a!==t&&a!==i;)r=a.parentNode,s=k.call(r.childNodes,a),a=r;for(;c&&d.nodeType!==o&&d.childNodes[l]&&"BR"===d.childNodes[l].nodeName&&(l+=1,c=!1),d!==n&&d!==i&&l===Y(d);)r=d.parentNode,l=k.call(r.childNodes,d)+1,d=r;e.setStart(a,s),e.setEnd(d,l)},ve=function(e,t){var n,o=e.startContainer;return(n=H(o)?K(o,t):o!==t&&W(o)?o:G(n=de(o,e.startOffset),t))&&pe(e,n,!0)?n:null},Ce=function(e,t){var n,o,i=e.endContainer;if(H(i))n=K(i,t);else if(i!==t&&W(i))n=i;else{if(!(n=le(i,e.endOffset))||!V(t,n))for(n=t;o=n.lastChild;)n=o;n=K(n,t)}return n&&pe(e,n,!0)?n:null},_e=new B(null,4|a,function(e){return e.nodeType===o?x.test(e.data):"IMG"===e.nodeName}),Ne=function(e,t){var n,i=e.startContainer,r=e.startOffset;if(_e.root=null,i.nodeType===o){if(r)return!1;n=i}else if((n=le(i,r))&&!V(t,n)&&(n=null),!n&&(n=de(i,r)).nodeType===o&&n.length)return!1;return _e.currentNode=n,_e.root=ve(e,t),!_e.previousNode()},Se=function(e,t){var n,i=e.endContainer,r=e.endOffset;if(_e.root=null,i.nodeType===o){if((n=i.data.length)&&r<n)return!1;_e.currentNode=i}else _e.currentNode=de(i,r);return _e.root=Ce(e,t),!_e.nextNode()},ye=function(e,t){var n,o=ve(e,t),i=Ce(e,t);o&&i&&(n=o.parentNode,e.setStart(n,k.call(n.childNodes,o)),n=i.parentNode,e.setEnd(n,k.call(n.childNodes,i)+1))},Te={8:"backspace",9:"tab",13:"enter",32:"space",33:"pageup",34:"pagedown",37:"left",39:"right",46:"delete",219:"[",221:"]"},Ee=function(e){var t=e.keyCode,n=Te[t],o="",i=this.getSelection();e.defaultPrevented||(n||(n=String.fromCharCode(t).toLowerCase(),/^[A-Za-z0-9]$/.test(n)||(n="")),m&&46===e.which&&(n="."),111<t&&t<124&&(n="f"+(t-111)),"backspace"!==n&&"delete"!==n&&(e.altKey&&(o+="alt-"),e.ctrlKey&&(o+="ctrl-"),e.metaKey&&(o+="meta-")),e.shiftKey&&(o+="shift-"),n=o+n,this._keyHandlers[n]?this._keyHandlers[n](this,e,i):i.collapsed||e.isComposing||e.ctrlKey||e.metaKey||1!==(e.key||n).length||(this.saveUndoState(i),ue(i,this._root),this._ensureBottomLine(),this.setSelection(i),this._updatePath(i,!0)))},be=function(e){return function(t,n){n.preventDefault(),t[e]()}},xe=function(e,t){return t=t||null,function(n,o){o.preventDefault();var i=n.getSelection();n.hasFormat(e,null,i)?n.changeFormat(null,{tag:e},i):n.changeFormat({tag:e},t,i)}},ke=function(e,t){try{t||(t=e.getSelection());var n,i=t.startContainer;for(i.nodeType===o&&(i=i.parentNode),n=i;H(n)&&(!n.textContent||n.textContent===s);)n=(i=n).parentNode;i!==n&&(t.setStart(n,k.call(n.childNodes,i)),t.collapse(!0),n.removeChild(i),W(n)||(n=K(n,e._root)),ne(n,e._root),ge(t)),i===e._root&&(i=i.firstChild)&&"BR"===i.nodeName&&X(i),e._ensureBottomLine(),e.setSelection(t),e._updatePath(t,!0)}catch(t){e.didError(t)}},Ae={enter:function(e,t,i){var r,a,d,l,c,h=e._root;if(t.preventDefault(),e._recordUndoState(i),ht(i.startContainer,h,e),e._removeZWS(),e._getRangeAndRemoveBookmark(i),i.collapsed||ue(i,h),(r=ve(i,h))&&(a=Q(r,h,"PRE")))return ge(i),d=i.startContainer,l=i.startOffset,d.nodeType!==o&&(d=e._doc.createTextNode(""),a.insertBefore(d,a.firstChild)),t.shiftKey||"\n"!==d.data.charAt(l-1)&&!Ne(i,h)||"\n"!==d.data.charAt(l)&&!Se(i,h)?(d.insertData(l,"\n"),ne(a,h),d.length===l+1?i.setStartAfter(d):i.setStart(d,l+1)):(d.deleteData(l&&l-1,l?2:1),(d=(c=ie(d,l&&l-1,h,h)).previousSibling).textContent||X(d),d=e.createDefaultBlock(),c.parentNode.insertBefore(d,c),c.textContent||X(c),i.setStart(d,0)),i.collapse(!0),e.setSelection(i),e._updatePath(i,!0),void e._docWasChanged();if(!r||t.shiftKey||/^T[HD]$/.test(r.nodeName))return(a=Q(i.endContainer,h,"A"))&&(a=a.parentNode,me(i,a,a,h),i.collapse(!1)),ce(i,e.createElement("BR")),i.collapse(!1),e.setSelection(i),void e._updatePath(i,!0);if((a=Q(r,h,"LI"))&&(r=a),Z(r)){if(Q(r,h,"UL")||Q(r,h,"OL"))return e.decreaseListLevel(i);if(Q(r,h,"BLOCKQUOTE"))return e.modifyBlocks(dt,i)}for(c=at(e,r,i.startContainer,i.startOffset),ot(r),Fe(r),ne(r,h);c.nodeType===n;){var u,f=c.firstChild;if("A"===c.nodeName&&(!c.textContent||c.textContent===s)){J(c,f=e._doc.createTextNode("")),c=f;break}for(;f&&f.nodeType===o&&!f.data&&(u=f.nextSibling)&&"BR"!==u.nodeName;)X(f),f=u;if(!f||"BR"===f.nodeName||f.nodeType===o&&!m)break;c=f}i=e.createRange(c,0),e.setSelection(i),e._updatePath(i,!0)},"shift-enter":function(e,t,n){return e._keyHandlers.enter(e,t,n)},backspace:function(e,t,n){var o=e._root;if(e._removeZWS(),e.saveUndoState(n),n.collapsed)if(Ne(n,o)){t.preventDefault();var i,r=ve(n,o);if(!r)return;if(oe(r.parentNode,o),i=K(r,o)){if(!i.isContentEditable)return void X(i);for(ae(i,r,n,o),r=i.parentNode;r!==o&&!r.nextSibling;)r=r.parentNode;r!==o&&(r=r.nextSibling)&&se(r,o),e.setSelection(n)}else if(r){if(Q(r,o,"UL")||Q(r,o,"OL"))return e.decreaseListLevel(n);if(Q(r,o,"BLOCKQUOTE"))return e.modifyBlocks(st,n);e.setSelection(n),e._updatePath(n,!0)}}else e.setSelection(n),setTimeout(function(){ke(e)},0);else t.preventDefault(),ue(n,o),ke(e,n)},delete:function(e,t,o){var i,r,a,s,d,l,c=e._root;if(e._removeZWS(),e.saveUndoState(o),o.collapsed)if(Se(o,c)){if(t.preventDefault(),!(i=ve(o,c)))return;if(oe(i.parentNode,c),r=G(i,c)){if(!r.isContentEditable)return void X(r);for(ae(i,r,o,c),r=i.parentNode;r!==c&&!r.nextSibling;)r=r.parentNode;r!==c&&(r=r.nextSibling)&&se(r,c),e.setSelection(o),e._updatePath(o,!0)}}else{if(a=o.cloneRange(),me(o,c,c,c),s=o.endContainer,d=o.endOffset,s.nodeType===n&&(l=s.childNodes[d])&&"IMG"===l.nodeName)return t.preventDefault(),X(l),ge(o),void ke(e,o);e.setSelection(a),setTimeout(function(){ke(e)},0)}else t.preventDefault(),ue(o,c),ke(e,o)},tab:function(e,t,n){var o,i,r=e._root;if(e._removeZWS(),n.collapsed&&Ne(n,r))for(o=ve(n,r);i=o.parentNode;){if("UL"===i.nodeName||"OL"===i.nodeName){t.preventDefault(),e.increaseListLevel(n);break}o=i}},"shift-tab":function(e,t,n){var o,i=e._root;e._removeZWS(),n.collapsed&&Ne(n,i)&&(Q(o=n.startContainer,i,"UL")||Q(o,i,"OL"))&&(t.preventDefault(),e.decreaseListLevel(n))},space:function(e,t,n){var o,i=e._root;if(e._recordUndoState(n),ht(n.startContainer,i,e),e._getRangeAndRemoveBookmark(n),o=n.endContainer,n.collapsed&&n.endOffset===Y(o))do{if("A"===o.nodeName){n.setStartAfter(o);break}}while(!o.nextSibling&&(o=o.parentNode)&&o!==i);n.collapsed||(ue(n,i),e._ensureBottomLine(),e.setSelection(n),e._updatePath(n,!0)),e.setSelection(n)},left:function(e){e._removeZWS()},right:function(e){e._removeZWS()}};u&&p&&(Ae["meta-left"]=function(e,t){t.preventDefault();var n=Je(e);n&&n.modify&&n.modify("move","backward","lineboundary")},Ae["meta-right"]=function(e,t){t.preventDefault();var n=Je(e);n&&n.modify&&n.modify("move","forward","lineboundary")}),u||(Ae.pageup=function(e){e.moveCursorToStart()},Ae.pagedown=function(e){e.moveCursorToEnd()}),Ae[N+"b"]=xe("B"),Ae[N+"i"]=xe("I"),Ae[N+"u"]=xe("U"),Ae[N+"shift-7"]=xe("S"),Ae[N+"shift-5"]=xe("SUB",{tag:"SUP"}),Ae[N+"shift-6"]=xe("SUP",{tag:"SUB"}),Ae[N+"shift-8"]=be("makeUnorderedList"),Ae[N+"shift-9"]=be("makeOrderedList"),Ae[N+"["]=be("decreaseQuoteLevel"),Ae[N+"]"]=be("increaseQuoteLevel"),Ae[N+"d"]=be("toggleCode"),Ae[N+"y"]=be("redo"),Ae[N+"z"]=be("undo"),Ae[N+"shift-z"]=be("redo");var Le={1:10,2:13,3:16,4:18,5:24,6:32,7:48},Be={backgroundColor:{regexp:x,replace:function(e,t,n){return te(e,"SPAN",{class:t.highlight,style:"background-color:"+n})}},color:{regexp:x,replace:function(e,t,n){return te(e,"SPAN",{class:t.colour,style:"color:"+n})}},fontWeight:{regexp:/^bold|^700/i,replace:function(e){return te(e,"B")}},fontStyle:{regexp:/^italic/i,replace:function(e){return te(e,"I")}},fontFamily:{regexp:x,replace:function(e,t,n){return te(e,"SPAN",{class:t.fontFamily,style:"font-family:"+n})}},fontSize:{regexp:x,replace:function(e,t,n){return te(e,"SPAN",{class:t.fontSize,style:"font-size:"+n})}},textDecoration:{regexp:/^underline/i,replace:function(e){return te(e,"U")}}},Oe=function(e){return function(t,n){var o=te(t.ownerDocument,e);return n.replaceChild(o,t),o.appendChild(ee(t)),o}},De=function(e,t,n){var o,i,r,a,s,d,l=e.style,c=e.ownerDocument;for(o in Be)i=Be[o],(r=l[o])&&i.regexp.test(r)&&(d=i.replace(c,n.classNames,r),s||(s=d),a&&a.appendChild(d),a=d,e.style[o]="");return s&&(a.appendChild(ee(e)),"SPAN"===e.nodeName?t.replaceChild(s,e):e.appendChild(s)),a||e},Re={P:De,SPAN:De,STRONG:Oe("B"),EM:Oe("I"),INS:Oe("U"),STRIKE:Oe("S"),FONT:function(e,t,n){var o,i,r,a,s,d=e.face,l=e.size,c=e.color,h=e.ownerDocument,u=n.classNames;return d&&(s=o=te(h,"SPAN",{class:u.fontFamily,style:"font-family:"+d}),a=o),l&&(i=te(h,"SPAN",{class:u.fontSize,style:"font-size:"+Le[l]+"px"}),s||(s=i),a&&a.appendChild(i),a=i),c&&/^#?([\dA-F]{3}){1,2}$/i.test(c)&&("#"!==c.charAt(0)&&(c="#"+c),r=te(h,"SPAN",{class:u.colour,style:"color:"+c}),s||(s=r),a&&a.appendChild(r),a=r),s||(s=a=te(h,"SPAN")),t.replaceChild(s,e),a.appendChild(ee(e)),a},TT:function(e,t,n){var o=te(e.ownerDocument,"SPAN",{class:n.classNames.fontFamily,style:'font-family:menlo,consolas,"courier new",monospace'});return t.replaceChild(o,e),o.appendChild(ee(e)),o}},Pe=/^(?:A(?:DDRESS|RTICLE|SIDE|UDIO)|BLOCKQUOTE|CAPTION|D(?:[DLT]|IV)|F(?:IGURE|IGCAPTION|OOTER)|H[1-6]|HEADER|L(?:ABEL|EGEND|I)|O(?:L|UTPUT)|P(?:RE)?|SECTION|T(?:ABLE|BODY|D|FOOT|H|HEAD|R)|COL(?:GROUP)?|UL)$/,Ue=/^(?:HEAD|META|STYLE)/,Ie=new B(null,4|a),we=function e(t,i,r){var a,s,d,l,c,h,u,f,p,g,m,v,C=t.childNodes;for(a=t;H(a);)a=a.parentNode;for(Ie.root=a,s=0,d=C.length;s<d;s+=1)if(c=(l=C[s]).nodeName,h=l.nodeType,u=Re[c],h===n){if(f=l.childNodes.length,u)l=u(l,t,i);else{if(Ue.test(c)){t.removeChild(l),s-=1,d-=1;continue}if(!Pe.test(c)&&!H(l)){s-=1,d+=f-1,t.replaceChild(ee(l),l);continue}}f&&e(l,i,r||"PRE"===c)}else{if(h===o){if(m=l.data,p=!x.test(m.charAt(0)),g=!x.test(m.charAt(m.length-1)),r||!p&&!g)continue;if(p){for(Ie.currentNode=l;(v=Ie.previousPONode())&&!("IMG"===(c=v.nodeName)||"#text"===c&&x.test(v.data));)if(!H(v)){v=null;break}m=m.replace(/^[ \t\r\n]+/g,v?" ":"")}if(g){for(Ie.currentNode=l;(v=Ie.nextNode())&&!("IMG"===c||"#text"===c&&x.test(v.data));)if(!H(v)){v=null;break}m=m.replace(/[ \t\r\n]+$/g,v?" ":"")}if(m){l.data=m;continue}}t.removeChild(l),s-=1,d-=1}return t},Fe=function e(t){for(var i,r=t.childNodes,a=r.length;a--;)(i=r[a]).nodeType!==n||F(i)?i.nodeType!==o||i.data||t.removeChild(i):(e(i),H(i)&&!i.firstChild&&t.removeChild(i))},Me=function(e){return e.nodeType===n?"BR"===e.nodeName:x.test(e.data)},He=function(e,t){for(var n,o=e.parentNode;H(o);)o=o.parentNode;return(n=new B(o,4|a,Me)).currentNode=e,!!n.nextNode()||t&&!n.previousNode()},We=function(e,t,n){var o,i,r,a=e.querySelectorAll("BR"),s=[],d=a.length;for(o=0;o<d;o+=1)s[o]=He(a[o],n);for(;d--;)(r=(i=a[d]).parentNode)&&(s[d]?H(r)||oe(r,t):X(i))},ze=function(e,t,n,o){var i,r,a=t.ownerDocument.body,s=o.willCutCopy;We(t,n,!0),t.setAttribute("style","position:fixed;overflow:hidden;bottom:100%;right:100%;"),a.appendChild(t),i=t.innerHTML,r=t.innerText||t.textContent,s&&(i=s(i)),f&&(r=r.replace(/\r?\n/g,"\r\n")),e.setData("text/html",i),e.setData("text/plain",r),a.removeChild(t)},qe=function(e){var t,n,i,r,a,s,d=e.clipboardData,l=this.getSelection(),c=this._root,u=this;if(l.collapsed)e.preventDefault();else{if(this.saveUndoState(l),v||h||!d)setTimeout(function(){try{u._ensureBottomLine()}catch(e){u.didError(e)}},0);else{for(n=(t=ve(l,c))===Ce(l,c)&&t||c,i=ue(l,c),(r=l.commonAncestorContainer).nodeType===o&&(r=r.parentNode);r&&r!==n;)(a=r.cloneNode(!1)).appendChild(i),i=a,r=r.parentNode;(s=this.createElement("div")).appendChild(i),ze(d,s,c,this._config),e.preventDefault()}this.setSelection(l)}},Ke=function(e){var t,n,i,r,a,s,d=e.clipboardData,l=this.getSelection(),c=this._root;if(!v&&!h&&d){for(n=(t=ve(l,c))===Ce(l,c)&&t||c,l=l.cloneRange(),ge(l),me(l,n,n,c),i=l.cloneContents(),(r=l.commonAncestorContainer).nodeType===o&&(r=r.parentNode);r&&r!==n;)(a=r.cloneNode(!1)).appendChild(i),i=a,r=r.parentNode;(s=this.createElement("div")).appendChild(i),ze(d,s,c,this._config),e.preventDefault()}};function Ge(e){this.isShiftDown=e.shiftKey}var Ze=function(e){var t,n,o,i,r,a=e.clipboardData,s=a&&a.items,d=this.isShiftDown,l=!1,c=!1,h=!1,u=null,f=null,g=this;if(s){for(t=s.length;t--;)"text/html"===(o=(n=s[t]).type)?f=n:"text/plain"===o||"text/uri-list"===o?u=n:"text/rtf"===o?c=!0:/^image\/.*/.test(o)&&(h=!0);if(h&&(!c||!f))return e.preventDefault(),this.fireEvent("dragover",{dataTransfer:a,preventDefault:function(){l=!0}}),void(l&&this.fireEvent("drop",{dataTransfer:a}));if(!v)return e.preventDefault(),void(!f||d&&u?u&&u.getAsString(function(e){g.insertPlainText(e,!0)}):f.getAsString(function(e){g.insertHTML(e,!0)}))}if(i=a&&a.types,!v&&i&&(k.call(i,"text/html")>-1||!p&&k.call(i,"text/plain")>-1&&k.call(i,"text/rtf")<0))return e.preventDefault(),void(!d&&(r=a.getData("text/html"))?this.insertHTML(r,!0):((r=a.getData("text/plain"))||(r=a.getData("text/uri-list")))&&this.insertPlainText(r,!0));this._awaitingPaste=!0;var m=this._doc.body,C=this.getSelection(),_=C.startContainer,N=C.startOffset,S=C.endContainer,y=C.endOffset,T=this.createElement("DIV",{contenteditable:"true",style:"position:fixed; overflow:hidden; top:0; right:100%; width:1px; height:1px;"});m.appendChild(T),C.selectNodeContents(T),this.setSelection(C),setTimeout(function(){try{g._awaitingPaste=!1;for(var e,t,n="",o=T;T=o;)o=T.nextSibling,X(T),(e=T.firstChild)&&e===T.lastChild&&"DIV"===e.nodeName&&(T=e),n+=T.innerHTML;t=g.createRange(_,N,S,y),g.setSelection(t),n&&g.insertHTML(n,!0)}catch(e){g.didError(e)}},0)},je=function(e){for(var t=e.dataTransfer.types,n=t.length,o=!1,i=!1;n--;)switch(t[n]){case"text/plain":o=!0;break;case"text/html":i=!0;break;default:return}(i||o)&&this.saveUndoState()};function $e(e,t,n){var o,i;if(e||(e={}),t)for(o in t)!n&&o in e||(i=t[o],e[o]=i&&i.constructor===Object?$e(e[o],i,n):i);return e}function Qe(e,t){e.nodeType===i&&(e=e.body);var n,o=e.ownerDocument,r=o.defaultView;this._win=r,this._doc=o,this._root=e,this._events={},this._isFocused=!1,this._lastSelection=null,T&&this.addEventListener("beforedeactivate",this.getSelection),this._hasZWS=!1,this._lastAnchorNode=null,this._lastFocusNode=null,this._path="",this._willUpdatePath=!1,"onselectionchange"in o?this.addEventListener("selectionchange",this._updatePathOnEvent):(this.addEventListener("keyup",this._updatePathOnEvent),this.addEventListener("mouseup",this._updatePathOnEvent)),this._undoIndex=-1,this._undoStack=[],this._undoStackLength=0,this._isInUndoState=!1,this._ignoreChange=!1,this._ignoreAllChanges=!1,E?((n=new MutationObserver(this._docWasChanged.bind(this))).observe(e,{childList:!0,attributes:!0,characterData:!0,subtree:!0}),this._mutation=n):this.addEventListener("keyup",this._keyUpDetectChange),this._restoreSelection=!1,this.addEventListener("blur",et),this.addEventListener("mousedown",tt),this.addEventListener("touchstart",tt),this.addEventListener("focus",nt),this._awaitingPaste=!1,this.addEventListener(g?"beforecut":"cut",qe),this.addEventListener("copy",Ke),this.addEventListener("keydown",Ge),this.addEventListener("keyup",Ge),this.addEventListener(g?"beforepaste":"paste",Ze),this.addEventListener("drop",je),this.addEventListener(m?"keypress":"keydown",Ee),this._keyHandlers=Object.create(Ae),this.setConfig(t),g&&(r.Text.prototype.splitText=function(e){var t=this.ownerDocument.createTextNode(this.data.slice(e)),n=this.nextSibling,o=this.parentNode,i=this.length-e;return n?o.insertBefore(t,n):o.appendChild(t),i&&this.deleteData(e,i),t}),e.setAttribute("contenteditable","true");try{o.execCommand("enableObjectResizing",!1,"false"),o.execCommand("enableInlineTableEditing",!1,"false")}catch(e){}e.__squire__=this,this.setHTML("")}var Ve=Qe.prototype,Ye=function(e,t,n){var o=n._doc,i=e?DOMPurify.sanitize(e,{ALLOW_UNKNOWN_PROTOCOLS:!0,WHOLE_DOCUMENT:!1,RETURN_DOM:!0,RETURN_DOM_FRAGMENT:!0}):null;return i?o.importNode(i,!0):o.createDocumentFragment()};Ve.setConfig=function(e){return(e=$e({blockTag:"DIV",blockAttributes:null,tagAttributes:{blockquote:null,ul:null,ol:null,li:null,a:null},classNames:{colour:"colour",fontFamily:"font",fontSize:"size",highlight:"highlight"},leafNodeNames:D,undo:{documentSizeThreshold:-1,undoLimit:-1},isInsertedHTMLSanitized:!0,isSetHTMLSanitized:!0,sanitizeToDOMFragment:"undefined"!=typeof DOMPurify&&DOMPurify.isSupported?Ye:null,willCutCopy:null},e,!0)).blockTag=e.blockTag.toUpperCase(),this._config=e,this},Ve.createElement=function(e,t,n){return te(this._doc,e,t,n)},Ve.createDefaultBlock=function(e){var t=this._config;return ne(this.createElement(t.blockTag,t.blockAttributes,e),this._root)},Ve.didError=function(e){console.log(e)},Ve.getDocument=function(){return this._doc},Ve.getRoot=function(){return this._root},Ve.modifyDocument=function(e){var t=this._mutation;t&&(t.takeRecords().length&&this._docWasChanged(),t.disconnect()),this._ignoreAllChanges=!0,e(),this._ignoreAllChanges=!1,t&&(t.observe(this._root,{childList:!0,attributes:!0,characterData:!0,subtree:!0}),this._ignoreChange=!1)};var Xe={pathChange:1,select:1,input:1,undoStateChange:1};Ve.fireEvent=function(e,t){var n,o,i,r=this._events[e];if(/^(?:focus|blur)/.test(e))if(n=this._root===this._doc.activeElement,"focus"===e){if(!n||this._isFocused)return this;this._isFocused=!0}else{if(n||!this._isFocused)return this;this._isFocused=!1}if(r)for(t||(t={}),t.type!==e&&(t.type=e),o=(r=r.slice()).length;o--;){i=r[o];try{i.handleEvent?i.handleEvent(t):i.call(this,t)}catch(t){t.details="Squire: fireEvent error. Event type: "+e,this.didError(t)}}return this},Ve.destroy=function(){var e,t=this._events;for(e in t)this.removeEventListener(e);this._mutation&&this._mutation.disconnect(),delete this._root.__squire__,this._undoIndex=-1,this._undoStack=[],this._undoStackLength=0},Ve.handleEvent=function(e){this.fireEvent(e.type,e)},Ve.addEventListener=function(e,t){var n=this._events[e],o=this._root;return t?(n||(n=this._events[e]=[],Xe[e]||("selectionchange"===e&&(o=this._doc),o.addEventListener(e,this,!0))),n.push(t),this):(this.didError({name:"Squire: addEventListener with null or undefined fn",message:"Event type: "+e}),this)},Ve.removeEventListener=function(e,t){var n,o=this._events[e],i=this._root;if(o){if(t)for(n=o.length;n--;)o[n]===t&&o.splice(n,1);else o.length=0;o.length||(delete this._events[e],Xe[e]||("selectionchange"===e&&(i=this._doc),i.removeEventListener(e,this,!0)))}return this},Ve.createRange=function(e,t,n,o){if(e instanceof this._win.Range)return e.cloneRange();var i=this._doc.createRange();return i.setStart(e,t),n?i.setEnd(n,o):i.setEnd(e,t),i},Ve.getCursorPosition=function(e){if(!e&&!(e=this.getSelection())||!e.getBoundingClientRect)return null;var t,n,o=e.getBoundingClientRect();return o&&!o.top&&(this._ignoreChange=!0,(t=this._doc.createElement("SPAN")).textContent=s,ce(e,t),o=t.getBoundingClientRect(),(n=t.parentNode).removeChild(t),re(n,e)),o},Ve._moveCursorTo=function(e){var t=this._root,n=this.createRange(t,e?0:t.childNodes.length);return ge(n),this.setSelection(n),this},Ve.moveCursorToStart=function(){return this._moveCursorTo(!0)},Ve.moveCursorToEnd=function(){return this._moveCursorTo(!1)};var Je=function(e){return e._win.getSelection()||null};function et(){this._restoreSelection=!0}function tt(){this._restoreSelection=!1}function nt(){this._restoreSelection&&this.setSelection(this._lastSelection)}Ve.setSelection=function(e){if(e)if(this._lastSelection=e,this._isFocused)if(c&&!this._restoreSelection)et.call(this),this.blur(),this.focus();else{h&&this._win.focus();var t=Je(this);t&&(t.removeAllRanges(),t.addRange(e))}else et.call(this);return this},Ve.getSelection=function(){var e,t,n,o,i=Je(this),r=this._root;return this._isFocused&&i&&i.rangeCount&&(t=(e=i.getRangeAt(0).cloneRange()).startContainer,n=e.endContainer,t&&F(t)&&e.setStartBefore(t),n&&F(n)&&e.setEndBefore(n)),e&&V(r,e.commonAncestorContainer)?this._lastSelection=e:V((o=(e=this._lastSelection).commonAncestorContainer).ownerDocument,o)||(e=null),e||(e=this.createRange(r.firstChild,0)),e},Ve.getSelectedText=function(){var e=this.getSelection();if(!e||e.collapsed)return"";var t,n=new B(e.commonAncestorContainer,4|a,function(t){return pe(e,t,!0)}),i=e.startContainer,r=e.endContainer,s=n.currentNode=i,d="",l=!1;for(n.filter(s)||(s=n.nextNode());s;)s.nodeType===o?(t=s.data)&&/\S/.test(t)&&(s===r&&(t=t.slice(0,e.endOffset)),s===i&&(t=t.slice(e.startOffset)),d+=t,l=!0):("BR"===s.nodeName||l&&!H(s))&&(d+="\n",l=!1),s=n.nextNode();return d},Ve.getPath=function(){return this._path};var ot=function(e,t){for(var n,o,i,r=new B(e,4);o=r.nextNode();)for(;(i=o.data.indexOf(s))>-1&&(!t||o.parentNode!==t);){if(1===o.length){do{(n=o.parentNode).removeChild(o),o=n,r.currentNode=n}while(H(o)&&!Y(o));break}o.deleteData(i,1)}};Ve._didAddZWS=function(){this._hasZWS=!0},Ve._removeZWS=function(){this._hasZWS&&(ot(this._root),this._hasZWS=!1)},Ve._updatePath=function(e,t){if(e){var o,i=e.startContainer,r=e.endContainer;(t||i!==this._lastAnchorNode||r!==this._lastFocusNode)&&(this._lastAnchorNode=i,this._lastFocusNode=r,o=i&&r?i===r?function e(t,o,i){var r,a,s,d,l,c="";return t&&t!==o&&(c=e(t.parentNode,o,i),t.nodeType===n&&(c+=(c?">":"")+t.nodeName,(r=t.id)&&(c+="#"+r),(a=t.className.trim())&&((s=a.split(/\s\s*/)).sort(),c+=".",c+=s.join(".")),(d=t.dir)&&(c+="[dir="+d+"]"),s&&(l=i.classNames,k.call(s,l.highlight)>-1&&(c+="[backgroundColor="+t.style.backgroundColor.replace(/ /g,"")+"]"),k.call(s,l.colour)>-1&&(c+="[color="+t.style.color.replace(/ /g,"")+"]"),k.call(s,l.fontFamily)>-1&&(c+="[fontFamily="+t.style.fontFamily.replace(/ /g,"")+"]"),k.call(s,l.fontSize)>-1&&(c+="[fontSize="+t.style.fontSize+"]")))),c}(r,this._root,this._config):"(selection)":"",this._path!==o&&(this._path=o,this.fireEvent("pathChange",{path:o}))),this.fireEvent(e.collapsed?"cursor":"select",{range:e})}},Ve._updatePathOnEvent=function(e){var t=this;t._isFocused&&!t._willUpdatePath&&(t._willUpdatePath=!0,setTimeout(function(){t._willUpdatePath=!1,t._updatePath(t.getSelection())},0))},Ve.focus=function(){return this._root.focus({preventScroll:!0}),_&&this.fireEvent("focus"),this},Ve.blur=function(){return this._root.blur(),_&&this.fireEvent("blur"),this};var it="squire-selection-end";Ve._saveRangeToBookmark=function(e){var t,n=this.createElement("INPUT",{id:"squire-selection-start",type:"hidden"}),o=this.createElement("INPUT",{id:it,type:"hidden"});ce(e,n),e.collapse(!1),ce(e,o),2&n.compareDocumentPosition(o)&&(n.id=it,o.id="squire-selection-start",t=n,n=o,o=t),e.setStartAfter(n),e.setEndBefore(o)},Ve._getRangeAndRemoveBookmark=function(e){var t=this._root,n=t.querySelector("#squire-selection-start"),i=t.querySelector("#"+it);if(n&&i){var r=n.parentNode,a=i.parentNode,s=k.call(r.childNodes,n),d=k.call(a.childNodes,i);r===a&&(d-=1),X(n),X(i),e||(e=this._doc.createRange()),e.setStart(r,s),e.setEnd(a,d),re(r,e),r!==a&&re(a,e),e.collapsed&&(r=e.startContainer).nodeType===o&&((a=r.childNodes[e.startOffset])&&a.nodeType===o||(a=r.childNodes[e.startOffset-1]),a&&a.nodeType===o&&(e.setStart(a,0),e.collapse(!0)))}return e||null},Ve._keyUpDetectChange=function(e){var t=e.keyCode;e.ctrlKey||e.metaKey||e.altKey||!(t<16||t>20)||!(t<33||t>45)||this._docWasChanged()},Ve._docWasChanged=function(){b&&(w=new WeakMap),this._ignoreAllChanges||(E&&this._ignoreChange?this._ignoreChange=!1:(this._isInUndoState&&(this._isInUndoState=!1,this.fireEvent("undoStateChange",{canUndo:!0,canRedo:!1})),this.fireEvent("input")))},Ve._recordUndoState=function(e,t){if(!this._isInUndoState||t){var n,o=this._undoIndex,i=this._undoStack,r=this._config.undo,a=r.documentSizeThreshold,s=r.undoLimit;t||(o+=1),o<this._undoStackLength&&(i.length=this._undoStackLength=o),e&&this._saveRangeToBookmark(e),n=this._getHTML(),a>-1&&2*n.length>a&&s>-1&&o>s&&(i.splice(0,o-s),o=s,this._undoStackLength=s),i[o]=n,this._undoIndex=o,this._undoStackLength+=1,this._isInUndoState=!0}},Ve.saveUndoState=function(e){return e===t&&(e=this.getSelection()),this._recordUndoState(e,this._isInUndoState),this._getRangeAndRemoveBookmark(e),this},Ve.undo=function(){if(0!==this._undoIndex||!this._isInUndoState){this._recordUndoState(this.getSelection(),!1),this._undoIndex-=1,this._setHTML(this._undoStack[this._undoIndex]);var e=this._getRangeAndRemoveBookmark();e&&this.setSelection(e),this._isInUndoState=!0,this.fireEvent("undoStateChange",{canUndo:0!==this._undoIndex,canRedo:!0}),this.fireEvent("input")}return this},Ve.redo=function(){var e=this._undoIndex,t=this._undoStackLength;if(e+1<t&&this._isInUndoState){this._undoIndex+=1,this._setHTML(this._undoStack[this._undoIndex]);var n=this._getRangeAndRemoveBookmark();n&&this.setSelection(n),this.fireEvent("undoStateChange",{canUndo:!0,canRedo:e+2<t}),this.fireEvent("input")}return this},Ve.hasFormat=function(e,t,n){if(e=e.toUpperCase(),t||(t={}),!n&&!(n=this.getSelection()))return!1;!n.collapsed&&n.startContainer.nodeType===o&&n.startOffset===n.startContainer.length&&n.startContainer.nextSibling&&n.setStartBefore(n.startContainer.nextSibling),!n.collapsed&&n.endContainer.nodeType===o&&0===n.endOffset&&n.endContainer.previousSibling&&n.setEndAfter(n.endContainer.previousSibling);var i,r,a=this._root,s=n.commonAncestorContainer;if(Q(s,a,e,t))return!0;if(s.nodeType===o)return!1;i=new B(s,4,function(e){return pe(n,e,!0)});for(var d=!1;r=i.nextNode();){if(!Q(r,a,e,t))return!1;d=!0}return d},Ve.getFontInfo=function(e){var n,i,r,a={color:t,backgroundColor:t,family:t,size:t},s=0;if(!e&&!(e=this.getSelection()))return a;if(n=e.commonAncestorContainer,e.collapsed||n.nodeType===o)for(n.nodeType===o&&(n=n.parentNode);s<4&&n;)(i=n.style)&&(!a.color&&(r=i.color)&&(a.color=r,s+=1),!a.backgroundColor&&(r=i.backgroundColor)&&(a.backgroundColor=r,s+=1),!a.family&&(r=i.fontFamily)&&(a.family=r,s+=1),!a.size&&(r=i.fontSize)&&(a.size=r,s+=1)),n=n.parentNode;return a},Ve._addFormat=function(e,t,n){var i,r,s,d,l,c,h,u,f=this._root;if(n.collapsed){for(i=ne(this.createElement(e,t),f),ce(n,i),n.setStart(i.firstChild,i.firstChild.length),n.collapse(!0),u=i;H(u);)u=u.parentNode;ot(u,i)}else{if(r=new B(n.commonAncestorContainer,4|a,function(e){return(e.nodeType===o||"BR"===e.nodeName||"IMG"===e.nodeName)&&pe(n,e,!0)}),s=n.startContainer,l=n.startOffset,d=n.endContainer,c=n.endOffset,r.currentNode=s,r.filter(s)||(s=r.nextNode(),l=0),!s)return n;do{!Q(h=r.currentNode,f,e,t)&&(h===d&&h.length>c&&h.splitText(c),h===s&&l&&(h=h.splitText(l),d===s&&(d=h,c-=l),s=h,l=0),J(h,i=this.createElement(e,t)),i.appendChild(h))}while(r.nextNode());d.nodeType!==o&&(h.nodeType===o?(d=h,c=h.length):(d=h.parentNode,c=1)),n=this.createRange(s,l,d,c)}return n},Ve._removeFormat=function(e,t,n,i){this._saveRangeToBookmark(n);var r,a=this._doc;n.collapsed&&(y?(r=a.createTextNode(s),this._didAddZWS()):r=a.createTextNode(""),ce(n,r));for(var d=n.commonAncestorContainer;H(d);)d=d.parentNode;var l=n.startContainer,c=n.startOffset,h=n.endContainer,u=n.endOffset,f=[],p=function(e,t){if(!pe(n,e,!1)){var i,r,a=e.nodeType===o;if(pe(n,e,!0))if(a)e===h&&u!==e.length&&f.push([t,e.splitText(u)]),e===l&&c&&(e.splitText(c),f.push([t,e]));else for(i=e.firstChild;i;i=r)r=i.nextSibling,p(i,t);else"INPUT"===e.nodeName||a&&!e.data||f.push([t,e])}},g=Array.prototype.filter.call(d.getElementsByTagName(e),function(o){return pe(n,o,!0)&&$(o,e,t)});return i||g.forEach(function(e){p(e,e)}),f.forEach(function(e){var t=e[0].cloneNode(!1),n=e[1];J(n,t),t.appendChild(n)}),g.forEach(function(e){J(e,ee(e))}),this._getRangeAndRemoveBookmark(n),r&&n.collapse(!1),re(d,n),n},Ve.changeFormat=function(e,t,n,o){return n||(n=this.getSelection())?(this.saveUndoState(n),t&&(n=this._removeFormat(t.tag.toUpperCase(),t.attributes||{},n,o)),e&&(n=this._addFormat(e.tag.toUpperCase(),e.attributes||{},n)),this.setSelection(n),this._updatePath(n,!0),E||this._docWasChanged(),this):this};var rt={DT:"DD",DD:"DT",LI:"LI",PRE:"PRE"},at=function(e,t,n,o){var i=rt[t.nodeName],r=null,a=ie(n,o,t.parentNode,e._root),s=e._config;return i||(i=s.blockTag,r=s.blockAttributes),$(a,i,r)||(t=te(a.ownerDocument,i,r),a.dir&&(t.dir=a.dir),J(a,t),t.appendChild(ee(a)),a=t),a};Ve.forEachBlock=function(e,t,n){if(!n&&!(n=this.getSelection()))return this;t&&this.saveUndoState(n);var o=this._root,i=ve(n,o),r=Ce(n,o);if(i&&r)do{if(e(i)||i===r)break}while(i=G(i,o));return t&&(this.setSelection(n),this._updatePath(n,!0),E||this._docWasChanged()),this},Ve.modifyBlocks=function(e,t){if(!t&&!(t=this.getSelection()))return this;this._recordUndoState(t,this._isInUndoState);var n,o=this._root;return ye(t,o),me(t,o,o,o),n=he(t,o,o),ce(t,e.call(this,n)),t.endOffset<t.endContainer.childNodes.length&&se(t.endContainer.childNodes[t.endOffset],o),se(t.startContainer.childNodes[t.startOffset],o),this._getRangeAndRemoveBookmark(t),this.setSelection(t),this._updatePath(t,!0),E||this._docWasChanged(),this};var st=function(e){var t=this._root,n=e.querySelectorAll("blockquote");return Array.prototype.filter.call(n,function(e){return!Q(e.parentNode,t,"BLOCKQUOTE")}).forEach(function(e){J(e,ee(e))}),e},dt=function(){return this.createDefaultBlock([this.createElement("INPUT",{id:"squire-selection-start",type:"hidden"}),this.createElement("INPUT",{id:it,type:"hidden"})])},lt=function(e,t,n){for(var o,i,r,a,s=q(t,e._root),d=e._config.tagAttributes,l=d[n.toLowerCase()],c=d.li;o=s.nextNode();)"LI"===o.parentNode.nodeName&&(o=o.parentNode,s.currentNode=o.lastChild),"LI"!==o.nodeName?(a=e.createElement("LI",c),o.dir&&(a.dir=o.dir),(r=o.previousSibling)&&r.nodeName===n?(r.appendChild(a),X(o)):J(o,e.createElement(n,l,[a])),a.appendChild(ee(o)),s.currentNode=a):(i=(o=o.parentNode).nodeName)!==n&&/^[OU]L$/.test(i)&&J(o,e.createElement(n,l,[ee(o)]))},ct=function(e,t){for(var n=e.commonAncestorContainer,o=e.startContainer,i=e.endContainer;n&&n!==t&&!/^[OU]L$/.test(n.nodeName);)n=n.parentNode;if(!n||n===t)return null;for(o===n&&(o=o.childNodes[e.startOffset]),i===n&&(i=i.childNodes[e.endOffset]);o&&o.parentNode!==n;)o=o.parentNode;for(;i&&i.parentNode!==n;)i=i.parentNode;return[n,o,i]};Ve.increaseListLevel=function(e){if(!e&&!(e=this.getSelection()))return this.focus();var t=this._root,n=ct(e,t);if(!n)return this.focus();var o=n[0],i=n[1],r=n[2];if(!i||i===o.firstChild)return this.focus();this._recordUndoState(e,this._isInUndoState);var a,s,d=o.nodeName,l=i.previousSibling;l.nodeName!==d&&(a=this._config.tagAttributes[d.toLowerCase()],l=this.createElement(d,a),o.insertBefore(l,i));do{s=i===r?null:i.nextSibling,l.appendChild(i)}while(i=s);return(s=l.nextSibling)&&se(s,t),this._getRangeAndRemoveBookmark(e),this.setSelection(e),this._updatePath(e,!0),E||this._docWasChanged(),this.focus()},Ve.decreaseListLevel=function(e){if(!e&&!(e=this.getSelection()))return this.focus();var t=this._root,n=ct(e,t);if(!n)return this.focus();var o,i,r,a,s=n[0],d=n[1],l=n[2];if(d||(d=s.firstChild),l||(l=s.lastChild),this._recordUndoState(e,this._isInUndoState),d){if(o=s.parentNode,r=l.nextSibling?ie(s,l.nextSibling,o,t):s.nextSibling,o!==t&&"LI"===o.nodeName){for(o=o.parentNode;r;)i=r.nextSibling,l.appendChild(r),r=i;r=s.parentNode.nextSibling}a=!/^[OU]L$/.test(o.nodeName);do{i=d===l?null:d.nextSibling,s.removeChild(d),a&&"LI"===d.nodeName&&(d=this.createDefaultBlock([ee(d)])),o.insertBefore(d,r)}while(d=i)}return s.firstChild||X(s),r&&se(r,t),this._getRangeAndRemoveBookmark(e),this.setSelection(e),this._updatePath(e,!0),E||this._docWasChanged(),this.focus()},Ve._ensureBottomLine=function(){var e=this._root,t=e.lastElementChild;t&&t.nodeName===this._config.blockTag&&W(t)||e.appendChild(this.createDefaultBlock())},Ve.setKeyHandler=function(e,t){return this._keyHandlers[e]=t,this},Ve._getHTML=function(){return this._root.innerHTML},Ve._setHTML=function(e){var t=this._root,n=t;n.innerHTML=e;do{ne(n,t)}while(n=G(n,t));this._ignoreChange=!0},Ve.getHTML=function(e){var t,n,o,i,r,a,s=[];if(e&&(a=this.getSelection())&&this._saveRangeToBookmark(a),S)for(n=t=this._root;n=G(n,t);)n.textContent||n.querySelector("BR")||(o=this.createElement("BR"),n.appendChild(o),s.push(o));if(i=this._getHTML().replace(/\u200B/g,""),S)for(r=s.length;r--;)X(s[r]);return a&&this._getRangeAndRemoveBookmark(a),i},Ve.setHTML=function(e){var t,n,o,i=this._config,r=i.isSetHTMLSanitized?i.sanitizeToDOMFragment:null,a=this._root;"function"==typeof r?n=r(e,!1,this):((t=this.createElement("DIV")).innerHTML=e,(n=this._doc.createDocumentFragment()).appendChild(ee(t))),we(n,i),We(n,a,!1),oe(n,a);for(var s=n;s=G(s,a);)ne(s,a);for(this._ignoreChange=!0;o=a.lastChild;)a.removeChild(o);a.appendChild(n),ne(a,a),this._undoIndex=-1,this._undoStack.length=0,this._undoStackLength=0,this._isInUndoState=!1;var d=this._getRangeAndRemoveBookmark()||this.createRange(a.firstChild,0);return this.saveUndoState(d),this._lastSelection=d,et.call(this),this._updatePath(d,!0),this},Ve.insertElement=function(e,t){if(t||(t=this.getSelection()),t.collapse(!0),H(e))ce(t,e),t.setStartAfter(e);else{for(var n,o=this._root,i=ve(t,o)||o;i!==o&&!i.nextSibling;)i=i.parentNode;i!==o&&(n=ie(i.parentNode,i.nextSibling,o,o)),n?o.insertBefore(e,n):(o.appendChild(e),n=this.createDefaultBlock(),o.appendChild(n)),t.setStart(n,0),t.setEnd(n,0),ge(t)}return this.focus(),this.setSelection(t),this._updatePath(t),E||this._docWasChanged(),this},Ve.insertImage=function(e,t){var n=this.createElement("IMG",$e({src:e},t,!0));return this.insertElement(n),n},Ve.linkRegExp=/\b((?:(?:ht|f)tps?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,}\/)(?:[^\s()<>]+|\([^\s()<>]+\))+(?:\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))|([\w\-.%+]+@(?:[\w\-]+\.)+[A-Z]{2,}\b)(?:\?[^&?\s]+=[^&?\s]+(?:&[^&?\s]+=[^&?\s]+)*)?/i;var ht=function(e,t,n){var o,i,r,a,s,d,l,c=e.ownerDocument,h=new B(e,4,function(e){return!Q(e,t,"A")}),u=n.linkRegExp,f=n._config.tagAttributes.a;if(u)for(;o=h.nextNode();)for(i=o.data,r=o.parentNode;a=u.exec(i);)d=(s=a.index)+a[0].length,s&&(l=c.createTextNode(i.slice(0,s)),r.insertBefore(l,o)),(l=n.createElement("A",$e({href:a[1]?/^(?:ht|f)tps?:/i.test(a[1])?a[1]:"http://"+a[1]:"mailto:"+a[0]},f,!1))).textContent=i.slice(s,d),r.insertBefore(l,o),o.data=i=i.slice(d)};Ve.insertHTML=function(e,t){var n,o,i,r,a,s,d,l=this._config,c=l.isInsertedHTMLSanitized?l.sanitizeToDOMFragment:null,h=this.getSelection(),u=this._doc;"function"==typeof c?r=c(e,t,this):(t&&(n=e.indexOf("\x3c!--StartFragment--\x3e"),o=e.lastIndexOf("\x3c!--EndFragment--\x3e"),n>-1&&o>-1&&(e=e.slice(n+20,o))),/<\/td>((?!<\/tr>)[\s\S])*$/i.test(e)&&(e="<TR>"+e+"</TR>"),/<\/tr>((?!<\/table>)[\s\S])*$/i.test(e)&&(e="<TABLE>"+e+"</TABLE>"),(i=this.createElement("DIV")).innerHTML=e,(r=u.createDocumentFragment()).appendChild(ee(i))),this.saveUndoState(h);try{for(a=this._root,s=r,d={fragment:r,preventDefault:function(){this.defaultPrevented=!0},defaultPrevented:!1},ht(r,r,this),we(r,l),We(r,a,!1),Fe(r),r.normalize();s=G(s,r);)ne(s,a);t&&this.fireEvent("willPaste",d),d.defaultPrevented||(fe(h,d.fragment,a),E||this._docWasChanged(),h.collapse(!1),this._ensureBottomLine()),this.setSelection(h),this._updatePath(h,!0),t&&this.focus()}catch(e){this.didError(e)}return this};var ut=function(e){return e.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;").split('"').join("&quot;")};Ve.insertPlainText=function(e,t){var n=this.getSelection();if(n.collapsed&&Q(n.startContainer,this._root,"PRE")){var i,r,a=n.startContainer,s=n.startOffset;return a&&a.nodeType===o||(i=this._doc.createTextNode(""),a.insertBefore(i,a.childNodes[s]),a=i,s=0),r={text:e,preventDefault:function(){this.defaultPrevented=!0},defaultPrevented:!1},t&&this.fireEvent("willPaste",r),r.defaultPrevented||(e=r.text,a.insertData(s,e),n.setStart(a,s+e.length),n.collapse(!0)),this.setSelection(n),this}var d,l,c,h,u=e.split("\n"),f=this._config,p=f.blockTag,g=f.blockAttributes,m="</"+p+">",v="<"+p;for(d in g)v+=" "+d+'="'+ut(g[d])+'"';for(v+=">",l=0,c=u.length;l<c;l+=1)h=u[l],h=ut(h).replace(/ (?= )/g,"&nbsp;"),u[l]=v+(h||"<BR>")+m;return this.insertHTML(u.join(""),t)};var ft=function(e,t,n){return function(){return this[e](t,n),this.focus()}};Ve.addStyles=function(e){if(e){var t=this._doc.documentElement.firstChild,n=this.createElement("STYLE",{type:"text/css"});n.appendChild(this._doc.createTextNode(e)),t.appendChild(n)}return this},Ve.bold=ft("changeFormat",{tag:"B"}),Ve.italic=ft("changeFormat",{tag:"I"}),Ve.underline=ft("changeFormat",{tag:"U"}),Ve.strikethrough=ft("changeFormat",{tag:"S"}),Ve.subscript=ft("changeFormat",{tag:"SUB"},{tag:"SUP"}),Ve.superscript=ft("changeFormat",{tag:"SUP"},{tag:"SUB"}),Ve.removeBold=ft("changeFormat",null,{tag:"B"}),Ve.removeItalic=ft("changeFormat",null,{tag:"I"}),Ve.removeUnderline=ft("changeFormat",null,{tag:"U"}),Ve.removeStrikethrough=ft("changeFormat",null,{tag:"S"}),Ve.removeSubscript=ft("changeFormat",null,{tag:"SUB"}),Ve.removeSuperscript=ft("changeFormat",null,{tag:"SUP"}),Ve.makeLink=function(e,t){var n=this.getSelection();if(n.collapsed){var o=e.indexOf(":")+1;if(o)for(;"/"===e[o];)o+=1;ce(n,this._doc.createTextNode(e.slice(o)))}return t=$e($e({href:e},t,!0),this._config.tagAttributes.a,!1),this.changeFormat({tag:"A",attributes:t},{tag:"A"},n),this.focus()},Ve.removeLink=function(){return this.changeFormat(null,{tag:"A"},this.getSelection(),!0),this.focus()},Ve.setFontFace=function(e){var t=this._config.classNames.fontFamily;return this.changeFormat(e?{tag:"SPAN",attributes:{class:t,style:"font-family: "+e+", sans-serif;"}}:null,{tag:"SPAN",attributes:{class:t}}),this.focus()},Ve.setFontSize=function(e){var t=this._config.classNames.fontSize;return this.changeFormat(e?{tag:"SPAN",attributes:{class:t,style:"font-size: "+("number"==typeof e?e+"px":e)}}:null,{tag:"SPAN",attributes:{class:t}}),this.focus()},Ve.setTextColour=function(e){var t=this._config.classNames.colour;return this.changeFormat(e?{tag:"SPAN",attributes:{class:t,style:"color:"+e}}:null,{tag:"SPAN",attributes:{class:t}}),this.focus()},Ve.setHighlightColour=function(e){var t=this._config.classNames.highlight;return this.changeFormat(e?{tag:"SPAN",attributes:{class:t,style:"background-color:"+e}}:e,{tag:"SPAN",attributes:{class:t}}),this.focus()},Ve.setTextAlignment=function(e){return this.forEachBlock(function(t){var n=t.className.split(/\s+/).filter(function(e){return!!e&&!/^align/.test(e)}).join(" ");e?(t.className=n+" align-"+e,t.style.textAlign=e):(t.className=n,t.style.textAlign="")},!0),this.focus()},Ve.setTextDirection=function(e){return this.forEachBlock(function(t){e?t.dir=e:t.removeAttribute("dir")},!0),this.focus()};var pt=function(e){for(var t,n=this._root,o=this._doc,i=o.createDocumentFragment(),r=q(e,n);t=r.nextNode();){var a,s,d=t.querySelectorAll("BR"),l=[],c=d.length;for(a=0;a<c;a+=1)l[a]=He(d[a],!1);for(;c--;)s=d[c],l[c]?J(s,o.createTextNode("\n")):X(s);for(c=(d=t.querySelectorAll("CODE")).length;c--;)X(d[c]);i.childNodes.length&&i.appendChild(o.createTextNode("\n")),i.appendChild(ee(t))}for(r=new B(i,4);t=r.nextNode();)t.data=t.data.replace(/ /g," ");return i.normalize(),ne(this.createElement("PRE",this._config.tagAttributes.pre,[i]),n)},gt=function(e){for(var t,n,o,i,r,a,s=this._doc,d=this._root,l=e.querySelectorAll("PRE"),c=l.length;c--;){for(n=new B(t=l[c],4);o=n.nextNode();){for(i=(i=o.data).replace(/ (?= )/g," "),r=s.createDocumentFragment();(a=i.indexOf("\n"))>-1;)r.appendChild(s.createTextNode(i.slice(0,a))),r.appendChild(s.createElement("BR")),i=i.slice(a+1);o.parentNode.insertBefore(r,o),o.data=i}oe(t,d),J(t,ee(t))}return e};Ve.code=function(){var e=this.getSelection();return e.collapsed||z(e.commonAncestorContainer)?this.modifyBlocks(pt,e):this.changeFormat({tag:"CODE",attributes:this._config.tagAttributes.code},null,e),this.focus()},Ve.removeCode=function(){var e=this.getSelection();return Q(e.commonAncestorContainer,this._root,"PRE")?this.modifyBlocks(gt,e):this.changeFormat(null,{tag:"CODE"},e),this.focus()},Ve.toggleCode=function(){return this.hasFormat("PRE")||this.hasFormat("CODE")?this.removeCode():this.code(),this},Ve.removeAllFormatting=function(e){if(!e&&!(e=this.getSelection())||e.collapsed)return this;for(var t=this._root,n=e.commonAncestorContainer;n&&!W(n);)n=n.parentNode;if(n||(ye(e,t),n=t),n.nodeType===o)return this;this.saveUndoState(e),me(e,n,n,t);for(var i,r,a=n.ownerDocument,s=e.startContainer,d=e.startOffset,l=e.endContainer,c=e.endOffset,h=a.createDocumentFragment(),u=a.createDocumentFragment(),f=ie(l,c,n,t),p=ie(s,d,n,t);p!==f;)i=p.nextSibling,h.appendChild(p),p=i;return function e(t,n,i){var r,a;for(r=n.firstChild;r;r=a){if(a=r.nextSibling,H(r)){if(r.nodeType===o||"BR"===r.nodeName||"IMG"===r.nodeName){i.appendChild(r);continue}}else if(W(r)){i.appendChild(t.createDefaultBlock([e(t,r,t._doc.createDocumentFragment())]));continue}e(t,r,i)}return i}(this,h,u),u.normalize(),p=u.firstChild,i=u.lastChild,r=n.childNodes,p?(n.insertBefore(u,f),d=k.call(r,p),c=k.call(r,i)+1):c=d=k.call(r,f),e.setStart(n,d),e.setEnd(n,c),re(n,e),ge(e),this.setSelection(e),this._updatePath(e,!0),this.focus()},Ve.increaseQuoteLevel=ft("modifyBlocks",function(e){return this.createElement("BLOCKQUOTE",this._config.tagAttributes.blockquote,[e])}),Ve.decreaseQuoteLevel=ft("modifyBlocks",st),Ve.makeUnorderedList=ft("modifyBlocks",function(e){return lt(this,e,"UL"),e}),Ve.makeOrderedList=ft("modifyBlocks",function(e){return lt(this,e,"OL"),e}),Ve.removeList=ft("modifyBlocks",function(e){var t,n,o,i,r,a=e.querySelectorAll("UL, OL"),s=e.querySelectorAll("LI"),d=this._root;for(t=0,n=a.length;t<n;t+=1)oe(i=ee(o=a[t]),d),J(o,i);for(t=0,n=s.length;t<n;t+=1)W(r=s[t])?J(r,this.createDefaultBlock([ee(r)])):(oe(r,d),J(r,ee(r)));return e}),Qe.isInline=H,Qe.isBlock=W,Qe.isContainer=z,Qe.getBlockWalker=q,Qe.getPreviousBlock=K,Qe.getNextBlock=G,Qe.areAlike=j,Qe.hasTagAttributes=$,Qe.getNearest=Q,Qe.isOrContains=V,Qe.detach=X,Qe.replaceWith=J,Qe.empty=ee,Qe.getNodeBefore=de,Qe.getNodeAfter=le,Qe.insertNodeInRange=ce,Qe.extractContentsOfRange=he,Qe.deleteContentsOfRange=ue,Qe.insertTreeFragmentIntoRange=fe,Qe.isNodeContainedInRange=pe,Qe.moveRangeBoundariesDownTree=ge,Qe.moveRangeBoundariesUpTree=me,Qe.getStartBlockOfRange=ve,Qe.getEndBlockOfRange=Ce,Qe.contentWalker=_e,Qe.rangeDoesStartAtBlockBoundary=Ne,Qe.rangeDoesEndAtBlockBoundary=Se,Qe.expandRangeToBlockBoundaries=ye,Qe.onPaste=Ze,Qe.addLinks=ht,Qe.splitBlock=at,Qe.startSelectionId="squire-selection-start",Qe.endSelectionId=it,"object"==typeof exports?module.exports=Qe:"function"==typeof define&&define.amd?define(function(){return Qe}):(d.Squire=Qe,top!==d&&"true"===e.documentElement.getAttribute("data-squireinit")&&(d.editor=new Qe(e),d.onEditorLoad&&(d.onEditorLoad(d.editor),d.onEditorLoad=null)))}(document);
+/* Copyright © 2011-2015 by Neil Jenkins. MIT Licensed. */
+const sq =  ( function ( doc, undefined ) {
+
+"use strict";
+
+var DOCUMENT_POSITION_PRECEDING = 2; // Node.DOCUMENT_POSITION_PRECEDING
+var ELEMENT_NODE = 1;                // Node.ELEMENT_NODE;
+var TEXT_NODE = 3;                   // Node.TEXT_NODE;
+var DOCUMENT_NODE = 9;               // Node.DOCUMENT_NODE;
+var DOCUMENT_FRAGMENT_NODE = 11;     // Node.DOCUMENT_FRAGMENT_NODE;
+var SHOW_ELEMENT = 1;                // NodeFilter.SHOW_ELEMENT;
+var SHOW_TEXT = 4;                   // NodeFilter.SHOW_TEXT;
+
+var START_TO_START = 0; // Range.START_TO_START
+var START_TO_END = 1;   // Range.START_TO_END
+var END_TO_END = 2;     // Range.END_TO_END
+var END_TO_START = 3;   // Range.END_TO_START
+
+var ZWS = '\u200B';
+
+var win = doc.defaultView;
+
+var ua = navigator.userAgent;
+
+var isAndroid = /Android/.test( ua );
+var isIOS = /iP(?:ad|hone|od)/.test( ua );
+var isMac = /Mac OS X/.test( ua );
+var isWin = /Windows NT/.test( ua );
+
+var isGecko = /Gecko\//.test( ua );
+var isIElt11 = /Trident\/[456]\./.test( ua );
+var isPresto = !!win.opera;
+var isEdge = /Edge\//.test( ua );
+var isWebKit = !isEdge && /WebKit\//.test( ua );
+var isIE = /Trident\/[4567]\./.test( ua );
+
+var ctrlKey = isMac ? 'meta-' : 'ctrl-';
+
+var useTextFixer = isIElt11 || isPresto;
+var cantFocusEmptyTextNodes = isIElt11 || isWebKit;
+var losesSelectionOnBlur = isIElt11;
+
+var canObserveMutations = typeof MutationObserver !== 'undefined';
+var canWeakMap = typeof WeakMap !== 'undefined';
+
+// Use [^ \t\r\n] instead of \S so that nbsp does not count as white-space
+var notWS = /[^ \t\r\n]/;
+
+var indexOf = Array.prototype.indexOf;
+
+// Polyfill for FF3.5
+if ( !Object.create ) {
+    Object.create = function ( proto ) {
+        var F = function () {};
+        F.prototype = proto;
+        return new F();
+    };
+}
+
+/*
+    Native TreeWalker is buggy in IE and Opera:
+    * IE9/10 sometimes throw errors when calling TreeWalker#nextNode or
+      TreeWalker#previousNode. No way to feature detect this.
+    * Some versions of Opera have a bug in TreeWalker#previousNode which makes
+      it skip to the wrong node.
+
+    Rather than risk further bugs, it's easiest just to implement our own
+    (subset) of the spec in all browsers.
+*/
+
+var typeToBitArray = {
+    // ELEMENT_NODE
+    1: 1,
+    // ATTRIBUTE_NODE
+    2: 2,
+    // TEXT_NODE
+    3: 4,
+    // COMMENT_NODE
+    8: 128,
+    // DOCUMENT_NODE
+    9: 256,
+    // DOCUMENT_FRAGMENT_NODE
+    11: 1024
+};
+
+var always = function () {
+    return true;
+};
+
+function TreeWalker ( root, nodeType, filter ) {
+    this.root = this.currentNode = root;
+    this.nodeType = nodeType;
+    this.filter = filter || always;
+}
+
+TreeWalker.prototype.nextNode = function () {
+    var current = this.currentNode,
+        root = this.root,
+        nodeType = this.nodeType,
+        filter = this.filter,
+        node;
+    while ( true ) {
+        node = current.firstChild;
+        while ( !node && current ) {
+            if ( current === root ) {
+                break;
+            }
+            node = current.nextSibling;
+            if ( !node ) { current = current.parentNode; }
+        }
+        if ( !node ) {
+            return null;
+        }
+        if ( ( typeToBitArray[ node.nodeType ] & nodeType ) &&
+                filter( node ) ) {
+            this.currentNode = node;
+            return node;
+        }
+        current = node;
+    }
+};
+
+TreeWalker.prototype.previousNode = function () {
+    var current = this.currentNode,
+        root = this.root,
+        nodeType = this.nodeType,
+        filter = this.filter,
+        node;
+    while ( true ) {
+        if ( current === root ) {
+            return null;
+        }
+        node = current.previousSibling;
+        if ( node ) {
+            while ( current = node.lastChild ) {
+                node = current;
+            }
+        } else {
+            node = current.parentNode;
+        }
+        if ( !node ) {
+            return null;
+        }
+        if ( ( typeToBitArray[ node.nodeType ] & nodeType ) &&
+                filter( node ) ) {
+            this.currentNode = node;
+            return node;
+        }
+        current = node;
+    }
+};
+
+// Previous node in post-order.
+TreeWalker.prototype.previousPONode = function () {
+    var current = this.currentNode,
+        root = this.root,
+        nodeType = this.nodeType,
+        filter = this.filter,
+        node;
+    while ( true ) {
+        node = current.lastChild;
+        while ( !node && current ) {
+            if ( current === root ) {
+                break;
+            }
+            node = current.previousSibling;
+            if ( !node ) { current = current.parentNode; }
+        }
+        if ( !node ) {
+            return null;
+        }
+        if ( ( typeToBitArray[ node.nodeType ] & nodeType ) &&
+                filter( node ) ) {
+            this.currentNode = node;
+            return node;
+        }
+        current = node;
+    }
+};
+
+var inlineNodeNames  = /^(?:#text|A(?:BBR|CRONYM)?|B(?:R|D[IO])?|C(?:ITE|ODE)|D(?:ATA|EL|FN)|EM|FONT|HR|I(?:FRAME|MG|NPUT|NS)?|KBD|Q|R(?:P|T|UBY)|S(?:AMP|MALL|PAN|TR(?:IKE|ONG)|U[BP])?|TIME|U|VAR|WBR)$/;
+
+var leafNodeNames = {
+    BR: 1,
+    HR: 1,
+    IFRAME: 1,
+    IMG: 1,
+    INPUT: 1
+};
+
+function every ( nodeList, fn ) {
+    var l = nodeList.length;
+    while ( l-- ) {
+        if ( !fn( nodeList[l] ) ) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// ---
+
+var UNKNOWN = 0;
+var INLINE = 1;
+var BLOCK = 2;
+var CONTAINER = 3;
+
+var nodeCategoryCache = canWeakMap ? new WeakMap() : null;
+
+function isLeaf ( node ) {
+    return node.nodeType === ELEMENT_NODE && !!leafNodeNames[ node.nodeName ];
+}
+function getNodeCategory ( node ) {
+    switch ( node.nodeType ) {
+    case TEXT_NODE:
+        return INLINE;
+    case ELEMENT_NODE:
+    case DOCUMENT_FRAGMENT_NODE:
+        if ( canWeakMap && nodeCategoryCache.has( node ) ) {
+            return nodeCategoryCache.get( node );
+        }
+        break;
+    default:
+        return UNKNOWN;
+    }
+
+    var nodeCategory;
+    if ( !every( node.childNodes, isInline ) ) {
+        // Malformed HTML can have block tags inside inline tags. Need to treat
+        // these as containers rather than inline. See #239.
+        nodeCategory = CONTAINER;
+    } else if ( inlineNodeNames.test( node.nodeName ) ) {
+        nodeCategory = INLINE;
+    } else {
+        nodeCategory = BLOCK;
+    }
+    if ( canWeakMap ) {
+        nodeCategoryCache.set( node, nodeCategory );
+    }
+    return nodeCategory;
+}
+function isInline ( node ) {
+    return getNodeCategory( node ) === INLINE;
+}
+function isBlock ( node ) {
+    return getNodeCategory( node ) === BLOCK;
+}
+function isContainer ( node ) {
+    return getNodeCategory( node ) === CONTAINER;
+}
+
+function getBlockWalker ( node, root ) {
+    var walker = new TreeWalker( root, SHOW_ELEMENT, isBlock );
+    walker.currentNode = node;
+    return walker;
+}
+function getPreviousBlock ( node, root ) {
+    node = getBlockWalker( node, root ).previousNode();
+    return node !== root ? node : null;
+}
+function getNextBlock ( node, root ) {
+    node = getBlockWalker( node, root ).nextNode();
+    return node !== root ? node : null;
+}
+
+function isEmptyBlock ( block ) {
+    return !block.textContent && !block.querySelector( 'IMG' );
+}
+
+function areAlike ( node, node2 ) {
+    return !isLeaf( node ) && (
+        node.nodeType === node2.nodeType &&
+        node.nodeName === node2.nodeName &&
+        node.nodeName !== 'A' &&
+        node.className === node2.className &&
+        ( ( !node.style && !node2.style ) ||
+          node.style.cssText === node2.style.cssText )
+    );
+}
+function hasTagAttributes ( node, tag, attributes ) {
+    if ( node.nodeName !== tag ) {
+        return false;
+    }
+    for ( var attr in attributes ) {
+        if ( node.getAttribute( attr ) !== attributes[ attr ] ) {
+            return false;
+        }
+    }
+    return true;
+}
+function getNearest ( node, root, tag, attributes ) {
+    while ( node && node !== root ) {
+        if ( hasTagAttributes( node, tag, attributes ) ) {
+            return node;
+        }
+        node = node.parentNode;
+    }
+    return null;
+}
+function isOrContains ( parent, node ) {
+    while ( node ) {
+        if ( node === parent ) {
+            return true;
+        }
+        node = node.parentNode;
+    }
+    return false;
+}
+
+function getPath ( node, root, config ) {
+    var path = '';
+    var id, className, classNames, dir, styleNames;
+    if ( node && node !== root ) {
+        path = getPath( node.parentNode, root, config );
+        if ( node.nodeType === ELEMENT_NODE ) {
+            path += ( path ? '>' : '' ) + node.nodeName;
+            if ( id = node.id ) {
+                path += '#' + id;
+            }
+            if ( className = node.className.trim() ) {
+                classNames = className.split( /\s\s*/ );
+                classNames.sort();
+                path += '.';
+                path += classNames.join( '.' );
+            }
+            if ( dir = node.dir ) {
+                path += '[dir=' + dir + ']';
+            }
+            if ( classNames ) {
+                styleNames = config.classNames;
+                if ( indexOf.call( classNames, styleNames.highlight ) > -1 ) {
+                    path += '[backgroundColor=' +
+                        node.style.backgroundColor.replace( / /g,'' ) + ']';
+                }
+                if ( indexOf.call( classNames, styleNames.colour ) > -1 ) {
+                    path += '[color=' +
+                        node.style.color.replace( / /g,'' ) + ']';
+                }
+                if ( indexOf.call( classNames, styleNames.fontFamily ) > -1 ) {
+                    path += '[fontFamily=' +
+                        node.style.fontFamily.replace( / /g,'' ) + ']';
+                }
+                if ( indexOf.call( classNames, styleNames.fontSize ) > -1 ) {
+                    path += '[fontSize=' + node.style.fontSize + ']';
+                }
+            }
+        }
+    }
+    return path;
+}
+
+function getLength ( node ) {
+    var nodeType = node.nodeType;
+    return nodeType === ELEMENT_NODE || nodeType === DOCUMENT_FRAGMENT_NODE ?
+        node.childNodes.length : node.length || 0;
+}
+
+function detach ( node ) {
+    var parent = node.parentNode;
+    if ( parent ) {
+        parent.removeChild( node );
+    }
+    return node;
+}
+function replaceWith ( node, node2 ) {
+    var parent = node.parentNode;
+    if ( parent ) {
+        parent.replaceChild( node2, node );
+    }
+}
+function empty ( node ) {
+    var frag = node.ownerDocument.createDocumentFragment(),
+        childNodes = node.childNodes,
+        l = childNodes ? childNodes.length : 0;
+    while ( l-- ) {
+        frag.appendChild( node.firstChild );
+    }
+    return frag;
+}
+
+function createElement ( doc, tag, props, children ) {
+    var el = doc.createElement( tag ),
+        attr, value, i, l;
+    if ( props instanceof Array ) {
+        children = props;
+        props = null;
+    }
+    if ( props ) {
+        for ( attr in props ) {
+            value = props[ attr ];
+            if ( value !== undefined ) {
+                el.setAttribute( attr, props[ attr ] );
+            }
+        }
+    }
+    if ( children ) {
+        for ( i = 0, l = children.length; i < l; i += 1 ) {
+            el.appendChild( children[i] );
+        }
+    }
+    return el;
+}
+
+function fixCursor ( node, root ) {
+    // In Webkit and Gecko, block level elements are collapsed and
+    // unfocussable if they have no content. To remedy this, a <BR> must be
+    // inserted. In Opera and IE, we just need a textnode in order for the
+    // cursor to appear.
+    var self = root.__squire__;
+    var doc = node.ownerDocument;
+    var originalNode = node;
+    var fixer, child;
+
+    if ( node === root ) {
+        if ( !( child = node.firstChild ) || child.nodeName === 'BR' ) {
+            fixer = self.createDefaultBlock();
+            if ( child ) {
+                node.replaceChild( fixer, child );
+            }
+            else {
+                node.appendChild( fixer );
+            }
+            node = fixer;
+            fixer = null;
+        }
+    }
+
+    if ( node.nodeType === TEXT_NODE ) {
+        return originalNode;
+    }
+
+    if ( isInline( node ) ) {
+        child = node.firstChild;
+        while ( cantFocusEmptyTextNodes && child &&
+                child.nodeType === TEXT_NODE && !child.data ) {
+            node.removeChild( child );
+            child = node.firstChild;
+        }
+        if ( !child ) {
+            if ( cantFocusEmptyTextNodes ) {
+                fixer = doc.createTextNode( ZWS );
+                self._didAddZWS();
+            } else {
+                fixer = doc.createTextNode( '' );
+            }
+        }
+    } else {
+        if ( useTextFixer ) {
+            while ( node.nodeType !== TEXT_NODE && !isLeaf( node ) ) {
+                child = node.firstChild;
+                if ( !child ) {
+                    fixer = doc.createTextNode( '' );
+                    break;
+                }
+                node = child;
+            }
+            if ( node.nodeType === TEXT_NODE ) {
+                // Opera will collapse the block element if it contains
+                // just spaces (but not if it contains no data at all).
+                if ( /^ +$/.test( node.data ) ) {
+                    node.data = '';
+                }
+            } else if ( isLeaf( node ) ) {
+                node.parentNode.insertBefore( doc.createTextNode( '' ), node );
+            }
+        }
+        else if ( !node.querySelector( 'BR' ) ) {
+            fixer = createElement( doc, 'BR' );
+            while ( ( child = node.lastElementChild ) && !isInline( child ) ) {
+                node = child;
+            }
+        }
+    }
+    if ( fixer ) {
+        try {
+            node.appendChild( fixer );
+        } catch ( error ) {
+            self.didError({
+                name: 'Squire: fixCursor – ' + error,
+                message: 'Parent: ' + node.nodeName + '/' + node.innerHTML +
+                    ' appendChild: ' + fixer.nodeName
+            });
+        }
+    }
+
+    return originalNode;
+}
+
+// Recursively examine container nodes and wrap any inline children.
+function fixContainer ( container, root ) {
+    var children = container.childNodes;
+    var doc = container.ownerDocument;
+    var wrapper = null;
+    var i, l, child, isBR;
+    var config = root.__squire__._config;
+
+    for ( i = 0, l = children.length; i < l; i += 1 ) {
+        child = children[i];
+        isBR = child.nodeName === 'BR';
+        if ( !isBR && isInline( child ) ) {
+            if ( !wrapper ) {
+                 wrapper = createElement( doc,
+                    config.blockTag, config.blockAttributes );
+            }
+            wrapper.appendChild( child );
+            i -= 1;
+            l -= 1;
+        } else if ( isBR || wrapper ) {
+            if ( !wrapper ) {
+                wrapper = createElement( doc,
+                    config.blockTag, config.blockAttributes );
+            }
+            fixCursor( wrapper, root );
+            if ( isBR ) {
+                container.replaceChild( wrapper, child );
+            } else {
+                container.insertBefore( wrapper, child );
+                i += 1;
+                l += 1;
+            }
+            wrapper = null;
+        }
+        if ( isContainer( child ) ) {
+            fixContainer( child, root );
+        }
+    }
+    if ( wrapper ) {
+        container.appendChild( fixCursor( wrapper, root ) );
+    }
+    return container;
+}
+
+function split ( node, offset, stopNode, root ) {
+    var nodeType = node.nodeType,
+        parent, clone, next;
+    if ( nodeType === TEXT_NODE && node !== stopNode ) {
+        return split(
+            node.parentNode, node.splitText( offset ), stopNode, root );
+    }
+    if ( nodeType === ELEMENT_NODE ) {
+        if ( typeof( offset ) === 'number' ) {
+            offset = offset < node.childNodes.length ?
+                node.childNodes[ offset ] : null;
+        }
+        if ( node === stopNode ) {
+            return offset;
+        }
+
+        // Clone node without children
+        parent = node.parentNode;
+        clone = node.cloneNode( false );
+
+        // Add right-hand siblings to the clone
+        while ( offset ) {
+            next = offset.nextSibling;
+            clone.appendChild( offset );
+            offset = next;
+        }
+
+        // Maintain li numbering if inside a quote.
+        if ( node.nodeName === 'OL' &&
+                getNearest( node, root, 'BLOCKQUOTE' ) ) {
+            clone.start = ( +node.start || 1 ) + node.childNodes.length - 1;
+        }
+
+        // DO NOT NORMALISE. This may undo the fixCursor() call
+        // of a node lower down the tree!
+
+        // We need something in the element in order for the cursor to appear.
+        fixCursor( node, root );
+        fixCursor( clone, root );
+
+        // Inject clone after original node
+        if ( next = node.nextSibling ) {
+            parent.insertBefore( clone, next );
+        } else {
+            parent.appendChild( clone );
+        }
+
+        // Keep on splitting up the tree
+        return split( parent, clone, stopNode, root );
+    }
+    return offset;
+}
+
+function _mergeInlines ( node, fakeRange ) {
+    var children = node.childNodes,
+        l = children.length,
+        frags = [],
+        child, prev, len;
+    while ( l-- ) {
+        child = children[l];
+        prev = l && children[ l - 1 ];
+        if ( l && isInline( child ) && areAlike( child, prev ) &&
+                !leafNodeNames[ child.nodeName ] ) {
+            if ( fakeRange.startContainer === child ) {
+                fakeRange.startContainer = prev;
+                fakeRange.startOffset += getLength( prev );
+            }
+            if ( fakeRange.endContainer === child ) {
+                fakeRange.endContainer = prev;
+                fakeRange.endOffset += getLength( prev );
+            }
+            if ( fakeRange.startContainer === node ) {
+                if ( fakeRange.startOffset > l ) {
+                    fakeRange.startOffset -= 1;
+                }
+                else if ( fakeRange.startOffset === l ) {
+                    fakeRange.startContainer = prev;
+                    fakeRange.startOffset = getLength( prev );
+                }
+            }
+            if ( fakeRange.endContainer === node ) {
+                if ( fakeRange.endOffset > l ) {
+                    fakeRange.endOffset -= 1;
+                }
+                else if ( fakeRange.endOffset === l ) {
+                    fakeRange.endContainer = prev;
+                    fakeRange.endOffset = getLength( prev );
+                }
+            }
+            detach( child );
+            if ( child.nodeType === TEXT_NODE ) {
+                prev.appendData( child.data );
+            }
+            else {
+                frags.push( empty( child ) );
+            }
+        }
+        else if ( child.nodeType === ELEMENT_NODE ) {
+            len = frags.length;
+            while ( len-- ) {
+                child.appendChild( frags.pop() );
+            }
+            _mergeInlines( child, fakeRange );
+        }
+    }
+}
+
+function mergeInlines ( node, range ) {
+    if ( node.nodeType === TEXT_NODE ) {
+        node = node.parentNode;
+    }
+    if ( node.nodeType === ELEMENT_NODE ) {
+        var fakeRange = {
+            startContainer: range.startContainer,
+            startOffset: range.startOffset,
+            endContainer: range.endContainer,
+            endOffset: range.endOffset
+        };
+        _mergeInlines( node, fakeRange );
+        range.setStart( fakeRange.startContainer, fakeRange.startOffset );
+        range.setEnd( fakeRange.endContainer, fakeRange.endOffset );
+    }
+}
+
+function mergeWithBlock ( block, next, range, root ) {
+    var container = next;
+    var parent, last, offset;
+    while ( ( parent = container.parentNode ) &&
+            parent !== root &&
+            parent.nodeType === ELEMENT_NODE &&
+            parent.childNodes.length === 1 ) {
+        container = parent;
+    }
+    detach( container );
+
+    offset = block.childNodes.length;
+
+    // Remove extra <BR> fixer if present.
+    last = block.lastChild;
+    if ( last && last.nodeName === 'BR' ) {
+        block.removeChild( last );
+        offset -= 1;
+    }
+
+    block.appendChild( empty( next ) );
+
+    range.setStart( block, offset );
+    range.collapse( true );
+    mergeInlines( block, range );
+
+    // Opera inserts a BR if you delete the last piece of text
+    // in a block-level element. Unfortunately, it then gets
+    // confused when setting the selection subsequently and
+    // refuses to accept the range that finishes just before the
+    // BR. Removing the BR fixes the bug.
+    // Steps to reproduce bug: Type "a-b-c" (where - is return)
+    // then backspace twice. The cursor goes to the top instead
+    // of after "b".
+    if ( isPresto && ( last = block.lastChild ) && last.nodeName === 'BR' ) {
+        block.removeChild( last );
+    }
+}
+
+function mergeContainers ( node, root ) {
+    var prev = node.previousSibling,
+        first = node.firstChild,
+        doc = node.ownerDocument,
+        isListItem = ( node.nodeName === 'LI' ),
+        needsFix, block;
+
+    // Do not merge LIs, unless it only contains a UL
+    if ( isListItem && ( !first || !/^[OU]L$/.test( first.nodeName ) ) ) {
+        return;
+    }
+
+    if ( prev && areAlike( prev, node ) ) {
+        if ( !isContainer( prev ) ) {
+            if ( isListItem ) {
+                block = createElement( doc, 'DIV' );
+                block.appendChild( empty( prev ) );
+                prev.appendChild( block );
+            } else {
+                return;
+            }
+        }
+        detach( node );
+        needsFix = !isContainer( node );
+        prev.appendChild( empty( node ) );
+        if ( needsFix ) {
+            fixContainer( prev, root );
+        }
+        if ( first ) {
+            mergeContainers( first, root );
+        }
+    } else if ( isListItem ) {
+        prev = createElement( doc, 'DIV' );
+        node.insertBefore( prev, first );
+        fixCursor( prev, root );
+    }
+}
+
+var getNodeBefore = function ( node, offset ) {
+    var children = node.childNodes;
+    while ( offset && node.nodeType === ELEMENT_NODE ) {
+        node = children[ offset - 1 ];
+        children = node.childNodes;
+        offset = children.length;
+    }
+    return node;
+};
+
+var getNodeAfter = function ( node, offset ) {
+    if ( node.nodeType === ELEMENT_NODE ) {
+        var children = node.childNodes;
+        if ( offset < children.length ) {
+            node = children[ offset ];
+        } else {
+            while ( node && !node.nextSibling ) {
+                node = node.parentNode;
+            }
+            if ( node ) { node = node.nextSibling; }
+        }
+    }
+    return node;
+};
+
+// ---
+
+var insertNodeInRange = function ( range, node ) {
+    // Insert at start.
+    var startContainer = range.startContainer,
+        startOffset = range.startOffset,
+        endContainer = range.endContainer,
+        endOffset = range.endOffset,
+        parent, children, childCount, afterSplit;
+
+    // If part way through a text node, split it.
+    if ( startContainer.nodeType === TEXT_NODE ) {
+        parent = startContainer.parentNode;
+        children = parent.childNodes;
+        if ( startOffset === startContainer.length ) {
+            startOffset = indexOf.call( children, startContainer ) + 1;
+            if ( range.collapsed ) {
+                endContainer = parent;
+                endOffset = startOffset;
+            }
+        } else {
+            if ( startOffset ) {
+                afterSplit = startContainer.splitText( startOffset );
+                if ( endContainer === startContainer ) {
+                    endOffset -= startOffset;
+                    endContainer = afterSplit;
+                }
+                else if ( endContainer === parent ) {
+                    endOffset += 1;
+                }
+                startContainer = afterSplit;
+            }
+            startOffset = indexOf.call( children, startContainer );
+        }
+        startContainer = parent;
+    } else {
+        children = startContainer.childNodes;
+    }
+
+    childCount = children.length;
+
+    if ( startOffset === childCount ) {
+        startContainer.appendChild( node );
+    } else {
+        startContainer.insertBefore( node, children[ startOffset ] );
+    }
+
+    if ( startContainer === endContainer ) {
+        endOffset += children.length - childCount;
+    }
+
+    range.setStart( startContainer, startOffset );
+    range.setEnd( endContainer, endOffset );
+};
+
+var extractContentsOfRange = function ( range, common, root ) {
+    var startContainer = range.startContainer,
+        startOffset = range.startOffset,
+        endContainer = range.endContainer,
+        endOffset = range.endOffset;
+
+    if ( !common ) {
+        common = range.commonAncestorContainer;
+    }
+
+    if ( common.nodeType === TEXT_NODE ) {
+        common = common.parentNode;
+    }
+
+    var endNode = split( endContainer, endOffset, common, root ),
+        startNode = split( startContainer, startOffset, common, root ),
+        frag = common.ownerDocument.createDocumentFragment(),
+        next, before, after, beforeText, afterText;
+
+    // End node will be null if at end of child nodes list.
+    while ( startNode !== endNode ) {
+        next = startNode.nextSibling;
+        frag.appendChild( startNode );
+        startNode = next;
+    }
+
+    startContainer = common;
+    startOffset = endNode ?
+        indexOf.call( common.childNodes, endNode ) :
+        common.childNodes.length;
+
+    // Merge text nodes if adjacent. IE10 in particular will not focus
+    // between two text nodes
+    after = common.childNodes[ startOffset ];
+    before = after && after.previousSibling;
+    if ( before &&
+            before.nodeType === TEXT_NODE &&
+            after.nodeType === TEXT_NODE ) {
+        startContainer = before;
+        startOffset = before.length;
+        beforeText = before.data;
+        afterText = after.data;
+
+        // If we now have two adjacent spaces, the second one needs to become
+        // a nbsp, otherwise the browser will swallow it due to HTML whitespace
+        // collapsing.
+        if ( beforeText.charAt( beforeText.length - 1 ) === ' ' &&
+                afterText.charAt( 0 ) === ' ' ) {
+            afterText = ' ' + afterText.slice( 1 ); // nbsp
+        }
+        before.appendData( afterText );
+        detach( after );
+    }
+
+    range.setStart( startContainer, startOffset );
+    range.collapse( true );
+
+    fixCursor( common, root );
+
+    return frag;
+};
+
+var deleteContentsOfRange = function ( range, root ) {
+    var startBlock = getStartBlockOfRange( range, root );
+    var endBlock = getEndBlockOfRange( range, root );
+    var needsMerge = ( startBlock !== endBlock );
+    var frag, child;
+
+    // Move boundaries up as much as possible without exiting block,
+    // to reduce need to split.
+    moveRangeBoundariesDownTree( range );
+    moveRangeBoundariesUpTree( range, startBlock, endBlock, root );
+
+    // Remove selected range
+    frag = extractContentsOfRange( range, null, root );
+
+    // Move boundaries back down tree as far as possible.
+    moveRangeBoundariesDownTree( range );
+
+    // If we split into two different blocks, merge the blocks.
+    if ( needsMerge ) {
+        // endBlock will have been split, so need to refetch
+        endBlock = getEndBlockOfRange( range, root );
+        if ( startBlock && endBlock && startBlock !== endBlock ) {
+            mergeWithBlock( startBlock, endBlock, range, root );
+        }
+    }
+
+    // Ensure block has necessary children
+    if ( startBlock ) {
+        fixCursor( startBlock, root );
+    }
+
+    // Ensure root has a block-level element in it.
+    child = root.firstChild;
+    if ( !child || child.nodeName === 'BR' ) {
+        fixCursor( root, root );
+        range.selectNodeContents( root.firstChild );
+    } else {
+        range.collapse( true );
+    }
+    return frag;
+};
+
+// ---
+
+// Contents of range will be deleted.
+// After method, range will be around inserted content
+var insertTreeFragmentIntoRange = function ( range, frag, root ) {
+    var node, block, blockContentsAfterSplit, stopPoint, container, offset;
+    var replaceBlock, firstBlockInFrag, nodeAfterSplit, nodeBeforeSplit;
+    var tempRange;
+
+    // Fixup content: ensure no top-level inline, and add cursor fix elements.
+    fixContainer( frag, root );
+    node = frag;
+    while ( ( node = getNextBlock( node, root ) ) ) {
+        fixCursor( node, root );
+    }
+
+    // Delete any selected content.
+    if ( !range.collapsed ) {
+        deleteContentsOfRange( range, root );
+    }
+
+    // Move range down into text nodes.
+    moveRangeBoundariesDownTree( range );
+    range.collapse( false ); // collapse to end
+
+    // Where will we split up to? First blockquote parent, otherwise root.
+    stopPoint = getNearest( range.endContainer, root, 'BLOCKQUOTE' ) || root;
+
+    // Merge the contents of the first block in the frag with the focused block.
+    // If there are contents in the block after the focus point, collect this
+    // up to insert in the last block later. If the block is empty, replace
+    // it instead of merging.
+    block = getStartBlockOfRange( range, root );
+    firstBlockInFrag = getNextBlock( frag, frag );
+    replaceBlock = !!block && isEmptyBlock( block );
+    if ( block && firstBlockInFrag && !replaceBlock &&
+            // Don't merge table cells or PRE elements into block
+            !getNearest( firstBlockInFrag, frag, 'PRE' ) &&
+            !getNearest( firstBlockInFrag, frag, 'TABLE' ) ) {
+        moveRangeBoundariesUpTree( range, block, block, root );
+        range.collapse( true ); // collapse to start
+        container = range.endContainer;
+        offset = range.endOffset;
+        // Remove trailing <br> – we don't want this considered content to be
+        // inserted again later
+        cleanupBRs( block, root, false );
+        if ( isInline( container ) ) {
+            // Split up to block parent.
+            nodeAfterSplit = split(
+                container, offset, getPreviousBlock( container, root ), root );
+            container = nodeAfterSplit.parentNode;
+            offset = indexOf.call( container.childNodes, nodeAfterSplit );
+        }
+        if ( /*isBlock( container ) && */offset !== getLength( container ) ) {
+            // Collect any inline contents of the block after the range point
+            blockContentsAfterSplit =
+                root.ownerDocument.createDocumentFragment();
+            while ( ( node = container.childNodes[ offset ] ) ) {
+                blockContentsAfterSplit.appendChild( node );
+            }
+        }
+        // And merge the first block in.
+        mergeWithBlock( container, firstBlockInFrag, range, root );
+
+        // And where we will insert
+        offset = indexOf.call( container.parentNode.childNodes, container ) + 1;
+        container = container.parentNode;
+        range.setEnd( container, offset );
+    }
+
+    // Is there still any content in the fragment?
+    if ( getLength( frag ) ) {
+        if ( replaceBlock ) {
+            range.setEndBefore( block );
+            range.collapse( false );
+            detach( block );
+        }
+        moveRangeBoundariesUpTree( range, stopPoint, stopPoint, root );
+        // Now split after block up to blockquote (if a parent) or root
+        nodeAfterSplit = split(
+            range.endContainer, range.endOffset, stopPoint, root );
+        nodeBeforeSplit = nodeAfterSplit ?
+            nodeAfterSplit.previousSibling :
+            stopPoint.lastChild;
+        stopPoint.insertBefore( frag, nodeAfterSplit );
+        if ( nodeAfterSplit ) {
+            range.setEndBefore( nodeAfterSplit );
+        } else {
+            range.setEnd( stopPoint, getLength( stopPoint ) );
+        }
+        block = getEndBlockOfRange( range, root );
+
+        // Get a reference that won't be invalidated if we merge containers.
+        moveRangeBoundariesDownTree( range );
+        container = range.endContainer;
+        offset = range.endOffset;
+
+        // Merge inserted containers with edges of split
+        if ( nodeAfterSplit && isContainer( nodeAfterSplit ) ) {
+            mergeContainers( nodeAfterSplit, root );
+        }
+        nodeAfterSplit = nodeBeforeSplit && nodeBeforeSplit.nextSibling;
+        if ( nodeAfterSplit && isContainer( nodeAfterSplit ) ) {
+            mergeContainers( nodeAfterSplit, root );
+        }
+        range.setEnd( container, offset );
+    }
+
+    // Insert inline content saved from before.
+    if ( blockContentsAfterSplit ) {
+        tempRange = range.cloneRange();
+        mergeWithBlock( block, blockContentsAfterSplit, tempRange, root );
+        range.setEnd( tempRange.endContainer, tempRange.endOffset );
+    }
+    moveRangeBoundariesDownTree( range );
+};
+
+// ---
+
+var isNodeContainedInRange = function ( range, node, partial ) {
+    var nodeRange = node.ownerDocument.createRange();
+
+    nodeRange.selectNode( node );
+
+    if ( partial ) {
+        // Node must not finish before range starts or start after range
+        // finishes.
+        var nodeEndBeforeStart = ( range.compareBoundaryPoints(
+                END_TO_START, nodeRange ) > -1 ),
+            nodeStartAfterEnd = ( range.compareBoundaryPoints(
+                START_TO_END, nodeRange ) < 1 );
+        return ( !nodeEndBeforeStart && !nodeStartAfterEnd );
+    }
+    else {
+        // Node must start after range starts and finish before range
+        // finishes
+        var nodeStartAfterStart = ( range.compareBoundaryPoints(
+                START_TO_START, nodeRange ) < 1 ),
+            nodeEndBeforeEnd = ( range.compareBoundaryPoints(
+                END_TO_END, nodeRange ) > -1 );
+        return ( nodeStartAfterStart && nodeEndBeforeEnd );
+    }
+};
+
+var moveRangeBoundariesDownTree = function ( range ) {
+    var startContainer = range.startContainer,
+        startOffset = range.startOffset,
+        endContainer = range.endContainer,
+        endOffset = range.endOffset,
+        maySkipBR = true,
+        child;
+
+    while ( startContainer.nodeType !== TEXT_NODE ) {
+        child = startContainer.childNodes[ startOffset ];
+        if ( !child || isLeaf( child ) ) {
+            break;
+        }
+        startContainer = child;
+        startOffset = 0;
+    }
+    if ( endOffset ) {
+        while ( endContainer.nodeType !== TEXT_NODE ) {
+            child = endContainer.childNodes[ endOffset - 1 ];
+            if ( !child || isLeaf( child ) ) {
+                if ( maySkipBR && child && child.nodeName === 'BR' ) {
+                    endOffset -= 1;
+                    maySkipBR = false;
+                    continue;
+                }
+                break;
+            }
+            endContainer = child;
+            endOffset = getLength( endContainer );
+        }
+    } else {
+        while ( endContainer.nodeType !== TEXT_NODE ) {
+            child = endContainer.firstChild;
+            if ( !child || isLeaf( child ) ) {
+                break;
+            }
+            endContainer = child;
+        }
+    }
+
+    // If collapsed, this algorithm finds the nearest text node positions
+    // *outside* the range rather than inside, but also it flips which is
+    // assigned to which.
+    if ( range.collapsed ) {
+        range.setStart( endContainer, endOffset );
+        range.setEnd( startContainer, startOffset );
+    } else {
+        range.setStart( startContainer, startOffset );
+        range.setEnd( endContainer, endOffset );
+    }
+};
+
+var moveRangeBoundariesUpTree = function ( range, startMax, endMax, root ) {
+    var startContainer = range.startContainer;
+    var startOffset = range.startOffset;
+    var endContainer = range.endContainer;
+    var endOffset = range.endOffset;
+    var maySkipBR = true;
+    var parent;
+
+    if ( !startMax ) {
+        startMax = range.commonAncestorContainer;
+    }
+    if ( !endMax ) {
+        endMax = startMax;
+    }
+
+    while ( !startOffset &&
+            startContainer !== startMax &&
+            startContainer !== root ) {
+        parent = startContainer.parentNode;
+        startOffset = indexOf.call( parent.childNodes, startContainer );
+        startContainer = parent;
+    }
+
+    while ( true ) {
+        if ( maySkipBR &&
+                endContainer.nodeType !== TEXT_NODE &&
+                endContainer.childNodes[ endOffset ] &&
+                endContainer.childNodes[ endOffset ].nodeName === 'BR' ) {
+            endOffset += 1;
+            maySkipBR = false;
+        }
+        if ( endContainer === endMax ||
+                endContainer === root ||
+                endOffset !== getLength( endContainer ) ) {
+            break;
+        }
+        parent = endContainer.parentNode;
+        endOffset = indexOf.call( parent.childNodes, endContainer ) + 1;
+        endContainer = parent;
+    }
+
+    range.setStart( startContainer, startOffset );
+    range.setEnd( endContainer, endOffset );
+};
+
+// Returns the first block at least partially contained by the range,
+// or null if no block is contained by the range.
+var getStartBlockOfRange = function ( range, root ) {
+    var container = range.startContainer,
+        block;
+
+    // If inline, get the containing block.
+    if ( isInline( container ) ) {
+        block = getPreviousBlock( container, root );
+    } else if ( container !== root && isBlock( container ) ) {
+        block = container;
+    } else {
+        block = getNodeBefore( container, range.startOffset );
+        block = getNextBlock( block, root );
+    }
+    // Check the block actually intersects the range
+    return block && isNodeContainedInRange( range, block, true ) ? block : null;
+};
+
+// Returns the last block at least partially contained by the range,
+// or null if no block is contained by the range.
+var getEndBlockOfRange = function ( range, root ) {
+    var container = range.endContainer,
+        block, child;
+
+    // If inline, get the containing block.
+    if ( isInline( container ) ) {
+        block = getPreviousBlock( container, root );
+    } else if ( container !== root && isBlock( container ) ) {
+        block = container;
+    } else {
+        block = getNodeAfter( container, range.endOffset );
+        if ( !block || !isOrContains( root, block ) ) {
+            block = root;
+            while ( child = block.lastChild ) {
+                block = child;
+            }
+        }
+        block = getPreviousBlock( block, root );
+    }
+    // Check the block actually intersects the range
+    return block && isNodeContainedInRange( range, block, true ) ? block : null;
+};
+
+var contentWalker = new TreeWalker( null,
+    SHOW_TEXT|SHOW_ELEMENT,
+    function ( node ) {
+        return node.nodeType === TEXT_NODE ?
+            notWS.test( node.data ) :
+            node.nodeName === 'IMG';
+    }
+);
+
+var rangeDoesStartAtBlockBoundary = function ( range, root ) {
+    var startContainer = range.startContainer;
+    var startOffset = range.startOffset;
+    var nodeAfterCursor;
+
+    // If in the middle or end of a text node, we're not at the boundary.
+    contentWalker.root = null;
+    if ( startContainer.nodeType === TEXT_NODE ) {
+        if ( startOffset ) {
+            return false;
+        }
+        nodeAfterCursor = startContainer;
+    } else {
+        nodeAfterCursor = getNodeAfter( startContainer, startOffset );
+        if ( nodeAfterCursor && !isOrContains( root, nodeAfterCursor ) ) {
+            nodeAfterCursor = null;
+        }
+        // The cursor was right at the end of the document
+        if ( !nodeAfterCursor ) {
+            nodeAfterCursor = getNodeBefore( startContainer, startOffset );
+            if ( nodeAfterCursor.nodeType === TEXT_NODE &&
+                    nodeAfterCursor.length ) {
+                return false;
+            }
+        }
+    }
+
+    // Otherwise, look for any previous content in the same block.
+    contentWalker.currentNode = nodeAfterCursor;
+    contentWalker.root = getStartBlockOfRange( range, root );
+
+    return !contentWalker.previousNode();
+};
+
+var rangeDoesEndAtBlockBoundary = function ( range, root ) {
+    var endContainer = range.endContainer,
+        endOffset = range.endOffset,
+        length;
+
+    // If in a text node with content, and not at the end, we're not
+    // at the boundary
+    contentWalker.root = null;
+    if ( endContainer.nodeType === TEXT_NODE ) {
+        length = endContainer.data.length;
+        if ( length && endOffset < length ) {
+            return false;
+        }
+        contentWalker.currentNode = endContainer;
+    } else {
+        contentWalker.currentNode = getNodeBefore( endContainer, endOffset );
+    }
+
+    // Otherwise, look for any further content in the same block.
+    contentWalker.root = getEndBlockOfRange( range, root );
+
+    return !contentWalker.nextNode();
+};
+
+var expandRangeToBlockBoundaries = function ( range, root ) {
+    var start = getStartBlockOfRange( range, root ),
+        end = getEndBlockOfRange( range, root ),
+        parent;
+
+    if ( start && end ) {
+        parent = start.parentNode;
+        range.setStart( parent, indexOf.call( parent.childNodes, start ) );
+        parent = end.parentNode;
+        range.setEnd( parent, indexOf.call( parent.childNodes, end ) + 1 );
+    }
+};
+
+var keys = {
+    8: 'backspace',
+    9: 'tab',
+    13: 'enter',
+    32: 'space',
+    33: 'pageup',
+    34: 'pagedown',
+    37: 'left',
+    39: 'right',
+    46: 'delete',
+    219: '[',
+    221: ']'
+};
+
+// Ref: http://unixpapa.com/js/key.html
+var onKey = function ( event ) {
+    var code = event.keyCode,
+        key = keys[ code ],
+        modifiers = '',
+        range = this.getSelection();
+
+    if ( event.defaultPrevented ) {
+        return;
+    }
+
+    if ( !key ) {
+        key = String.fromCharCode( code ).toLowerCase();
+        // Only reliable for letters and numbers
+        if ( !/^[A-Za-z0-9]$/.test( key ) ) {
+            key = '';
+        }
+    }
+
+    // On keypress, delete and '.' both have event.keyCode 46
+    // Must check event.which to differentiate.
+    if ( isPresto && event.which === 46 ) {
+        key = '.';
+    }
+
+    // Function keys
+    if ( 111 < code && code < 124 ) {
+        key = 'f' + ( code - 111 );
+    }
+
+    // We need to apply the backspace/delete handlers regardless of
+    // control key modifiers.
+    if ( key !== 'backspace' && key !== 'delete' ) {
+        if ( event.altKey  ) { modifiers += 'alt-'; }
+        if ( event.ctrlKey ) { modifiers += 'ctrl-'; }
+        if ( event.metaKey ) { modifiers += 'meta-'; }
+    }
+    // However, on Windows, shift-delete is apparently "cut" (WTF right?), so
+    // we want to let the browser handle shift-delete.
+    if ( event.shiftKey ) { modifiers += 'shift-'; }
+
+    key = modifiers + key;
+
+    if ( this._keyHandlers[ key ] ) {
+        this._keyHandlers[ key ]( this, event, range );
+    // !event.isComposing stops us from blatting Kana-Kanji conversion in Safari
+    } else if ( !range.collapsed && !event.isComposing &&
+            !event.ctrlKey && !event.metaKey &&
+            ( event.key || key ).length === 1 ) {
+        // Record undo checkpoint.
+        this.saveUndoState( range );
+        // Delete the selection
+        deleteContentsOfRange( range, this._root );
+        this._ensureBottomLine();
+        this.setSelection( range );
+        this._updatePath( range, true );
+    }
+};
+
+var mapKeyTo = function ( method ) {
+    return function ( self, event ) {
+        event.preventDefault();
+        self[ method ]();
+    };
+};
+
+var mapKeyToFormat = function ( tag, remove ) {
+    remove = remove || null;
+    return function ( self, event ) {
+        event.preventDefault();
+        var range = self.getSelection();
+        if ( self.hasFormat( tag, null, range ) ) {
+            self.changeFormat( null, { tag: tag }, range );
+        } else {
+            self.changeFormat( { tag: tag }, remove, range );
+        }
+    };
+};
+
+// If you delete the content inside a span with a font styling, Webkit will
+// replace it with a <font> tag (!). If you delete all the text inside a
+// link in Opera, it won't delete the link. Let's make things consistent. If
+// you delete all text inside an inline tag, remove the inline tag.
+var afterDelete = function ( self, range ) {
+    try {
+        if ( !range ) { range = self.getSelection(); }
+        var node = range.startContainer,
+            parent;
+        // Climb the tree from the focus point while we are inside an empty
+        // inline element
+        if ( node.nodeType === TEXT_NODE ) {
+            node = node.parentNode;
+        }
+        parent = node;
+        while ( isInline( parent ) &&
+                ( !parent.textContent || parent.textContent === ZWS ) ) {
+            node = parent;
+            parent = node.parentNode;
+        }
+        // If focused in empty inline element
+        if ( node !== parent ) {
+            // Move focus to just before empty inline(s)
+            range.setStart( parent,
+                indexOf.call( parent.childNodes, node ) );
+            range.collapse( true );
+            // Remove empty inline(s)
+            parent.removeChild( node );
+            // Fix cursor in block
+            if ( !isBlock( parent ) ) {
+                parent = getPreviousBlock( parent, self._root );
+            }
+            fixCursor( parent, self._root );
+            // Move cursor into text node
+            moveRangeBoundariesDownTree( range );
+        }
+        // If you delete the last character in the sole <div> in Chrome,
+        // it removes the div and replaces it with just a <br> inside the
+        // root. Detach the <br>; the _ensureBottomLine call will insert a new
+        // block.
+        if ( node === self._root &&
+                ( node = node.firstChild ) && node.nodeName === 'BR' ) {
+            detach( node );
+        }
+        self._ensureBottomLine();
+        self.setSelection( range );
+        self._updatePath( range, true );
+    } catch ( error ) {
+        self.didError( error );
+    }
+};
+
+var keyHandlers = {
+    enter: function ( self, event, range ) {
+        var root = self._root;
+        var block, parent, node, offset, nodeAfterSplit;
+
+        // We handle this ourselves
+        event.preventDefault();
+
+        // Save undo checkpoint and add any links in the preceding section.
+        // Remove any zws so we don't think there's content in an empty
+        // block.
+        self._recordUndoState( range );
+        addLinks( range.startContainer, root, self );
+        self._removeZWS();
+        self._getRangeAndRemoveBookmark( range );
+
+        // Selected text is overwritten, therefore delete the contents
+        // to collapse selection.
+        if ( !range.collapsed ) {
+            deleteContentsOfRange( range, root );
+        }
+
+        block = getStartBlockOfRange( range, root );
+
+        // Inside a PRE, insert literal newline, unless on blank line.
+        if ( block && ( parent = getNearest( block, root, 'PRE' ) ) ) {
+            moveRangeBoundariesDownTree( range );
+            node = range.startContainer;
+            offset = range.startOffset;
+            if ( node.nodeType !== TEXT_NODE ) {
+                node = self._doc.createTextNode( '' );
+                parent.insertBefore( node, parent.firstChild );
+            }
+            // If blank line: split and insert default block
+            if ( !event.shiftKey &&
+                    ( node.data.charAt( offset - 1 ) === '\n' ||
+                        rangeDoesStartAtBlockBoundary( range, root ) ) &&
+                    ( node.data.charAt( offset ) === '\n' ||
+                        rangeDoesEndAtBlockBoundary( range, root ) ) ) {
+                node.deleteData( offset && offset - 1, offset ? 2 : 1 );
+                nodeAfterSplit =
+                    split( node, offset && offset - 1, root, root );
+                node = nodeAfterSplit.previousSibling;
+                if ( !node.textContent ) {
+                    detach( node );
+                }
+                node = self.createDefaultBlock();
+                nodeAfterSplit.parentNode.insertBefore( node, nodeAfterSplit );
+                if ( !nodeAfterSplit.textContent ) {
+                    detach( nodeAfterSplit );
+                }
+                range.setStart( node, 0 );
+            } else {
+                node.insertData( offset, '\n' );
+                fixCursor( parent, root );
+                // Firefox bug: if you set the selection in the text node after
+                // the new line, it draws the cursor before the line break still
+                // but if you set the selection to the equivalent position
+                // in the parent, it works.
+                if ( node.length === offset + 1 ) {
+                    range.setStartAfter( node );
+                } else {
+                    range.setStart( node, offset + 1 );
+                }
+            }
+            range.collapse( true );
+            self.setSelection( range );
+            self._updatePath( range, true );
+            self._docWasChanged();
+            return;
+        }
+
+        // If this is a malformed bit of document or in a table;
+        // just play it safe and insert a <br>.
+        if ( !block || event.shiftKey || /^T[HD]$/.test( block.nodeName ) ) {
+            // If inside an <a>, move focus out
+            parent = getNearest( range.endContainer, root, 'A' );
+            if ( parent ) {
+                parent = parent.parentNode;
+                moveRangeBoundariesUpTree( range, parent, parent, root );
+                range.collapse( false );
+            }
+            insertNodeInRange( range, self.createElement( 'BR' ) );
+            range.collapse( false );
+            self.setSelection( range );
+            self._updatePath( range, true );
+            return;
+        }
+
+        // If in a list, we'll split the LI instead.
+        if ( parent = getNearest( block, root, 'LI' ) ) {
+            block = parent;
+        }
+
+        if ( isEmptyBlock( block ) ) {
+            // Break list
+            if ( getNearest( block, root, 'UL' ) ||
+                    getNearest( block, root, 'OL' ) ) {
+                return self.decreaseListLevel( range );
+            }
+            // Break blockquote
+            else if ( getNearest( block, root, 'BLOCKQUOTE' ) ) {
+                return self.modifyBlocks( removeBlockQuote, range );
+            }
+        }
+
+        // Otherwise, split at cursor point.
+        nodeAfterSplit = splitBlock( self, block,
+            range.startContainer, range.startOffset );
+
+        // Clean up any empty inlines if we hit enter at the beginning of the
+        // block
+        removeZWS( block );
+        removeEmptyInlines( block );
+        fixCursor( block, root );
+
+        // Focus cursor
+        // If there's a <b>/<i> etc. at the beginning of the split
+        // make sure we focus inside it.
+        while ( nodeAfterSplit.nodeType === ELEMENT_NODE ) {
+            var child = nodeAfterSplit.firstChild,
+                next;
+
+            // Don't continue links over a block break; unlikely to be the
+            // desired outcome.
+            if ( nodeAfterSplit.nodeName === 'A' &&
+                    ( !nodeAfterSplit.textContent ||
+                        nodeAfterSplit.textContent === ZWS ) ) {
+                child = self._doc.createTextNode( '' );
+                replaceWith( nodeAfterSplit, child );
+                nodeAfterSplit = child;
+                break;
+            }
+
+            while ( child && child.nodeType === TEXT_NODE && !child.data ) {
+                next = child.nextSibling;
+                if ( !next || next.nodeName === 'BR' ) {
+                    break;
+                }
+                detach( child );
+                child = next;
+            }
+
+            // 'BR's essentially don't count; they're a browser hack.
+            // If you try to select the contents of a 'BR', FF will not let
+            // you type anything!
+            if ( !child || child.nodeName === 'BR' ||
+                    ( child.nodeType === TEXT_NODE && !isPresto ) ) {
+                break;
+            }
+            nodeAfterSplit = child;
+        }
+        range = self.createRange( nodeAfterSplit, 0 );
+        self.setSelection( range );
+        self._updatePath( range, true );
+    },
+
+    'shift-enter': function ( self, event, range ) {
+        return self._keyHandlers.enter( self, event, range );
+    },
+
+    backspace: function ( self, event, range ) {
+        var root = self._root;
+        self._removeZWS();
+        // Record undo checkpoint.
+        self.saveUndoState( range );
+        // If not collapsed, delete contents
+        if ( !range.collapsed ) {
+            event.preventDefault();
+            deleteContentsOfRange( range, root );
+            afterDelete( self, range );
+        }
+        // If at beginning of block, merge with previous
+        else if ( rangeDoesStartAtBlockBoundary( range, root ) ) {
+            event.preventDefault();
+            var current = getStartBlockOfRange( range, root );
+            var previous;
+            if ( !current ) {
+                return;
+            }
+            // In case inline data has somehow got between blocks.
+            fixContainer( current.parentNode, root );
+            // Now get previous block
+            previous = getPreviousBlock( current, root );
+            // Must not be at the very beginning of the text area.
+            if ( previous ) {
+                // If not editable, just delete whole block.
+                if ( !previous.isContentEditable ) {
+                    detach( previous );
+                    return;
+                }
+                // Otherwise merge.
+                mergeWithBlock( previous, current, range, root );
+                // If deleted line between containers, merge newly adjacent
+                // containers.
+                current = previous.parentNode;
+                while ( current !== root && !current.nextSibling ) {
+                    current = current.parentNode;
+                }
+                if ( current !== root && ( current = current.nextSibling ) ) {
+                    mergeContainers( current, root );
+                }
+                self.setSelection( range );
+            }
+            // If at very beginning of text area, allow backspace
+            // to break lists/blockquote.
+            else if ( current ) {
+                // Break list
+                if ( getNearest( current, root, 'UL' ) ||
+                        getNearest( current, root, 'OL' ) ) {
+                    return self.decreaseListLevel( range );
+                }
+                // Break blockquote
+                else if ( getNearest( current, root, 'BLOCKQUOTE' ) ) {
+                    return self.modifyBlocks( decreaseBlockQuoteLevel, range );
+                }
+                self.setSelection( range );
+                self._updatePath( range, true );
+            }
+        }
+        // Otherwise, leave to browser but check afterwards whether it has
+        // left behind an empty inline tag.
+        else {
+            self.setSelection( range );
+            setTimeout( function () { afterDelete( self ); }, 0 );
+        }
+    },
+    'delete': function ( self, event, range ) {
+        var root = self._root;
+        var current, next, originalRange,
+            cursorContainer, cursorOffset, nodeAfterCursor;
+        self._removeZWS();
+        // Record undo checkpoint.
+        self.saveUndoState( range );
+        // If not collapsed, delete contents
+        if ( !range.collapsed ) {
+            event.preventDefault();
+            deleteContentsOfRange( range, root );
+            afterDelete( self, range );
+        }
+        // If at end of block, merge next into this block
+        else if ( rangeDoesEndAtBlockBoundary( range, root ) ) {
+            event.preventDefault();
+            current = getStartBlockOfRange( range, root );
+            if ( !current ) {
+                return;
+            }
+            // In case inline data has somehow got between blocks.
+            fixContainer( current.parentNode, root );
+            // Now get next block
+            next = getNextBlock( current, root );
+            // Must not be at the very end of the text area.
+            if ( next ) {
+                // If not editable, just delete whole block.
+                if ( !next.isContentEditable ) {
+                    detach( next );
+                    return;
+                }
+                // Otherwise merge.
+                mergeWithBlock( current, next, range, root );
+                // If deleted line between containers, merge newly adjacent
+                // containers.
+                next = current.parentNode;
+                while ( next !== root && !next.nextSibling ) {
+                    next = next.parentNode;
+                }
+                if ( next !== root && ( next = next.nextSibling ) ) {
+                    mergeContainers( next, root );
+                }
+                self.setSelection( range );
+                self._updatePath( range, true );
+            }
+        }
+        // Otherwise, leave to browser but check afterwards whether it has
+        // left behind an empty inline tag.
+        else {
+            // But first check if the cursor is just before an IMG tag. If so,
+            // delete it ourselves, because the browser won't if it is not
+            // inline.
+            originalRange = range.cloneRange();
+            moveRangeBoundariesUpTree( range, root, root, root );
+            cursorContainer = range.endContainer;
+            cursorOffset = range.endOffset;
+            if ( cursorContainer.nodeType === ELEMENT_NODE ) {
+                nodeAfterCursor = cursorContainer.childNodes[ cursorOffset ];
+                if ( nodeAfterCursor && nodeAfterCursor.nodeName === 'IMG' ) {
+                    event.preventDefault();
+                    detach( nodeAfterCursor );
+                    moveRangeBoundariesDownTree( range );
+                    afterDelete( self, range );
+                    return;
+                }
+            }
+            self.setSelection( originalRange );
+            setTimeout( function () { afterDelete( self ); }, 0 );
+        }
+    },
+    tab: function ( self, event, range ) {
+        var root = self._root;
+        var node, parent;
+        self._removeZWS();
+        // If no selection and at start of block
+        if ( range.collapsed && rangeDoesStartAtBlockBoundary( range, root ) ) {
+            node = getStartBlockOfRange( range, root );
+            // Iterate through the block's parents
+            while ( ( parent = node.parentNode ) ) {
+                // If we find a UL or OL (so are in a list, node must be an LI)
+                if ( parent.nodeName === 'UL' || parent.nodeName === 'OL' ) {
+                    // Then increase the list level
+                    event.preventDefault();
+                    self.increaseListLevel( range );
+                    break;
+                }
+                node = parent;
+            }
+        }
+    },
+    'shift-tab': function ( self, event, range ) {
+        var root = self._root;
+        var node;
+        self._removeZWS();
+        // If no selection and at start of block
+        if ( range.collapsed && rangeDoesStartAtBlockBoundary( range, root ) ) {
+            // Break list
+            node = range.startContainer;
+            if ( getNearest( node, root, 'UL' ) ||
+                    getNearest( node, root, 'OL' ) ) {
+                event.preventDefault();
+                self.decreaseListLevel( range );
+            }
+        }
+    },
+    space: function ( self, _, range ) {
+        var node, parent;
+        var root = self._root;
+        self._recordUndoState( range );
+        addLinks( range.startContainer, root, self );
+        self._getRangeAndRemoveBookmark( range );
+
+        // If the cursor is at the end of a link (<a>foo|</a>) then move it
+        // outside of the link (<a>foo</a>|) so that the space is not part of
+        // the link text.
+        node = range.endContainer;
+        if ( range.collapsed && range.endOffset === getLength( node ) ) {
+            do {
+                if ( node.nodeName === 'A' ) {
+                    range.setStartAfter( node );
+                    break;
+                }
+            } while ( !node.nextSibling &&
+                ( node = node.parentNode ) && node !== root );
+        }
+        // Delete the selection if not collapsed
+        if ( !range.collapsed ) {
+            deleteContentsOfRange( range, root );
+            self._ensureBottomLine();
+            self.setSelection( range );
+            self._updatePath( range, true );
+        }
+
+        self.setSelection( range );
+    },
+    left: function ( self ) {
+        self._removeZWS();
+    },
+    right: function ( self ) {
+        self._removeZWS();
+    }
+};
+
+// Firefox pre v29 incorrectly handles Cmd-left/Cmd-right on Mac:
+// it goes back/forward in history! Override to do the right
+// thing.
+// https://bugzilla.mozilla.org/show_bug.cgi?id=289384
+if ( isMac && isGecko ) {
+    keyHandlers[ 'meta-left' ] = function ( self, event ) {
+        event.preventDefault();
+        var sel = getWindowSelection( self );
+        if ( sel && sel.modify ) {
+            sel.modify( 'move', 'backward', 'lineboundary' );
+        }
+    };
+    keyHandlers[ 'meta-right' ] = function ( self, event ) {
+        event.preventDefault();
+        var sel = getWindowSelection( self );
+        if ( sel && sel.modify ) {
+            sel.modify( 'move', 'forward', 'lineboundary' );
+        }
+    };
+}
+
+// System standard for page up/down on Mac is to just scroll, not move the
+// cursor. On Linux/Windows, it should move the cursor, but some browsers don't
+// implement this natively. Override to support it.
+if ( !isMac ) {
+    keyHandlers.pageup = function ( self ) {
+        self.moveCursorToStart();
+    };
+    keyHandlers.pagedown = function ( self ) {
+        self.moveCursorToEnd();
+    };
+}
+
+keyHandlers[ ctrlKey + 'b' ] = mapKeyToFormat( 'B' );
+keyHandlers[ ctrlKey + 'i' ] = mapKeyToFormat( 'I' );
+keyHandlers[ ctrlKey + 'u' ] = mapKeyToFormat( 'U' );
+keyHandlers[ ctrlKey + 'shift-7' ] = mapKeyToFormat( 'S' );
+keyHandlers[ ctrlKey + 'shift-5' ] = mapKeyToFormat( 'SUB', { tag: 'SUP' } );
+keyHandlers[ ctrlKey + 'shift-6' ] = mapKeyToFormat( 'SUP', { tag: 'SUB' } );
+keyHandlers[ ctrlKey + 'shift-8' ] = mapKeyTo( 'makeUnorderedList' );
+keyHandlers[ ctrlKey + 'shift-9' ] = mapKeyTo( 'makeOrderedList' );
+keyHandlers[ ctrlKey + '[' ] = mapKeyTo( 'decreaseQuoteLevel' );
+keyHandlers[ ctrlKey + ']' ] = mapKeyTo( 'increaseQuoteLevel' );
+keyHandlers[ ctrlKey + 'd' ] = mapKeyTo( 'toggleCode' );
+keyHandlers[ ctrlKey + 'y' ] = mapKeyTo( 'redo' );
+keyHandlers[ ctrlKey + 'z' ] = mapKeyTo( 'undo' );
+keyHandlers[ ctrlKey + 'shift-z' ] = mapKeyTo( 'redo' );
+
+var fontSizes = {
+    1: 10,
+    2: 13,
+    3: 16,
+    4: 18,
+    5: 24,
+    6: 32,
+    7: 48
+};
+
+var styleToSemantic = {
+    backgroundColor: {
+        regexp: notWS,
+        replace: function ( doc, classNames, colour ) {
+            return createElement( doc, 'SPAN', {
+                'class': classNames.highlight,
+                style: 'background-color:' + colour
+            });
+        }
+    },
+    color: {
+        regexp: notWS,
+        replace: function ( doc, classNames, colour ) {
+            return createElement( doc, 'SPAN', {
+                'class': classNames.colour,
+                style: 'color:' + colour
+            });
+        }
+    },
+    fontWeight: {
+        regexp: /^bold|^700/i,
+        replace: function ( doc ) {
+            return createElement( doc, 'B' );
+        }
+    },
+    fontStyle: {
+        regexp: /^italic/i,
+        replace: function ( doc ) {
+            return createElement( doc, 'I' );
+        }
+    },
+    fontFamily: {
+        regexp: notWS,
+        replace: function ( doc, classNames, family ) {
+            return createElement( doc, 'SPAN', {
+                'class': classNames.fontFamily,
+                style: 'font-family:' + family
+            });
+        }
+    },
+    fontSize: {
+        regexp: notWS,
+        replace: function ( doc, classNames, size ) {
+            return createElement( doc, 'SPAN', {
+                'class': classNames.fontSize,
+                style: 'font-size:' + size
+            });
+        }
+    },
+    textDecoration: {
+        regexp: /^underline/i,
+        replace: function ( doc ) {
+            return createElement( doc, 'U' );
+        }
+    }
+};
+
+var replaceWithTag = function ( tag ) {
+    return function ( node, parent ) {
+        var el = createElement( node.ownerDocument, tag );
+        parent.replaceChild( el, node );
+        el.appendChild( empty( node ) );
+        return el;
+    };
+};
+
+var replaceStyles = function ( node, parent, config ) {
+    var style = node.style;
+    var doc = node.ownerDocument;
+    var attr, converter, css, newTreeBottom, newTreeTop, el;
+
+    for ( attr in styleToSemantic ) {
+        converter = styleToSemantic[ attr ];
+        css = style[ attr ];
+        if ( css && converter.regexp.test( css ) ) {
+            el = converter.replace( doc, config.classNames, css );
+            if ( !newTreeTop ) {
+                newTreeTop = el;
+            }
+            if ( newTreeBottom ) {
+                newTreeBottom.appendChild( el );
+            }
+            newTreeBottom = el;
+            node.style[ attr ] = '';
+        }
+    }
+
+    if ( newTreeTop ) {
+        newTreeBottom.appendChild( empty( node ) );
+        if ( node.nodeName === 'SPAN' ) {
+            parent.replaceChild( newTreeTop, node );
+        } else {
+            node.appendChild( newTreeTop );
+        }
+    }
+
+    return newTreeBottom || node;
+};
+
+var stylesRewriters = {
+    P: replaceStyles,
+    SPAN: replaceStyles,
+    STRONG: replaceWithTag( 'B' ),
+    EM: replaceWithTag( 'I' ),
+    INS: replaceWithTag( 'U' ),
+    STRIKE: replaceWithTag( 'S' ),
+    FONT: function ( node, parent, config ) {
+        var face = node.face;
+        var size = node.size;
+        var colour = node.color;
+        var doc = node.ownerDocument;
+        var classNames = config.classNames;
+        var fontSpan, sizeSpan, colourSpan;
+        var newTreeBottom, newTreeTop;
+        if ( face ) {
+            fontSpan = createElement( doc, 'SPAN', {
+                'class': classNames.fontFamily,
+                style: 'font-family:' + face
+            });
+            newTreeTop = fontSpan;
+            newTreeBottom = fontSpan;
+        }
+        if ( size ) {
+            sizeSpan = createElement( doc, 'SPAN', {
+                'class': classNames.fontSize,
+                style: 'font-size:' + fontSizes[ size ] + 'px'
+            });
+            if ( !newTreeTop ) {
+                newTreeTop = sizeSpan;
+            }
+            if ( newTreeBottom ) {
+                newTreeBottom.appendChild( sizeSpan );
+            }
+            newTreeBottom = sizeSpan;
+        }
+        if ( colour && /^#?([\dA-F]{3}){1,2}$/i.test( colour ) ) {
+            if ( colour.charAt( 0 ) !== '#' ) {
+                colour = '#' + colour;
+            }
+            colourSpan = createElement( doc, 'SPAN', {
+                'class': classNames.colour,
+                style: 'color:' + colour
+            });
+            if ( !newTreeTop ) {
+                newTreeTop = colourSpan;
+            }
+            if ( newTreeBottom ) {
+                newTreeBottom.appendChild( colourSpan );
+            }
+            newTreeBottom = colourSpan;
+        }
+        if ( !newTreeTop ) {
+            newTreeTop = newTreeBottom = createElement( doc, 'SPAN' );
+        }
+        parent.replaceChild( newTreeTop, node );
+        newTreeBottom.appendChild( empty( node ) );
+        return newTreeBottom;
+    },
+    TT: function ( node, parent, config ) {
+        var el = createElement( node.ownerDocument, 'SPAN', {
+            'class': config.classNames.fontFamily,
+            style: 'font-family:menlo,consolas,"courier new",monospace'
+        });
+        parent.replaceChild( el, node );
+        el.appendChild( empty( node ) );
+        return el;
+    }
+};
+
+var allowedBlock = /^(?:A(?:DDRESS|RTICLE|SIDE|UDIO)|BLOCKQUOTE|CAPTION|D(?:[DLT]|IV)|F(?:IGURE|IGCAPTION|OOTER)|H[1-6]|HEADER|L(?:ABEL|EGEND|I)|O(?:L|UTPUT)|P(?:RE)?|SECTION|T(?:ABLE|BODY|D|FOOT|H|HEAD|R)|COL(?:GROUP)?|UL)$/;
+
+var blacklist = /^(?:HEAD|META|STYLE)/;
+
+var walker = new TreeWalker( null, SHOW_TEXT|SHOW_ELEMENT );
+
+/*
+    Two purposes:
+
+    1. Remove nodes we don't want, such as weird <o:p> tags, comment nodes
+       and whitespace nodes.
+    2. Convert inline tags into our preferred format.
+*/
+var cleanTree = function cleanTree ( node, config, preserveWS ) {
+    var children = node.childNodes,
+        nonInlineParent, i, l, child, nodeName, nodeType, rewriter, childLength,
+        startsWithWS, endsWithWS, data, sibling;
+
+    nonInlineParent = node;
+    while ( isInline( nonInlineParent ) ) {
+        nonInlineParent = nonInlineParent.parentNode;
+    }
+    walker.root = nonInlineParent;
+
+    for ( i = 0, l = children.length; i < l; i += 1 ) {
+        child = children[i];
+        nodeName = child.nodeName;
+        nodeType = child.nodeType;
+        rewriter = stylesRewriters[ nodeName ];
+        if ( nodeType === ELEMENT_NODE ) {
+            childLength = child.childNodes.length;
+            if ( rewriter ) {
+                child = rewriter( child, node, config );
+            } else if ( blacklist.test( nodeName ) ) {
+                node.removeChild( child );
+                i -= 1;
+                l -= 1;
+                continue;
+            } else if ( !allowedBlock.test( nodeName ) && !isInline( child ) ) {
+                i -= 1;
+                l += childLength - 1;
+                node.replaceChild( empty( child ), child );
+                continue;
+            }
+            if ( childLength ) {
+                cleanTree( child, config,
+                    preserveWS || ( nodeName === 'PRE' ) );
+            }
+        } else {
+            if ( nodeType === TEXT_NODE ) {
+                data = child.data;
+                startsWithWS = !notWS.test( data.charAt( 0 ) );
+                endsWithWS = !notWS.test( data.charAt( data.length - 1 ) );
+                if ( preserveWS || ( !startsWithWS && !endsWithWS ) ) {
+                    continue;
+                }
+                // Iterate through the nodes; if we hit some other content
+                // before the start of a new block we don't trim
+                if ( startsWithWS ) {
+                    walker.currentNode = child;
+                    while ( sibling = walker.previousPONode() ) {
+                        nodeName = sibling.nodeName;
+                        if ( nodeName === 'IMG' ||
+                                ( nodeName === '#text' &&
+                                    notWS.test( sibling.data ) ) ) {
+                            break;
+                        }
+                        if ( !isInline( sibling ) ) {
+                            sibling = null;
+                            break;
+                        }
+                    }
+                    data = data.replace( /^[ \t\r\n]+/g, sibling ? ' ' : '' );
+                }
+                if ( endsWithWS ) {
+                    walker.currentNode = child;
+                    while ( sibling = walker.nextNode() ) {
+                        if ( nodeName === 'IMG' ||
+                                ( nodeName === '#text' &&
+                                    notWS.test( sibling.data ) ) ) {
+                            break;
+                        }
+                        if ( !isInline( sibling ) ) {
+                            sibling = null;
+                            break;
+                        }
+                    }
+                    data = data.replace( /[ \t\r\n]+$/g, sibling ? ' ' : '' );
+                }
+                if ( data ) {
+                    child.data = data;
+                    continue;
+                }
+            }
+            node.removeChild( child );
+            i -= 1;
+            l -= 1;
+        }
+    }
+    return node;
+};
+
+// ---
+
+var removeEmptyInlines = function removeEmptyInlines ( node ) {
+    var children = node.childNodes,
+        l = children.length,
+        child;
+    while ( l-- ) {
+        child = children[l];
+        if ( child.nodeType === ELEMENT_NODE && !isLeaf( child ) ) {
+            removeEmptyInlines( child );
+            if ( isInline( child ) && !child.firstChild ) {
+                node.removeChild( child );
+            }
+        } else if ( child.nodeType === TEXT_NODE && !child.data ) {
+            node.removeChild( child );
+        }
+    }
+};
+
+// ---
+
+var notWSTextNode = function ( node ) {
+    return node.nodeType === ELEMENT_NODE ?
+        node.nodeName === 'BR' :
+        notWS.test( node.data );
+};
+var isLineBreak = function ( br, isLBIfEmptyBlock ) {
+    var block = br.parentNode;
+    var walker;
+    while ( isInline( block ) ) {
+        block = block.parentNode;
+    }
+    walker = new TreeWalker(
+        block, SHOW_ELEMENT|SHOW_TEXT, notWSTextNode );
+    walker.currentNode = br;
+    return !!walker.nextNode() ||
+        ( isLBIfEmptyBlock && !walker.previousNode() );
+};
+
+// <br> elements are treated specially, and differently depending on the
+// browser, when in rich text editor mode. When adding HTML from external
+// sources, we must remove them, replacing the ones that actually affect
+// line breaks by wrapping the inline text in a <div>. Browsers that want <br>
+// elements at the end of each block will then have them added back in a later
+// fixCursor method call.
+var cleanupBRs = function ( node, root, keepForBlankLine ) {
+    var brs = node.querySelectorAll( 'BR' );
+    var brBreaksLine = [];
+    var l = brs.length;
+    var i, br, parent;
+
+    // Must calculate whether the <br> breaks a line first, because if we
+    // have two <br>s next to each other, after the first one is converted
+    // to a block split, the second will be at the end of a block and
+    // therefore seem to not be a line break. But in its original context it
+    // was, so we should also convert it to a block split.
+    for ( i = 0; i < l; i += 1 ) {
+        brBreaksLine[i] = isLineBreak( brs[i], keepForBlankLine );
+    }
+    while ( l-- ) {
+        br = brs[l];
+        // Cleanup may have removed it
+        parent = br.parentNode;
+        if ( !parent ) { continue; }
+        // If it doesn't break a line, just remove it; it's not doing
+        // anything useful. We'll add it back later if required by the
+        // browser. If it breaks a line, wrap the content in div tags
+        // and replace the brs.
+        if ( !brBreaksLine[l] ) {
+            detach( br );
+        } else if ( !isInline( parent ) ) {
+            fixContainer( parent, root );
+        }
+    }
+};
+
+// The (non-standard but supported enough) innerText property is based on the
+// render tree in Firefox and possibly other browsers, so we must insert the
+// DOM node into the document to ensure the text part is correct.
+var setClipboardData = function ( clipboardData, node, root, config ) {
+    var body = node.ownerDocument.body;
+    var willCutCopy = config.willCutCopy;
+    var html, text;
+
+    // Firefox will add an extra new line for BRs at the end of block when
+    // calculating innerText, even though they don't actually affect display.
+    // So we need to remove them first.
+    cleanupBRs( node, root, true );
+
+    node.setAttribute( 'style',
+        'position:fixed;overflow:hidden;bottom:100%;right:100%;' );
+    body.appendChild( node );
+    html = node.innerHTML;
+    text = node.innerText || node.textContent;
+
+    if ( willCutCopy ) {
+        html = willCutCopy( html );
+    }
+
+    // Firefox (and others?) returns unix line endings (\n) even on Windows.
+    // If on Windows, normalise to \r\n, since Notepad and some other crappy
+    // apps do not understand just \n.
+    if ( isWin ) {
+        text = text.replace( /\r?\n/g, '\r\n' );
+    }
+
+    clipboardData.setData( 'text/html', html );
+    clipboardData.setData( 'text/plain', text );
+
+    body.removeChild( node );
+};
+
+var onCut = function ( event ) {
+    var clipboardData = event.clipboardData;
+    var range = this.getSelection();
+    var root = this._root;
+    var self = this;
+    var startBlock, endBlock, copyRoot, contents, parent, newContents, node;
+
+    // Nothing to do
+    if ( range.collapsed ) {
+        event.preventDefault();
+        return;
+    }
+
+    // Save undo checkpoint
+    this.saveUndoState( range );
+
+    // Edge only seems to support setting plain text as of 2016-03-11.
+    // Mobile Safari flat out doesn't work:
+    // https://bugs.webkit.org/show_bug.cgi?id=143776
+    if ( !isEdge && !isIOS && clipboardData ) {
+        // Clipboard content should include all parents within block, or all
+        // parents up to root if selection across blocks
+        startBlock = getStartBlockOfRange( range, root );
+        endBlock = getEndBlockOfRange( range, root );
+        copyRoot = ( ( startBlock === endBlock ) && startBlock ) || root;
+        // Extract the contents
+        contents = deleteContentsOfRange( range, root );
+        // Add any other parents not in extracted content, up to copy root
+        parent = range.commonAncestorContainer;
+        if ( parent.nodeType === TEXT_NODE ) {
+            parent = parent.parentNode;
+        }
+        while ( parent && parent !== copyRoot ) {
+            newContents = parent.cloneNode( false );
+            newContents.appendChild( contents );
+            contents = newContents;
+            parent = parent.parentNode;
+        }
+        // Set clipboard data
+        node = this.createElement( 'div' );
+        node.appendChild( contents );
+        setClipboardData( clipboardData, node, root, this._config );
+        event.preventDefault();
+    } else {
+        setTimeout( function () {
+            try {
+                // If all content removed, ensure div at start of root.
+                self._ensureBottomLine();
+            } catch ( error ) {
+                self.didError( error );
+            }
+        }, 0 );
+    }
+
+    this.setSelection( range );
+};
+
+var onCopy = function ( event ) {
+    var clipboardData = event.clipboardData;
+    var range = this.getSelection();
+    var root = this._root;
+    var startBlock, endBlock, copyRoot, contents, parent, newContents, node;
+
+    // Edge only seems to support setting plain text as of 2016-03-11.
+    // Mobile Safari flat out doesn't work:
+    // https://bugs.webkit.org/show_bug.cgi?id=143776
+    if ( !isEdge && !isIOS && clipboardData ) {
+        // Clipboard content should include all parents within block, or all
+        // parents up to root if selection across blocks
+        startBlock = getStartBlockOfRange( range, root );
+        endBlock = getEndBlockOfRange( range, root );
+        copyRoot = ( ( startBlock === endBlock ) && startBlock ) || root;
+        // Clone range to mutate, then move up as high as possible without
+        // passing the copy root node.
+        range = range.cloneRange();
+        moveRangeBoundariesDownTree( range );
+        moveRangeBoundariesUpTree( range, copyRoot, copyRoot, root );
+        // Extract the contents
+        contents = range.cloneContents();
+        // Add any other parents not in extracted content, up to copy root
+        parent = range.commonAncestorContainer;
+        if ( parent.nodeType === TEXT_NODE ) {
+            parent = parent.parentNode;
+        }
+        while ( parent && parent !== copyRoot ) {
+            newContents = parent.cloneNode( false );
+            newContents.appendChild( contents );
+            contents = newContents;
+            parent = parent.parentNode;
+        }
+        // Set clipboard data
+        node = this.createElement( 'div' );
+        node.appendChild( contents );
+        setClipboardData( clipboardData, node, root, this._config );
+        event.preventDefault();
+    }
+};
+
+// Need to monitor for shift key like this, as event.shiftKey is not available
+// in paste event.
+function monitorShiftKey ( event ) {
+    this.isShiftDown = event.shiftKey;
+}
+
+var onPaste = function ( event ) {
+    var clipboardData = event.clipboardData;
+    var items = clipboardData && clipboardData.items;
+    var choosePlain = this.isShiftDown;
+    var fireDrop = false;
+    var hasRTF = false;
+    var hasImage = false;
+    var plainItem = null;
+    var htmlItem = null;
+    var self = this;
+    var l, item, type, types, data;
+
+    // Current HTML5 Clipboard interface
+    // ---------------------------------
+    // https://html.spec.whatwg.org/multipage/interaction.html
+    if ( items ) {
+        l = items.length;
+        while ( l-- ) {
+            item = items[l];
+            type = item.type;
+            if ( type === 'text/html' ) {
+                htmlItem = item;
+            // iOS copy URL gives you type text/uri-list which is just a list
+            // of 1 or more URLs separated by new lines. Can just treat as
+            // plain text.
+            } else if ( type === 'text/plain' || type === 'text/uri-list' ) {
+                plainItem = item;
+            } else if ( type === 'text/rtf' ) {
+                hasRTF = true;
+            } else if ( /^image\/.*/.test( type ) ) {
+                hasImage = true;
+            }
+        }
+
+        // Treat image paste as a drop of an image file. When you copy
+        // an image in Chrome/Firefox (at least), it copies the image data
+        // but also an HTML version (referencing the original URL of the image)
+        // and a plain text version.
+        //
+        // However, when you copy in Excel, you get html, rtf, text, image;
+        // in this instance you want the html version! So let's try using
+        // the presence of text/rtf as an indicator to choose the html version
+        // over the image.
+        if ( hasImage && !( hasRTF && htmlItem ) ) {
+            event.preventDefault();
+            this.fireEvent( 'dragover', {
+                dataTransfer: clipboardData,
+                /*jshint loopfunc: true */
+                preventDefault: function () {
+                    fireDrop = true;
+                }
+                /*jshint loopfunc: false */
+            });
+            if ( fireDrop ) {
+                this.fireEvent( 'drop', {
+                    dataTransfer: clipboardData
+                });
+            }
+            return;
+        }
+
+        // Edge only provides access to plain text as of 2016-03-11 and gives no
+        // indication there should be an HTML part. However, it does support
+        // access to image data, so we check for that first. Otherwise though,
+        // fall through to fallback clipboard handling methods
+        if ( !isEdge ) {
+            event.preventDefault();
+            if ( htmlItem && ( !choosePlain || !plainItem ) ) {
+                htmlItem.getAsString( function ( html ) {
+                    self.insertHTML( html, true );
+                });
+            } else if ( plainItem ) {
+                plainItem.getAsString( function ( text ) {
+                    self.insertPlainText( text, true );
+                });
+            }
+            return;
+        }
+    }
+
+    // Old interface
+    // -------------
+
+    // Safari (and indeed many other OS X apps) copies stuff as text/rtf
+    // rather than text/html; even from a webpage in Safari. The only way
+    // to get an HTML version is to fallback to letting the browser insert
+    // the content. Same for getting image data. *Sigh*.
+    //
+    // Firefox is even worse: it doesn't even let you know that there might be
+    // an RTF version on the clipboard, but it will also convert to HTML if you
+    // let the browser insert the content. I've filed
+    // https://bugzilla.mozilla.org/show_bug.cgi?id=1254028
+    types = clipboardData && clipboardData.types;
+    if ( !isEdge && types && (
+            indexOf.call( types, 'text/html' ) > -1 || (
+                !isGecko &&
+                indexOf.call( types, 'text/plain' ) > -1 &&
+                indexOf.call( types, 'text/rtf' ) < 0 )
+            )) {
+        event.preventDefault();
+        // Abiword on Linux copies a plain text and html version, but the HTML
+        // version is the empty string! So always try to get HTML, but if none,
+        // insert plain text instead. On iOS, Facebook (and possibly other
+        // apps?) copy links as type text/uri-list, but also insert a **blank**
+        // text/plain item onto the clipboard. Why? Who knows.
+        if ( !choosePlain && ( data = clipboardData.getData( 'text/html' ) ) ) {
+            this.insertHTML( data, true );
+        } else if (
+                ( data = clipboardData.getData( 'text/plain' ) ) ||
+                ( data = clipboardData.getData( 'text/uri-list' ) ) ) {
+            this.insertPlainText( data, true );
+        }
+        return;
+    }
+
+    // No interface. Includes all versions of IE :(
+    // --------------------------------------------
+
+    this._awaitingPaste = true;
+
+    var body = this._doc.body,
+        range = this.getSelection(),
+        startContainer = range.startContainer,
+        startOffset = range.startOffset,
+        endContainer = range.endContainer,
+        endOffset = range.endOffset;
+
+    // We need to position the pasteArea in the visible portion of the screen
+    // to stop the browser auto-scrolling.
+    var pasteArea = this.createElement( 'DIV', {
+        contenteditable: 'true',
+        style: 'position:fixed; overflow:hidden; top:0; right:100%; width:1px; height:1px;'
+    });
+    body.appendChild( pasteArea );
+    range.selectNodeContents( pasteArea );
+    this.setSelection( range );
+
+    // A setTimeout of 0 means this is added to the back of the
+    // single javascript thread, so it will be executed after the
+    // paste event.
+    setTimeout( function () {
+        try {
+            // IE sometimes fires the beforepaste event twice; make sure it is
+            // not run again before our after paste function is called.
+            self._awaitingPaste = false;
+
+            // Get the pasted content and clean
+            var html = '',
+                next = pasteArea,
+                first, range;
+
+            // #88: Chrome can apparently split the paste area if certain
+            // content is inserted; gather them all up.
+            while ( pasteArea = next ) {
+                next = pasteArea.nextSibling;
+                detach( pasteArea );
+                // Safari and IE like putting extra divs around things.
+                first = pasteArea.firstChild;
+                if ( first && first === pasteArea.lastChild &&
+                        first.nodeName === 'DIV' ) {
+                    pasteArea = first;
+                }
+                html += pasteArea.innerHTML;
+            }
+
+            range = self.createRange(
+                startContainer, startOffset, endContainer, endOffset );
+            self.setSelection( range );
+
+            if ( html ) {
+                self.insertHTML( html, true );
+            }
+        } catch ( error ) {
+            self.didError( error );
+        }
+    }, 0 );
+};
+
+// On Windows you can drag an drop text. We can't handle this ourselves, because
+// as far as I can see, there's no way to get the drop insertion point. So just
+// save an undo state and hope for the best.
+var onDrop = function ( event ) {
+    var types = event.dataTransfer.types;
+    var l = types.length;
+    var hasPlain = false;
+    var hasHTML = false;
+    while ( l-- ) {
+        switch ( types[l] ) {
+        case 'text/plain':
+            hasPlain = true;
+            break;
+        case 'text/html':
+            hasHTML = true;
+            break;
+        default:
+            return;
+        }
+    }
+    if ( hasHTML || hasPlain ) {
+        this.saveUndoState();
+    }
+};
+
+function mergeObjects ( base, extras, mayOverride ) {
+    var prop, value;
+    if ( !base ) {
+        base = {};
+    }
+    if ( extras ) {
+        for ( prop in extras ) {
+            if ( mayOverride || !( prop in base ) ) {
+                value = extras[ prop ];
+                base[ prop ] = ( value && value.constructor === Object ) ?
+                    mergeObjects( base[ prop ], value, mayOverride ) :
+                    value;
+            }
+        }
+    }
+    return base;
+}
+
+function Squire ( root, config ) {
+    if ( root.nodeType === DOCUMENT_NODE ) {
+        root = root.body;
+    }
+    var doc = root.ownerDocument;
+    var win = doc.defaultView;
+    var mutation;
+
+    this._win = win;
+    this._doc = doc;
+    this._root = root;
+
+    this._events = {};
+
+    this._isFocused = false;
+    this._lastSelection = null;
+
+    // IE loses selection state of iframe on blur, so make sure we
+    // cache it just before it loses focus.
+    if ( losesSelectionOnBlur ) {
+        this.addEventListener( 'beforedeactivate', this.getSelection );
+    }
+
+    this._hasZWS = false;
+
+    this._lastAnchorNode = null;
+    this._lastFocusNode = null;
+    this._path = '';
+    this._willUpdatePath = false;
+
+    if ( 'onselectionchange' in doc ) {
+        this.addEventListener( 'selectionchange', this._updatePathOnEvent );
+    } else {
+        this.addEventListener( 'keyup', this._updatePathOnEvent );
+        this.addEventListener( 'mouseup', this._updatePathOnEvent );
+    }
+
+    this._undoIndex = -1;
+    this._undoStack = [];
+    this._undoStackLength = 0;
+    this._isInUndoState = false;
+    this._ignoreChange = false;
+    this._ignoreAllChanges = false;
+
+    if ( canObserveMutations ) {
+        mutation = new MutationObserver( this._docWasChanged.bind( this ) );
+        mutation.observe( root, {
+            childList: true,
+            attributes: true,
+            characterData: true,
+            subtree: true
+        });
+        this._mutation = mutation;
+    } else {
+        this.addEventListener( 'keyup', this._keyUpDetectChange );
+    }
+
+    // On blur, restore focus except if the user taps or clicks to focus a
+    // specific point. Can't actually use click event because focus happens
+    // before click, so use mousedown/touchstart
+    this._restoreSelection = false;
+    this.addEventListener( 'blur', enableRestoreSelection );
+    this.addEventListener( 'mousedown', disableRestoreSelection );
+    this.addEventListener( 'touchstart', disableRestoreSelection );
+    this.addEventListener( 'focus', restoreSelection );
+
+    // IE sometimes fires the beforepaste event twice; make sure it is not run
+    // again before our after paste function is called.
+    this._awaitingPaste = false;
+    this.addEventListener( isIElt11 ? 'beforecut' : 'cut', onCut );
+    this.addEventListener( 'copy', onCopy );
+    this.addEventListener( 'keydown', monitorShiftKey );
+    this.addEventListener( 'keyup', monitorShiftKey );
+    this.addEventListener( isIElt11 ? 'beforepaste' : 'paste', onPaste );
+    this.addEventListener( 'drop', onDrop );
+
+    // Opera does not fire keydown repeatedly.
+    this.addEventListener( isPresto ? 'keypress' : 'keydown', onKey );
+
+    // Add key handlers
+    this._keyHandlers = Object.create( keyHandlers );
+
+    // Override default properties
+    this.setConfig( config );
+
+    // Fix IE<10's buggy implementation of Text#splitText.
+    // If the split is at the end of the node, it doesn't insert the newly split
+    // node into the document, and sets its value to undefined rather than ''.
+    // And even if the split is not at the end, the original node is removed
+    // from the document and replaced by another, rather than just having its
+    // data shortened.
+    // We used to feature test for this, but then found the feature test would
+    // sometimes pass, but later on the buggy behaviour would still appear.
+    // I think IE10 does not have the same bug, but it doesn't hurt to replace
+    // its native fn too and then we don't need yet another UA category.
+    if ( isIElt11 ) {
+        win.Text.prototype.splitText = function ( offset ) {
+            var afterSplit = this.ownerDocument.createTextNode(
+                    this.data.slice( offset ) ),
+                next = this.nextSibling,
+                parent = this.parentNode,
+                toDelete = this.length - offset;
+            if ( next ) {
+                parent.insertBefore( afterSplit, next );
+            } else {
+                parent.appendChild( afterSplit );
+            }
+            if ( toDelete ) {
+                this.deleteData( offset, toDelete );
+            }
+            return afterSplit;
+        };
+    }
+
+    root.setAttribute( 'contenteditable', 'true' );
+
+    // Remove Firefox's built-in controls
+    try {
+        doc.execCommand( 'enableObjectResizing', false, 'false' );
+        doc.execCommand( 'enableInlineTableEditing', false, 'false' );
+    } catch ( error ) {}
+
+    root.__squire__ = this;
+
+    // Need to register instance before calling setHTML, so that the fixCursor
+    // function can lookup any default block tag options set.
+    this.setHTML( '' );
+}
+
+var proto = Squire.prototype;
+
+var sanitizeToDOMFragment = function ( html, isPaste, self ) {
+    var doc = self._doc;
+    var frag = html ? DOMPurify.sanitize( html, {
+        ALLOW_UNKNOWN_PROTOCOLS: true,
+        WHOLE_DOCUMENT: false,
+        RETURN_DOM: true,
+        RETURN_DOM_FRAGMENT: true
+    }) : null;
+    return frag ? doc.importNode( frag, true ) : doc.createDocumentFragment();
+};
+
+proto.setConfig = function ( config ) {
+    config = mergeObjects({
+        blockTag: 'DIV',
+        blockAttributes: null,
+        tagAttributes: {
+            blockquote: null,
+            ul: null,
+            ol: null,
+            li: null,
+            a: null
+        },
+        classNames: {
+            colour: 'colour',
+            fontFamily: 'font',
+            fontSize: 'size',
+            highlight: 'highlight'
+        },
+        leafNodeNames: leafNodeNames,
+        undo: {
+            documentSizeThreshold: -1, // -1 means no threshold
+            undoLimit: -1 // -1 means no limit
+        },
+        isInsertedHTMLSanitized: true,
+        isSetHTMLSanitized: true,
+        sanitizeToDOMFragment:
+            typeof DOMPurify !== 'undefined' && DOMPurify.isSupported ?
+            sanitizeToDOMFragment : null,
+        willCutCopy: null
+    }, config, true );
+
+    // Users may specify block tag in lower case
+    config.blockTag = config.blockTag.toUpperCase();
+
+    this._config = config;
+
+    return this;
+};
+
+proto.createElement = function ( tag, props, children ) {
+    return createElement( this._doc, tag, props, children );
+};
+
+proto.createDefaultBlock = function ( children ) {
+    var config = this._config;
+    return fixCursor(
+        this.createElement( config.blockTag, config.blockAttributes, children ),
+        this._root
+    );
+};
+
+proto.didError = function ( error ) {
+    console.log( error );
+};
+
+proto.getDocument = function () {
+    return this._doc;
+};
+proto.getRoot = function () {
+    return this._root;
+};
+
+proto.modifyDocument = function ( modificationCallback ) {
+    var mutation = this._mutation;
+    if ( mutation ) {
+        if ( mutation.takeRecords().length ) {
+            this._docWasChanged();
+        }
+        mutation.disconnect();
+    }
+
+    this._ignoreAllChanges = true;
+    modificationCallback();
+    this._ignoreAllChanges = false;
+
+    if ( mutation ) {
+        mutation.observe( this._root, {
+            childList: true,
+            attributes: true,
+            characterData: true,
+            subtree: true
+        });
+        this._ignoreChange = false;
+    }
+};
+
+// --- Events ---
+
+// Subscribing to these events won't automatically add a listener to the
+// document node, since these events are fired in a custom manner by the
+// editor code.
+var customEvents = {
+    pathChange: 1, select: 1, input: 1, undoStateChange: 1
+};
+
+proto.fireEvent = function ( type, event ) {
+    var handlers = this._events[ type ];
+    var isFocused, l, obj;
+    // UI code, especially modal views, may be monitoring for focus events and
+    // immediately removing focus. In certain conditions, this can cause the
+    // focus event to fire after the blur event, which can cause an infinite
+    // loop. So we detect whether we're actually focused/blurred before firing.
+    if ( /^(?:focus|blur)/.test( type ) ) {
+        isFocused = this._root === this._doc.activeElement;
+        if ( type === 'focus' ) {
+            if ( !isFocused || this._isFocused ) {
+                return this;
+            }
+            this._isFocused = true;
+        } else {
+            if ( isFocused || !this._isFocused ) {
+                return this;
+            }
+            this._isFocused = false;
+        }
+    }
+    if ( handlers ) {
+        if ( !event ) {
+            event = {};
+        }
+        if ( event.type !== type ) {
+            event.type = type;
+        }
+        // Clone handlers array, so any handlers added/removed do not affect it.
+        handlers = handlers.slice();
+        l = handlers.length;
+        while ( l-- ) {
+            obj = handlers[l];
+            try {
+                if ( obj.handleEvent ) {
+                    obj.handleEvent( event );
+                } else {
+                    obj.call( this, event );
+                }
+            } catch ( error ) {
+                error.details = 'Squire: fireEvent error. Event type: ' + type;
+                this.didError( error );
+            }
+        }
+    }
+    return this;
+};
+
+proto.destroy = function () {
+    var events = this._events;
+    var type;
+
+    for ( type in events ) {
+        this.removeEventListener( type );
+    }
+    if ( this._mutation ) {
+        this._mutation.disconnect();
+    }
+    delete this._root.__squire__;
+
+    // Destroy undo stack
+    this._undoIndex = -1;
+    this._undoStack = [];
+    this._undoStackLength = 0;
+};
+
+proto.handleEvent = function ( event ) {
+    this.fireEvent( event.type, event );
+};
+
+proto.addEventListener = function ( type, fn ) {
+    var handlers = this._events[ type ];
+    var target = this._root;
+    if ( !fn ) {
+        this.didError({
+            name: 'Squire: addEventListener with null or undefined fn',
+            message: 'Event type: ' + type
+        });
+        return this;
+    }
+    if ( !handlers ) {
+        handlers = this._events[ type ] = [];
+        if ( !customEvents[ type ] ) {
+            if ( type === 'selectionchange' ) {
+                target = this._doc;
+            }
+            target.addEventListener( type, this, true );
+        }
+    }
+    handlers.push( fn );
+    return this;
+};
+
+proto.removeEventListener = function ( type, fn ) {
+    var handlers = this._events[ type ];
+    var target = this._root;
+    var l;
+    if ( handlers ) {
+        if ( fn ) {
+            l = handlers.length;
+            while ( l-- ) {
+                if ( handlers[l] === fn ) {
+                    handlers.splice( l, 1 );
+                }
+            }
+        } else {
+            handlers.length = 0;
+        }
+        if ( !handlers.length ) {
+            delete this._events[ type ];
+            if ( !customEvents[ type ] ) {
+                if ( type === 'selectionchange' ) {
+                    target = this._doc;
+                }
+                target.removeEventListener( type, this, true );
+            }
+        }
+    }
+    return this;
+};
+
+// --- Selection and Path ---
+
+proto.createRange =
+        function ( range, startOffset, endContainer, endOffset ) {
+    if ( range instanceof this._win.Range ) {
+        return range.cloneRange();
+    }
+    var domRange = this._doc.createRange();
+    domRange.setStart( range, startOffset );
+    if ( endContainer ) {
+        domRange.setEnd( endContainer, endOffset );
+    } else {
+        domRange.setEnd( range, startOffset );
+    }
+    return domRange;
+};
+
+proto.getCursorPosition = function ( range ) {
+    if ( ( !range && !( range = this.getSelection() ) ) ||
+            !range.getBoundingClientRect ) {
+        return null;
+    }
+    // Get the bounding rect
+    var rect = range.getBoundingClientRect();
+    var node, parent;
+    if ( rect && !rect.top ) {
+        this._ignoreChange = true;
+        node = this._doc.createElement( 'SPAN' );
+        node.textContent = ZWS;
+        insertNodeInRange( range, node );
+        rect = node.getBoundingClientRect();
+        parent = node.parentNode;
+        parent.removeChild( node );
+        mergeInlines( parent, range );
+    }
+    return rect;
+};
+
+proto._moveCursorTo = function ( toStart ) {
+    var root = this._root,
+        range = this.createRange( root, toStart ? 0 : root.childNodes.length );
+    moveRangeBoundariesDownTree( range );
+    this.setSelection( range );
+    return this;
+};
+proto.moveCursorToStart = function () {
+    return this._moveCursorTo( true );
+};
+proto.moveCursorToEnd = function () {
+    return this._moveCursorTo( false );
+};
+
+var getWindowSelection = function ( self ) {
+    return self._win.getSelection() || null;
+};
+
+proto.setSelection = function ( range ) {
+    if ( range ) {
+        this._lastSelection = range;
+        // If we're setting selection, that automatically, and synchronously, // triggers a focus event. So just store the selection and mark it as
+        // needing restore on focus.
+        if ( !this._isFocused ) {
+            enableRestoreSelection.call( this );
+        } else if ( isAndroid && !this._restoreSelection ) {
+            // Android closes the keyboard on removeAllRanges() and doesn't
+            // open it again when addRange() is called, sigh.
+            // Since Android doesn't trigger a focus event in setSelection(),
+            // use a blur/focus dance to work around this by letting the
+            // selection be restored on focus.
+            // Need to check for !this._restoreSelection to avoid infinite loop
+            enableRestoreSelection.call( this );
+            this.blur();
+            this.focus();
+        } else {
+            // iOS bug: if you don't focus the iframe before setting the
+            // selection, you can end up in a state where you type but the input
+            // doesn't get directed into the contenteditable area but is instead
+            // lost in a black hole. Very strange.
+            if ( isIOS ) {
+                this._win.focus();
+            }
+            var sel = getWindowSelection( this );
+            if ( sel ) {
+                sel.removeAllRanges();
+                sel.addRange( range );
+            }
+        }
+    }
+    return this;
+};
+
+proto.getSelection = function () {
+    var sel = getWindowSelection( this );
+    var root = this._root;
+    var selection, startContainer, endContainer, node;
+    // If not focused, always rely on cached selection; another function may
+    // have set it but the DOM is not modified until focus again
+    if ( this._isFocused && sel && sel.rangeCount ) {
+        selection  = sel.getRangeAt( 0 ).cloneRange();
+        startContainer = selection.startContainer;
+        endContainer = selection.endContainer;
+        // FF can return the selection as being inside an <img>. WTF?
+        if ( startContainer && isLeaf( startContainer ) ) {
+            selection.setStartBefore( startContainer );
+        }
+        if ( endContainer && isLeaf( endContainer ) ) {
+            selection.setEndBefore( endContainer );
+        }
+    }
+    if ( selection &&
+            isOrContains( root, selection.commonAncestorContainer ) ) {
+        this._lastSelection = selection;
+    } else {
+        selection = this._lastSelection;
+        node = selection.commonAncestorContainer;
+        // Check the editor is in the live document; if not, the range has
+        // probably been rewritten by the browser and is bogus
+        if ( !isOrContains( node.ownerDocument, node ) ) {
+            selection = null;
+        }
+    }
+    if ( !selection ) {
+        selection = this.createRange( root.firstChild, 0 );
+    }
+    return selection;
+};
+
+function enableRestoreSelection () {
+    this._restoreSelection = true;
+}
+function disableRestoreSelection () {
+    this._restoreSelection = false;
+}
+function restoreSelection () {
+    if ( this._restoreSelection ) {
+        this.setSelection( this._lastSelection );
+    }
+}
+
+proto.getSelectedText = function () {
+    var range = this.getSelection();
+    if ( !range || range.collapsed ) {
+        return '';
+    }
+    var walker = new TreeWalker(
+        range.commonAncestorContainer,
+        SHOW_TEXT|SHOW_ELEMENT,
+        function ( node ) {
+            return isNodeContainedInRange( range, node, true );
+        }
+    );
+    var startContainer = range.startContainer;
+    var endContainer = range.endContainer;
+    var node = walker.currentNode = startContainer;
+    var textContent = '';
+    var addedTextInBlock = false;
+    var value;
+
+    if ( !walker.filter( node ) ) {
+        node = walker.nextNode();
+    }
+
+    while ( node ) {
+        if ( node.nodeType === TEXT_NODE ) {
+            value = node.data;
+            if ( value && ( /\S/.test( value ) ) ) {
+                if ( node === endContainer ) {
+                    value = value.slice( 0, range.endOffset );
+                }
+                if ( node === startContainer ) {
+                    value = value.slice( range.startOffset );
+                }
+                textContent += value;
+                addedTextInBlock = true;
+            }
+        } else if ( node.nodeName === 'BR' ||
+                addedTextInBlock && !isInline( node ) ) {
+            textContent += '\n';
+            addedTextInBlock = false;
+        }
+        node = walker.nextNode();
+    }
+
+    return textContent;
+};
+
+proto.getPath = function () {
+    return this._path;
+};
+
+// --- Workaround for browsers that can't focus empty text nodes ---
+
+// WebKit bug: https://bugs.webkit.org/show_bug.cgi?id=15256
+
+// Walk down the tree starting at the root and remove any ZWS. If the node only
+// contained ZWS space then remove it too. We may want to keep one ZWS node at
+// the bottom of the tree so the block can be selected. Define that node as the
+// keepNode.
+var removeZWS = function ( root, keepNode ) {
+    var walker = new TreeWalker( root, SHOW_TEXT );
+    var parent, node, index;
+    while ( node = walker.nextNode() ) {
+        while ( ( index = node.data.indexOf( ZWS ) ) > -1  &&
+                ( !keepNode || node.parentNode !== keepNode ) ) {
+            if ( node.length === 1 ) {
+                do {
+                    parent = node.parentNode;
+                    parent.removeChild( node );
+                    node = parent;
+                    walker.currentNode = parent;
+                } while ( isInline( node ) && !getLength( node ) );
+                break;
+            } else {
+                node.deleteData( index, 1 );
+            }
+        }
+    }
+};
+
+proto._didAddZWS = function () {
+    this._hasZWS = true;
+};
+proto._removeZWS = function () {
+    if ( !this._hasZWS ) {
+        return;
+    }
+    removeZWS( this._root );
+    this._hasZWS = false;
+};
+
+// --- Path change events ---
+
+proto._updatePath = function ( range, force ) {
+    if ( !range ) {
+        return;
+    }
+    var anchor = range.startContainer,
+        focus = range.endContainer,
+        newPath;
+    if ( force || anchor !== this._lastAnchorNode ||
+            focus !== this._lastFocusNode ) {
+        this._lastAnchorNode = anchor;
+        this._lastFocusNode = focus;
+        newPath = ( anchor && focus ) ? ( anchor === focus ) ?
+            getPath( focus, this._root, this._config ) : '(selection)' : '';
+        if ( this._path !== newPath ) {
+            this._path = newPath;
+            this.fireEvent( 'pathChange', { path: newPath } );
+        }
+    }
+    this.fireEvent( range.collapsed ? 'cursor' : 'select', {
+        range: range
+    });
+};
+
+// selectionchange is fired synchronously in IE when removing current selection
+// and when setting new selection; keyup/mouseup may have processing we want
+// to do first. Either way, send to next event loop.
+proto._updatePathOnEvent = function ( event ) {
+    var self = this;
+    if ( self._isFocused && !self._willUpdatePath ) {
+        self._willUpdatePath = true;
+        setTimeout( function () {
+            self._willUpdatePath = false;
+            self._updatePath( self.getSelection() );
+        }, 0 );
+    }
+};
+
+// --- Focus ---
+
+proto.focus = function () {
+    this._root.focus({ preventScroll: true });
+
+    if ( isIE ) {
+        this.fireEvent( 'focus' );
+    }
+
+    return this;
+};
+
+proto.blur = function () {
+    this._root.blur();
+
+    if ( isIE ) {
+        this.fireEvent( 'blur' );
+    }
+
+    return this;
+};
+
+// --- Bookmarking ---
+
+var startSelectionId = 'squire-selection-start';
+var endSelectionId = 'squire-selection-end';
+
+proto._saveRangeToBookmark = function ( range ) {
+    var startNode = this.createElement( 'INPUT', {
+            id: startSelectionId,
+            type: 'hidden'
+        }),
+        endNode = this.createElement( 'INPUT', {
+            id: endSelectionId,
+            type: 'hidden'
+        }),
+        temp;
+
+    insertNodeInRange( range, startNode );
+    range.collapse( false );
+    insertNodeInRange( range, endNode );
+
+    // In a collapsed range, the start is sometimes inserted after the end!
+    if ( startNode.compareDocumentPosition( endNode ) &
+            DOCUMENT_POSITION_PRECEDING ) {
+        startNode.id = endSelectionId;
+        endNode.id = startSelectionId;
+        temp = startNode;
+        startNode = endNode;
+        endNode = temp;
+    }
+
+    range.setStartAfter( startNode );
+    range.setEndBefore( endNode );
+};
+
+proto._getRangeAndRemoveBookmark = function ( range ) {
+    var root = this._root,
+        start = root.querySelector( '#' + startSelectionId ),
+        end = root.querySelector( '#' + endSelectionId );
+
+    if ( start && end ) {
+        var startContainer = start.parentNode,
+            endContainer = end.parentNode,
+            startOffset = indexOf.call( startContainer.childNodes, start ),
+            endOffset = indexOf.call( endContainer.childNodes, end );
+
+        if ( startContainer === endContainer ) {
+            endOffset -= 1;
+        }
+
+        detach( start );
+        detach( end );
+
+        if ( !range ) {
+            range = this._doc.createRange();
+        }
+        range.setStart( startContainer, startOffset );
+        range.setEnd( endContainer, endOffset );
+
+        // Merge any text nodes we split
+        mergeInlines( startContainer, range );
+        if ( startContainer !== endContainer ) {
+            mergeInlines( endContainer, range );
+        }
+
+        // If we didn't split a text node, we should move into any adjacent
+        // text node to current selection point
+        if ( range.collapsed ) {
+            startContainer = range.startContainer;
+            if ( startContainer.nodeType === TEXT_NODE ) {
+                endContainer = startContainer.childNodes[ range.startOffset ];
+                if ( !endContainer || endContainer.nodeType !== TEXT_NODE ) {
+                    endContainer =
+                        startContainer.childNodes[ range.startOffset - 1 ];
+                }
+                if ( endContainer && endContainer.nodeType === TEXT_NODE ) {
+                    range.setStart( endContainer, 0 );
+                    range.collapse( true );
+                }
+            }
+        }
+    }
+    return range || null;
+};
+
+// --- Undo ---
+
+proto._keyUpDetectChange = function ( event ) {
+    var code = event.keyCode;
+    // Presume document was changed if:
+    // 1. A modifier key (other than shift) wasn't held down
+    // 2. The key pressed is not in range 16<=x<=20 (control keys)
+    // 3. The key pressed is not in range 33<=x<=45 (navigation keys)
+    if ( !event.ctrlKey && !event.metaKey && !event.altKey &&
+            ( code < 16 || code > 20 ) &&
+            ( code < 33 || code > 45 ) ) {
+        this._docWasChanged();
+    }
+};
+
+proto._docWasChanged = function () {
+    if ( canWeakMap ) {
+        nodeCategoryCache = new WeakMap();
+    }
+    if ( this._ignoreAllChanges ) {
+        return;
+    }
+
+    if ( canObserveMutations && this._ignoreChange ) {
+        this._ignoreChange = false;
+        return;
+    }
+    if ( this._isInUndoState ) {
+        this._isInUndoState = false;
+        this.fireEvent( 'undoStateChange', {
+            canUndo: true,
+            canRedo: false
+        });
+    }
+    this.fireEvent( 'input' );
+};
+
+// Leaves bookmark
+proto._recordUndoState = function ( range, replace ) {
+    // Don't record if we're already in an undo state
+    if ( !this._isInUndoState|| replace ) {
+        // Advance pointer to new position
+        var undoIndex = this._undoIndex;
+        var undoStack = this._undoStack;
+        var undoConfig = this._config.undo;
+        var undoThreshold = undoConfig.documentSizeThreshold;
+        var undoLimit = undoConfig.undoLimit;
+        var html;
+
+        if ( !replace ) {
+            undoIndex += 1;
+        }
+
+        // Truncate stack if longer (i.e. if has been previously undone)
+        if ( undoIndex < this._undoStackLength ) {
+            undoStack.length = this._undoStackLength = undoIndex;
+        }
+
+        // Get data
+        if ( range ) {
+            this._saveRangeToBookmark( range );
+        }
+        html = this._getHTML();
+
+        // If this document is above the configured size threshold,
+        // limit the number of saved undo states.
+        // Threshold is in bytes, JS uses 2 bytes per character
+        if ( undoThreshold > -1 && html.length * 2 > undoThreshold ) {
+            if ( undoLimit > -1 && undoIndex > undoLimit ) {
+                undoStack.splice( 0, undoIndex - undoLimit );
+                undoIndex = undoLimit;
+                this._undoStackLength = undoLimit;
+            }
+        }
+
+        // Save data
+        undoStack[ undoIndex ] = html;
+        this._undoIndex = undoIndex;
+        this._undoStackLength += 1;
+        this._isInUndoState = true;
+    }
+};
+
+proto.saveUndoState = function ( range ) {
+    if ( range === undefined ) {
+        range = this.getSelection();
+    }
+    this._recordUndoState( range, this._isInUndoState );
+    this._getRangeAndRemoveBookmark( range );
+
+    return this;
+};
+
+proto.undo = function () {
+    // Sanity check: must not be at beginning of the history stack
+    if ( this._undoIndex !== 0 || !this._isInUndoState ) {
+        // Make sure any changes since last checkpoint are saved.
+        this._recordUndoState( this.getSelection(), false );
+
+        this._undoIndex -= 1;
+        this._setHTML( this._undoStack[ this._undoIndex ] );
+        var range = this._getRangeAndRemoveBookmark();
+        if ( range ) {
+            this.setSelection( range );
+        }
+        this._isInUndoState = true;
+        this.fireEvent( 'undoStateChange', {
+            canUndo: this._undoIndex !== 0,
+            canRedo: true
+        });
+        this.fireEvent( 'input' );
+    }
+    return this;
+};
+
+proto.redo = function () {
+    // Sanity check: must not be at end of stack and must be in an undo
+    // state.
+    var undoIndex = this._undoIndex,
+        undoStackLength = this._undoStackLength;
+    if ( undoIndex + 1 < undoStackLength && this._isInUndoState ) {
+        this._undoIndex += 1;
+        this._setHTML( this._undoStack[ this._undoIndex ] );
+        var range = this._getRangeAndRemoveBookmark();
+        if ( range ) {
+            this.setSelection( range );
+        }
+        this.fireEvent( 'undoStateChange', {
+            canUndo: true,
+            canRedo: undoIndex + 2 < undoStackLength
+        });
+        this.fireEvent( 'input' );
+    }
+    return this;
+};
+
+// --- Inline formatting ---
+
+// Looks for matching tag and attributes, so won't work
+// if <strong> instead of <b> etc.
+proto.hasFormat = function ( tag, attributes, range ) {
+    // 1. Normalise the arguments and get selection
+    tag = tag.toUpperCase();
+    if ( !attributes ) { attributes = {}; }
+    if ( !range && !( range = this.getSelection() ) ) {
+        return false;
+    }
+
+    // Sanitize range to prevent weird IE artifacts
+    if ( !range.collapsed &&
+            range.startContainer.nodeType === TEXT_NODE &&
+            range.startOffset === range.startContainer.length &&
+            range.startContainer.nextSibling ) {
+        range.setStartBefore( range.startContainer.nextSibling );
+    }
+    if ( !range.collapsed &&
+            range.endContainer.nodeType === TEXT_NODE &&
+            range.endOffset === 0 &&
+            range.endContainer.previousSibling ) {
+        range.setEndAfter( range.endContainer.previousSibling );
+    }
+
+    // If the common ancestor is inside the tag we require, we definitely
+    // have the format.
+    var root = this._root;
+    var common = range.commonAncestorContainer;
+    var walker, node;
+    if ( getNearest( common, root, tag, attributes ) ) {
+        return true;
+    }
+
+    // If common ancestor is a text node and doesn't have the format, we
+    // definitely don't have it.
+    if ( common.nodeType === TEXT_NODE ) {
+        return false;
+    }
+
+    // Otherwise, check each text node at least partially contained within
+    // the selection and make sure all of them have the format we want.
+    walker = new TreeWalker( common, SHOW_TEXT, function ( node ) {
+        return isNodeContainedInRange( range, node, true );
+    });
+
+    var seenNode = false;
+    while ( node = walker.nextNode() ) {
+        if ( !getNearest( node, root, tag, attributes ) ) {
+            return false;
+        }
+        seenNode = true;
+    }
+
+    return seenNode;
+};
+
+// Extracts the font-family and font-size (if any) of the element
+// holding the cursor. If there's a selection, returns an empty object.
+proto.getFontInfo = function ( range ) {
+    var fontInfo = {
+        color: undefined,
+        backgroundColor: undefined,
+        family: undefined,
+        size: undefined
+    };
+    var seenAttributes = 0;
+    var element, style, attr;
+
+    if ( !range && !( range = this.getSelection() ) ) {
+        return fontInfo;
+    }
+
+    element = range.commonAncestorContainer;
+    if ( range.collapsed || element.nodeType === TEXT_NODE ) {
+        if ( element.nodeType === TEXT_NODE ) {
+            element = element.parentNode;
+        }
+        while ( seenAttributes < 4 && element ) {
+            if ( style = element.style ) {
+                if ( !fontInfo.color && ( attr = style.color ) ) {
+                    fontInfo.color = attr;
+                    seenAttributes += 1;
+                }
+                if ( !fontInfo.backgroundColor &&
+                        ( attr = style.backgroundColor ) ) {
+                    fontInfo.backgroundColor = attr;
+                    seenAttributes += 1;
+                }
+                if ( !fontInfo.family && ( attr = style.fontFamily ) ) {
+                    fontInfo.family = attr;
+                    seenAttributes += 1;
+                }
+                if ( !fontInfo.size && ( attr = style.fontSize ) ) {
+                    fontInfo.size = attr;
+                    seenAttributes += 1;
+                }
+            }
+            element = element.parentNode;
+        }
+    }
+    return fontInfo;
+};
+
+proto._addFormat = function ( tag, attributes, range ) {
+    // If the range is collapsed we simply insert the node by wrapping
+    // it round the range and focus it.
+    var root = this._root;
+    var el, walker, startContainer, endContainer, startOffset, endOffset,
+        node, needsFormat, block;
+
+    if ( range.collapsed ) {
+        el = fixCursor( this.createElement( tag, attributes ), root );
+        insertNodeInRange( range, el );
+        range.setStart( el.firstChild, el.firstChild.length );
+        range.collapse( true );
+
+        // Clean up any previous formats that may have been set on this block
+        // that are unused.
+        block = el;
+        while ( isInline( block ) ) {
+            block = block.parentNode;
+        }
+        removeZWS( block, el );
+    }
+    // Otherwise we find all the textnodes in the range (splitting
+    // partially selected nodes) and if they're not already formatted
+    // correctly we wrap them in the appropriate tag.
+    else {
+        // Create an iterator to walk over all the text nodes under this
+        // ancestor which are in the range and not already formatted
+        // correctly.
+        //
+        // In Blink/WebKit, empty blocks may have no text nodes, just a <br>.
+        // Therefore we wrap this in the tag as well, as this will then cause it
+        // to apply when the user types something in the block, which is
+        // presumably what was intended.
+        //
+        // IMG tags are included because we may want to create a link around
+        // them, and adding other styles is harmless.
+        walker = new TreeWalker(
+            range.commonAncestorContainer,
+            SHOW_TEXT|SHOW_ELEMENT,
+            function ( node ) {
+                return ( node.nodeType === TEXT_NODE ||
+                        node.nodeName === 'BR' ||
+                        node.nodeName === 'IMG'
+                    ) && isNodeContainedInRange( range, node, true );
+            }
+        );
+
+        // Start at the beginning node of the range and iterate through
+        // all the nodes in the range that need formatting.
+        startContainer = range.startContainer;
+        startOffset = range.startOffset;
+        endContainer = range.endContainer;
+        endOffset = range.endOffset;
+
+        // Make sure we start with a valid node.
+        walker.currentNode = startContainer;
+        if ( !walker.filter( startContainer ) ) {
+            startContainer = walker.nextNode();
+            startOffset = 0;
+        }
+
+        // If there are no interesting nodes in the selection, abort
+        if ( !startContainer ) {
+            return range;
+        }
+
+        do {
+            node = walker.currentNode;
+            needsFormat = !getNearest( node, root, tag, attributes );
+            if ( needsFormat ) {
+                // <br> can never be a container node, so must have a text node
+                // if node == (end|start)Container
+                if ( node === endContainer && node.length > endOffset ) {
+                    node.splitText( endOffset );
+                }
+                if ( node === startContainer && startOffset ) {
+                    node = node.splitText( startOffset );
+                    if ( endContainer === startContainer ) {
+                        endContainer = node;
+                        endOffset -= startOffset;
+                    }
+                    startContainer = node;
+                    startOffset = 0;
+                }
+                el = this.createElement( tag, attributes );
+                replaceWith( node, el );
+                el.appendChild( node );
+            }
+        } while ( walker.nextNode() );
+
+        // If we don't finish inside a text node, offset may have changed.
+        if ( endContainer.nodeType !== TEXT_NODE ) {
+            if ( node.nodeType === TEXT_NODE ) {
+                endContainer = node;
+                endOffset = node.length;
+            } else {
+                // If <br>, we must have just wrapped it, so it must have only
+                // one child
+                endContainer = node.parentNode;
+                endOffset = 1;
+            }
+        }
+
+        // Now set the selection to as it was before
+        range = this.createRange(
+            startContainer, startOffset, endContainer, endOffset );
+    }
+    return range;
+};
+
+proto._removeFormat = function ( tag, attributes, range, partial ) {
+    // Add bookmark
+    this._saveRangeToBookmark( range );
+
+    // We need a node in the selection to break the surrounding
+    // formatted text.
+    var doc = this._doc,
+        fixer;
+    if ( range.collapsed ) {
+        if ( cantFocusEmptyTextNodes ) {
+            fixer = doc.createTextNode( ZWS );
+            this._didAddZWS();
+        } else {
+            fixer = doc.createTextNode( '' );
+        }
+        insertNodeInRange( range, fixer );
+    }
+
+    // Find block-level ancestor of selection
+    var root = range.commonAncestorContainer;
+    while ( isInline( root ) ) {
+        root = root.parentNode;
+    }
+
+    // Find text nodes inside formatTags that are not in selection and
+    // add an extra tag with the same formatting.
+    var startContainer = range.startContainer,
+        startOffset = range.startOffset,
+        endContainer = range.endContainer,
+        endOffset = range.endOffset,
+        toWrap = [],
+        examineNode = function ( node, exemplar ) {
+            // If the node is completely contained by the range then
+            // we're going to remove all formatting so ignore it.
+            if ( isNodeContainedInRange( range, node, false ) ) {
+                return;
+            }
+
+            var isText = ( node.nodeType === TEXT_NODE ),
+                child, next;
+
+            // If not at least partially contained, wrap entire contents
+            // in a clone of the tag we're removing and we're done.
+            if ( !isNodeContainedInRange( range, node, true ) ) {
+                // Ignore bookmarks and empty text nodes
+                if ( node.nodeName !== 'INPUT' &&
+                        ( !isText || node.data ) ) {
+                    toWrap.push([ exemplar, node ]);
+                }
+                return;
+            }
+
+            // Split any partially selected text nodes.
+            if ( isText ) {
+                if ( node === endContainer && endOffset !== node.length ) {
+                    toWrap.push([ exemplar, node.splitText( endOffset ) ]);
+                }
+                if ( node === startContainer && startOffset ) {
+                    node.splitText( startOffset );
+                    toWrap.push([ exemplar, node ]);
+                }
+            }
+            // If not a text node, recurse onto all children.
+            // Beware, the tree may be rewritten with each call
+            // to examineNode, hence find the next sibling first.
+            else {
+                for ( child = node.firstChild; child; child = next ) {
+                    next = child.nextSibling;
+                    examineNode( child, exemplar );
+                }
+            }
+        },
+        formatTags = Array.prototype.filter.call(
+            root.getElementsByTagName( tag ), function ( el ) {
+                return isNodeContainedInRange( range, el, true ) &&
+                    hasTagAttributes( el, tag, attributes );
+            }
+        );
+
+    if ( !partial ) {
+        formatTags.forEach( function ( node ) {
+            examineNode( node, node );
+        });
+    }
+
+    // Now wrap unselected nodes in the tag
+    toWrap.forEach( function ( item ) {
+        // [ exemplar, node ] tuple
+        var el = item[0].cloneNode( false ),
+            node = item[1];
+        replaceWith( node, el );
+        el.appendChild( node );
+    });
+    // and remove old formatting tags.
+    formatTags.forEach( function ( el ) {
+        replaceWith( el, empty( el ) );
+    });
+
+    // Merge adjacent inlines:
+    this._getRangeAndRemoveBookmark( range );
+    if ( fixer ) {
+        range.collapse( false );
+    }
+    mergeInlines( root, range );
+
+    return range;
+};
+
+proto.changeFormat = function ( add, remove, range, partial ) {
+    // Normalise the arguments and get selection
+    if ( !range && !( range = this.getSelection() ) ) {
+        return this;
+    }
+
+    // Save undo checkpoint
+    this.saveUndoState( range );
+
+    if ( remove ) {
+        range = this._removeFormat( remove.tag.toUpperCase(),
+            remove.attributes || {}, range, partial );
+    }
+    if ( add ) {
+        range = this._addFormat( add.tag.toUpperCase(),
+            add.attributes || {}, range );
+    }
+
+    this.setSelection( range );
+    this._updatePath( range, true );
+
+    // We're not still in an undo state
+    if ( !canObserveMutations ) {
+        this._docWasChanged();
+    }
+
+    return this;
+};
+
+// --- Block formatting ---
+
+var tagAfterSplit = {
+    DT:  'DD',
+    DD:  'DT',
+    LI:  'LI',
+    PRE: 'PRE'
+};
+
+var splitBlock = function ( self, block, node, offset ) {
+    var splitTag = tagAfterSplit[ block.nodeName ],
+        splitProperties = null,
+        nodeAfterSplit = split( node, offset, block.parentNode, self._root ),
+        config = self._config;
+
+    if ( !splitTag ) {
+        splitTag = config.blockTag;
+        splitProperties = config.blockAttributes;
+    }
+
+    // Make sure the new node is the correct type.
+    if ( !hasTagAttributes( nodeAfterSplit, splitTag, splitProperties ) ) {
+        block = createElement( nodeAfterSplit.ownerDocument,
+            splitTag, splitProperties );
+        if ( nodeAfterSplit.dir ) {
+            block.dir = nodeAfterSplit.dir;
+        }
+        replaceWith( nodeAfterSplit, block );
+        block.appendChild( empty( nodeAfterSplit ) );
+        nodeAfterSplit = block;
+    }
+    return nodeAfterSplit;
+};
+
+proto.forEachBlock = function ( fn, mutates, range ) {
+    if ( !range && !( range = this.getSelection() ) ) {
+        return this;
+    }
+
+    // Save undo checkpoint
+    if ( mutates ) {
+        this.saveUndoState( range );
+    }
+
+    var root = this._root;
+    var start = getStartBlockOfRange( range, root );
+    var end = getEndBlockOfRange( range, root );
+    if ( start && end ) {
+        do {
+            if ( fn( start ) || start === end ) { break; }
+        } while ( start = getNextBlock( start, root ) );
+    }
+
+    if ( mutates ) {
+        this.setSelection( range );
+
+        // Path may have changed
+        this._updatePath( range, true );
+
+        // We're not still in an undo state
+        if ( !canObserveMutations ) {
+            this._docWasChanged();
+        }
+    }
+    return this;
+};
+
+proto.modifyBlocks = function ( modify, range ) {
+    if ( !range && !( range = this.getSelection() ) ) {
+        return this;
+    }
+
+    // 1. Save undo checkpoint and bookmark selection
+    this._recordUndoState( range, this._isInUndoState );
+
+    var root = this._root;
+    var frag;
+
+    // 2. Expand range to block boundaries
+    expandRangeToBlockBoundaries( range, root );
+
+    // 3. Remove range.
+    moveRangeBoundariesUpTree( range, root, root, root );
+    frag = extractContentsOfRange( range, root, root );
+
+    // 4. Modify tree of fragment and reinsert.
+    insertNodeInRange( range, modify.call( this, frag ) );
+
+    // 5. Merge containers at edges
+    if ( range.endOffset < range.endContainer.childNodes.length ) {
+        mergeContainers( range.endContainer.childNodes[ range.endOffset ], root );
+    }
+    mergeContainers( range.startContainer.childNodes[ range.startOffset ], root );
+
+    // 6. Restore selection
+    this._getRangeAndRemoveBookmark( range );
+    this.setSelection( range );
+    this._updatePath( range, true );
+
+    // 7. We're not still in an undo state
+    if ( !canObserveMutations ) {
+        this._docWasChanged();
+    }
+
+    return this;
+};
+
+var increaseBlockQuoteLevel = function ( frag ) {
+    return this.createElement( 'BLOCKQUOTE',
+        this._config.tagAttributes.blockquote, [
+            frag
+        ]);
+};
+
+var decreaseBlockQuoteLevel = function ( frag ) {
+    var root = this._root;
+    var blockquotes = frag.querySelectorAll( 'blockquote' );
+    Array.prototype.filter.call( blockquotes, function ( el ) {
+        return !getNearest( el.parentNode, root, 'BLOCKQUOTE' );
+    }).forEach( function ( el ) {
+        replaceWith( el, empty( el ) );
+    });
+    return frag;
+};
+
+var removeBlockQuote = function (/* frag */) {
+    return this.createDefaultBlock([
+        this.createElement( 'INPUT', {
+            id: startSelectionId,
+            type: 'hidden'
+        }),
+        this.createElement( 'INPUT', {
+            id: endSelectionId,
+            type: 'hidden'
+        })
+    ]);
+};
+
+var makeList = function ( self, frag, type ) {
+    var walker = getBlockWalker( frag, self._root ),
+        node, tag, prev, newLi,
+        tagAttributes = self._config.tagAttributes,
+        listAttrs = tagAttributes[ type.toLowerCase() ],
+        listItemAttrs = tagAttributes.li;
+
+    while ( node = walker.nextNode() ) {
+        if ( node.parentNode.nodeName === 'LI' ) {
+            node = node.parentNode;
+            walker.currentNode = node.lastChild;
+        }
+        if ( node.nodeName !== 'LI' ) {
+            newLi = self.createElement( 'LI', listItemAttrs );
+            if ( node.dir ) {
+                newLi.dir = node.dir;
+            }
+
+            // Have we replaced the previous block with a new <ul>/<ol>?
+            if ( ( prev = node.previousSibling ) && prev.nodeName === type ) {
+                prev.appendChild( newLi );
+                detach( node );
+            }
+            // Otherwise, replace this block with the <ul>/<ol>
+            else {
+                replaceWith(
+                    node,
+                    self.createElement( type, listAttrs, [
+                        newLi
+                    ])
+                );
+            }
+            newLi.appendChild( empty( node ) );
+            walker.currentNode = newLi;
+        } else {
+            node = node.parentNode;
+            tag = node.nodeName;
+            if ( tag !== type && ( /^[OU]L$/.test( tag ) ) ) {
+                replaceWith( node,
+                    self.createElement( type, listAttrs, [ empty( node ) ] )
+                );
+            }
+        }
+    }
+};
+
+var makeUnorderedList = function ( frag ) {
+    makeList( this, frag, 'UL' );
+    return frag;
+};
+
+var makeOrderedList = function ( frag ) {
+    makeList( this, frag, 'OL' );
+    return frag;
+};
+
+var removeList = function ( frag ) {
+    var lists = frag.querySelectorAll( 'UL, OL' ),
+        items =  frag.querySelectorAll( 'LI' ),
+        root = this._root,
+        i, l, list, listFrag, item;
+    for ( i = 0, l = lists.length; i < l; i += 1 ) {
+        list = lists[i];
+        listFrag = empty( list );
+        fixContainer( listFrag, root );
+        replaceWith( list, listFrag );
+    }
+
+    for ( i = 0, l = items.length; i < l; i += 1 ) {
+        item = items[i];
+        if ( isBlock( item ) ) {
+            replaceWith( item,
+                this.createDefaultBlock([ empty( item ) ])
+            );
+        } else {
+            fixContainer( item, root );
+            replaceWith( item, empty( item ) );
+        }
+    }
+    return frag;
+};
+
+var getListSelection = function ( range, root ) {
+    // Get start+end li in single common ancestor
+    var list = range.commonAncestorContainer;
+    var startLi = range.startContainer;
+    var endLi = range.endContainer;
+    while ( list && list !== root && !/^[OU]L$/.test( list.nodeName ) ) {
+        list = list.parentNode;
+    }
+    if ( !list || list === root ) {
+        return null;
+    }
+    if ( startLi === list ) {
+        startLi = startLi.childNodes[ range.startOffset ];
+    }
+    if ( endLi === list ) {
+        endLi = endLi.childNodes[ range.endOffset ];
+    }
+    while ( startLi && startLi.parentNode !== list ) {
+        startLi = startLi.parentNode;
+    }
+    while ( endLi && endLi.parentNode !== list ) {
+        endLi = endLi.parentNode;
+    }
+    return [ list, startLi, endLi ];
+};
+
+proto.increaseListLevel = function ( range ) {
+    if ( !range && !( range = this.getSelection() ) ) {
+        return this.focus();
+    }
+
+    var root = this._root;
+    var listSelection = getListSelection( range, root );
+    if ( !listSelection ) {
+        return this.focus();
+    }
+
+    var list = listSelection[0];
+    var startLi = listSelection[1];
+    var endLi = listSelection[2];
+    if ( !startLi || startLi === list.firstChild ) {
+        return this.focus();
+    }
+
+    // Save undo checkpoint and bookmark selection
+    this._recordUndoState( range, this._isInUndoState );
+
+    // Increase list depth
+    var type = list.nodeName;
+    var newParent = startLi.previousSibling;
+    var listAttrs, next;
+    if ( newParent.nodeName !== type ) {
+        listAttrs = this._config.tagAttributes[ type.toLowerCase() ];
+        newParent = this.createElement( type, listAttrs );
+        list.insertBefore( newParent, startLi );
+    }
+    do {
+        next = startLi === endLi ? null : startLi.nextSibling;
+        newParent.appendChild( startLi );
+    } while ( ( startLi = next ) );
+    next = newParent.nextSibling;
+    if ( next ) {
+        mergeContainers( next, root );
+    }
+
+    // Restore selection
+    this._getRangeAndRemoveBookmark( range );
+    this.setSelection( range );
+    this._updatePath( range, true );
+
+    // We're not still in an undo state
+    if ( !canObserveMutations ) {
+        this._docWasChanged();
+    }
+
+    return this.focus();
+};
+
+proto.decreaseListLevel = function ( range ) {
+    if ( !range && !( range = this.getSelection() ) ) {
+        return this.focus();
+    }
+
+    var root = this._root;
+    var listSelection = getListSelection( range, root );
+    if ( !listSelection ) {
+        return this.focus();
+    }
+
+    var list = listSelection[0];
+    var startLi = listSelection[1];
+    var endLi = listSelection[2];
+    var newParent, next, insertBefore, makeNotList;
+    if ( !startLi ) {
+        startLi = list.firstChild;
+    }
+    if ( !endLi ) {
+        endLi = list.lastChild;
+    }
+
+    // Save undo checkpoint and bookmark selection
+    this._recordUndoState( range, this._isInUndoState );
+
+    if ( startLi ) {
+        // Find the new parent list node
+        newParent = list.parentNode;
+
+        // Split list if necesary
+        insertBefore = !endLi.nextSibling ?
+            list.nextSibling :
+            split( list, endLi.nextSibling, newParent, root );
+
+        if ( newParent !== root && newParent.nodeName === 'LI' ) {
+            newParent = newParent.parentNode;
+            while ( insertBefore ) {
+                next = insertBefore.nextSibling;
+                endLi.appendChild( insertBefore );
+                insertBefore = next;
+            }
+            insertBefore = list.parentNode.nextSibling;
+        }
+
+        makeNotList = !/^[OU]L$/.test( newParent.nodeName );
+        do {
+            next = startLi === endLi ? null : startLi.nextSibling;
+            list.removeChild( startLi );
+            if ( makeNotList && startLi.nodeName === 'LI' ) {
+                startLi = this.createDefaultBlock([ empty( startLi ) ]);
+            }
+            newParent.insertBefore( startLi, insertBefore );
+        } while (( startLi = next ));
+    }
+
+    if ( !list.firstChild ) {
+        detach( list );
+    }
+
+    if ( insertBefore ) {
+        mergeContainers( insertBefore, root );
+    }
+
+    // Restore selection
+    this._getRangeAndRemoveBookmark( range );
+    this.setSelection( range );
+    this._updatePath( range, true );
+
+    // We're not still in an undo state
+    if ( !canObserveMutations ) {
+        this._docWasChanged();
+    }
+
+    return this.focus();
+};
+
+proto._ensureBottomLine = function () {
+    var root = this._root;
+    var last = root.lastElementChild;
+    if ( !last ||
+            last.nodeName !== this._config.blockTag || !isBlock( last ) ) {
+        root.appendChild( this.createDefaultBlock() );
+    }
+};
+
+// --- Keyboard interaction ---
+
+proto.setKeyHandler = function ( key, fn ) {
+    this._keyHandlers[ key ] = fn;
+    return this;
+};
+
+// --- Get/Set data ---
+
+proto._getHTML = function () {
+    return this._root.innerHTML;
+};
+
+proto._setHTML = function ( html ) {
+    var root = this._root;
+    var node = root;
+    node.innerHTML = html;
+    do {
+        fixCursor( node, root );
+    } while ( node = getNextBlock( node, root ) );
+    this._ignoreChange = true;
+};
+
+proto.getHTML = function ( withBookMark ) {
+    var brs = [],
+        root, node, fixer, html, l, range;
+    if ( withBookMark && ( range = this.getSelection() ) ) {
+        this._saveRangeToBookmark( range );
+    }
+    if ( useTextFixer ) {
+        root = this._root;
+        node = root;
+        while ( node = getNextBlock( node, root ) ) {
+            if ( !node.textContent && !node.querySelector( 'BR' ) ) {
+                fixer = this.createElement( 'BR' );
+                node.appendChild( fixer );
+                brs.push( fixer );
+            }
+        }
+    }
+    html = this._getHTML().replace( /\u200B/g, '' );
+    if ( useTextFixer ) {
+        l = brs.length;
+        while ( l-- ) {
+            detach( brs[l] );
+        }
+    }
+    if ( range ) {
+        this._getRangeAndRemoveBookmark( range );
+    }
+    return html;
+};
+
+proto.setHTML = function ( html ) {
+    var config = this._config;
+    var sanitizeToDOMFragment = config.isSetHTMLSanitized ?
+            config.sanitizeToDOMFragment : null;
+    var root = this._root;
+    var div, frag, child;
+
+    // Parse HTML into DOM tree
+    if ( typeof sanitizeToDOMFragment === 'function' ) {
+        frag = sanitizeToDOMFragment( html, false, this );
+    } else {
+        div = this.createElement( 'DIV' );
+        div.innerHTML = html;
+        frag = this._doc.createDocumentFragment();
+        frag.appendChild( empty( div ) );
+    }
+
+    cleanTree( frag, config );
+    cleanupBRs( frag, root, false );
+
+    fixContainer( frag, root );
+
+    // Fix cursor
+    var node = frag;
+    while ( node = getNextBlock( node, root ) ) {
+        fixCursor( node, root );
+    }
+
+    // Don't fire an input event
+    this._ignoreChange = true;
+
+    // Remove existing root children
+    while ( child = root.lastChild ) {
+        root.removeChild( child );
+    }
+
+    // And insert new content
+    root.appendChild( frag );
+    fixCursor( root, root );
+
+    // Reset the undo stack
+    this._undoIndex = -1;
+    this._undoStack.length = 0;
+    this._undoStackLength = 0;
+    this._isInUndoState = false;
+
+    // Record undo state
+    var range = this._getRangeAndRemoveBookmark() ||
+        this.createRange( root.firstChild, 0 );
+    this.saveUndoState( range );
+    // IE will also set focus when selecting text so don't use
+    // setSelection. Instead, just store it in lastSelection, so if
+    // anything calls getSelection before first focus, we have a range
+    // to return.
+    this._lastSelection = range;
+    enableRestoreSelection.call( this );
+    this._updatePath( range, true );
+
+    return this;
+};
+
+proto.insertElement = function ( el, range ) {
+    if ( !range ) {
+        range = this.getSelection();
+    }
+    range.collapse( true );
+    if ( isInline( el ) ) {
+        insertNodeInRange( range, el );
+        range.setStartAfter( el );
+    } else {
+        // Get containing block node.
+        var root = this._root;
+        var splitNode = getStartBlockOfRange( range, root ) || root;
+        var parent, nodeAfterSplit;
+        // While at end of container node, move up DOM tree.
+        while ( splitNode !== root && !splitNode.nextSibling ) {
+            splitNode = splitNode.parentNode;
+        }
+        // If in the middle of a container node, split up to root.
+        if ( splitNode !== root ) {
+            parent = splitNode.parentNode;
+            nodeAfterSplit = split( parent, splitNode.nextSibling, root, root );
+        }
+        if ( nodeAfterSplit ) {
+            root.insertBefore( el, nodeAfterSplit );
+        } else {
+            root.appendChild( el );
+            // Insert blank line below block.
+            nodeAfterSplit = this.createDefaultBlock();
+            root.appendChild( nodeAfterSplit );
+        }
+        range.setStart( nodeAfterSplit, 0 );
+        range.setEnd( nodeAfterSplit, 0 );
+        moveRangeBoundariesDownTree( range );
+    }
+    this.focus();
+    this.setSelection( range );
+    this._updatePath( range );
+
+    if ( !canObserveMutations ) {
+        this._docWasChanged();
+    }
+
+    return this;
+};
+
+proto.insertImage = function ( src, attributes ) {
+    var img = this.createElement( 'IMG', mergeObjects({
+        src: src
+    }, attributes, true ));
+    this.insertElement( img );
+    return img;
+};
+
+proto.linkRegExp = /\b((?:(?:ht|f)tps?:\/\/|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,}\/)(?:[^\s()<>]+|\([^\s()<>]+\))+(?:\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))|([\w\-.%+]+@(?:[\w\-]+\.)+[A-Z]{2,}\b)(?:\?[^&?\s]+=[^&?\s]+(?:&[^&?\s]+=[^&?\s]+)*)?/i;
+
+var addLinks = function ( frag, root, self ) {
+    var doc = frag.ownerDocument;
+    var walker = new TreeWalker( frag, SHOW_TEXT, function ( node ) {
+        return !getNearest( node, root, 'A' );
+    });
+    var linkRegExp = self.linkRegExp;
+    var defaultAttributes = self._config.tagAttributes.a;
+    var node, data, parent, match, index, endIndex, child;
+    if ( !linkRegExp ) {
+        return;
+    }
+    while (( node = walker.nextNode() )) {
+        data = node.data;
+        parent = node.parentNode;
+        while (( match = linkRegExp.exec( data ) )) {
+            index = match.index;
+            endIndex = index + match[0].length;
+            if ( index ) {
+                child = doc.createTextNode( data.slice( 0, index ) );
+                parent.insertBefore( child, node );
+            }
+            child = self.createElement( 'A', mergeObjects({
+                href: match[1] ?
+                    /^(?:ht|f)tps?:/i.test( match[1] ) ?
+                        match[1] :
+                        'http://' + match[1] :
+                    'mailto:' + match[0]
+            }, defaultAttributes, false ));
+            child.textContent = data.slice( index, endIndex );
+            parent.insertBefore( child, node );
+            node.data = data = data.slice( endIndex );
+        }
+    }
+};
+
+// Insert HTML at the cursor location. If the selection is not collapsed
+// insertTreeFragmentIntoRange will delete the selection so that it is replaced
+// by the html being inserted.
+proto.insertHTML = function ( html, isPaste ) {
+    var config = this._config;
+    var sanitizeToDOMFragment = config.isInsertedHTMLSanitized ?
+            config.sanitizeToDOMFragment : null;
+    var range = this.getSelection();
+    var doc = this._doc;
+    var startFragmentIndex, endFragmentIndex;
+    var div, frag, root, node, event;
+
+    // Edge doesn't just copy the fragment, but includes the surrounding guff
+    // including the full <head> of the page. Need to strip this out. If
+    // available use DOMPurify to parse and sanitise.
+    if ( typeof sanitizeToDOMFragment === 'function' ) {
+        frag = sanitizeToDOMFragment( html, isPaste, this );
+    } else {
+        if ( isPaste ) {
+            startFragmentIndex = html.indexOf( '<!--StartFragment-->' );
+            endFragmentIndex = html.lastIndexOf( '<!--EndFragment-->' );
+            if ( startFragmentIndex > -1 && endFragmentIndex > -1 ) {
+                html = html.slice( startFragmentIndex + 20, endFragmentIndex );
+            }
+        }
+        // Wrap with <tr> if html contains dangling <td> tags
+        if ( /<\/td>((?!<\/tr>)[\s\S])*$/i.test( html ) ) {
+            html = '<TR>' + html + '</TR>';
+        }
+        // Wrap with <table> if html contains dangling <tr> tags
+        if ( /<\/tr>((?!<\/table>)[\s\S])*$/i.test( html ) ) {
+            html = '<TABLE>' + html + '</TABLE>';
+        }
+        // Parse HTML into DOM tree
+        div = this.createElement( 'DIV' );
+        div.innerHTML = html;
+        frag = doc.createDocumentFragment();
+        frag.appendChild( empty( div ) );
+    }
+
+    // Record undo checkpoint
+    this.saveUndoState( range );
+
+    try {
+        root = this._root;
+        node = frag;
+        event = {
+            fragment: frag,
+            preventDefault: function () {
+                this.defaultPrevented = true;
+            },
+            defaultPrevented: false
+        };
+
+        addLinks( frag, frag, this );
+        cleanTree( frag, config );
+        cleanupBRs( frag, root, false );
+        removeEmptyInlines( frag );
+        frag.normalize();
+
+        while ( node = getNextBlock( node, frag ) ) {
+            fixCursor( node, root );
+        }
+
+        if ( isPaste ) {
+            this.fireEvent( 'willPaste', event );
+        }
+
+        if ( !event.defaultPrevented ) {
+            insertTreeFragmentIntoRange( range, event.fragment, root );
+            if ( !canObserveMutations ) {
+                this._docWasChanged();
+            }
+            range.collapse( false );
+            this._ensureBottomLine();
+        }
+
+        this.setSelection( range );
+        this._updatePath( range, true );
+        // Safari sometimes loses focus after paste. Weird.
+        if ( isPaste ) {
+            this.focus();
+        }
+    } catch ( error ) {
+        this.didError( error );
+    }
+    return this;
+};
+
+var escapeHTMLFragement = function ( text ) {
+    return text.split( '&' ).join( '&amp;' )
+               .split( '<' ).join( '&lt;'  )
+               .split( '>' ).join( '&gt;'  )
+               .split( '"' ).join( '&quot;'  );
+};
+
+proto.insertPlainText = function ( plainText, isPaste ) {
+    var range = this.getSelection();
+    if ( range.collapsed &&
+            getNearest( range.startContainer, this._root, 'PRE' ) ) {
+        var node = range.startContainer;
+        var offset = range.startOffset;
+        var text, event;
+        if ( !node || node.nodeType !== TEXT_NODE ) {
+            text = this._doc.createTextNode( '' );
+            node.insertBefore( text, node.childNodes[ offset ] );
+            node = text;
+            offset = 0;
+        }
+        event = {
+            text: plainText,
+            preventDefault: function () {
+                this.defaultPrevented = true;
+            },
+            defaultPrevented: false
+        };
+        if ( isPaste ) {
+            this.fireEvent( 'willPaste', event );
+        }
+
+        if ( !event.defaultPrevented ) {
+            plainText = event.text;
+            node.insertData( offset, plainText );
+            range.setStart( node, offset + plainText.length );
+            range.collapse( true );
+        }
+        this.setSelection( range );
+        return this;
+    }
+    var lines = plainText.split( '\n' );
+    var config = this._config;
+    var tag = config.blockTag;
+    var attributes = config.blockAttributes;
+    var closeBlock  = '</' + tag + '>';
+    var openBlock = '<' + tag;
+    var attr, i, l, line;
+
+    for ( attr in attributes ) {
+        openBlock += ' ' + attr + '="' +
+            escapeHTMLFragement( attributes[ attr ] ) +
+        '"';
+    }
+    openBlock += '>';
+
+    for ( i = 0, l = lines.length; i < l; i += 1 ) {
+        line = lines[i];
+        line = escapeHTMLFragement( line ).replace( / (?= )/g, '&nbsp;' );
+        // Wrap each line in <div></div>
+        lines[i] = openBlock + ( line || '<BR>' ) + closeBlock;
+    }
+    return this.insertHTML( lines.join( '' ), isPaste );
+};
+
+// --- Formatting ---
+
+var command = function ( method, arg, arg2 ) {
+    return function () {
+        this[ method ]( arg, arg2 );
+        return this.focus();
+    };
+};
+
+proto.addStyles = function ( styles ) {
+    if ( styles ) {
+        var head = this._doc.documentElement.firstChild,
+            style = this.createElement( 'STYLE', {
+                type: 'text/css'
+            });
+        style.appendChild( this._doc.createTextNode( styles ) );
+        head.appendChild( style );
+    }
+    return this;
+};
+
+proto.bold = command( 'changeFormat', { tag: 'B' } );
+proto.italic = command( 'changeFormat', { tag: 'I' } );
+proto.underline = command( 'changeFormat', { tag: 'U' } );
+proto.strikethrough = command( 'changeFormat', { tag: 'S' } );
+proto.subscript = command( 'changeFormat', { tag: 'SUB' }, { tag: 'SUP' } );
+proto.superscript = command( 'changeFormat', { tag: 'SUP' }, { tag: 'SUB' } );
+
+proto.removeBold = command( 'changeFormat', null, { tag: 'B' } );
+proto.removeItalic = command( 'changeFormat', null, { tag: 'I' } );
+proto.removeUnderline = command( 'changeFormat', null, { tag: 'U' } );
+proto.removeStrikethrough = command( 'changeFormat', null, { tag: 'S' } );
+proto.removeSubscript = command( 'changeFormat', null, { tag: 'SUB' } );
+proto.removeSuperscript = command( 'changeFormat', null, { tag: 'SUP' } );
+
+proto.makeLink = function ( url, attributes ) {
+    var range = this.getSelection();
+    if ( range.collapsed ) {
+        var protocolEnd = url.indexOf( ':' ) + 1;
+        if ( protocolEnd ) {
+            while ( url[ protocolEnd ] === '/' ) { protocolEnd += 1; }
+        }
+        insertNodeInRange(
+            range,
+            this._doc.createTextNode( url.slice( protocolEnd ) )
+        );
+    }
+    attributes = mergeObjects(
+        mergeObjects({
+            href: url
+        }, attributes, true ),
+        this._config.tagAttributes.a,
+        false
+    );
+
+    this.changeFormat({
+        tag: 'A',
+        attributes: attributes
+    }, {
+        tag: 'A'
+    }, range );
+    return this.focus();
+};
+proto.removeLink = function () {
+    this.changeFormat( null, {
+        tag: 'A'
+    }, this.getSelection(), true );
+    return this.focus();
+};
+
+proto.setFontFace = function ( name ) {
+    var className = this._config.classNames.fontFamily;
+    this.changeFormat( name ? {
+        tag: 'SPAN',
+        attributes: {
+            'class': className,
+            style: 'font-family: ' + name + ', sans-serif;'
+        }
+    } : null, {
+        tag: 'SPAN',
+        attributes: { 'class': className }
+    });
+    return this.focus();
+};
+proto.setFontSize = function ( size ) {
+    var className = this._config.classNames.fontSize;
+    this.changeFormat( size ? {
+        tag: 'SPAN',
+        attributes: {
+            'class': className,
+            style: 'font-size: ' +
+                ( typeof size === 'number' ? size + 'px' : size )
+        }
+    } : null, {
+        tag: 'SPAN',
+        attributes: { 'class': className }
+    });
+    return this.focus();
+};
+
+proto.setTextColour = function ( colour ) {
+    var className = this._config.classNames.colour;
+    this.changeFormat( colour ? {
+        tag: 'SPAN',
+        attributes: {
+            'class': className,
+            style: 'color:' + colour
+        }
+    } : null, {
+        tag: 'SPAN',
+        attributes: { 'class': className }
+    });
+    return this.focus();
+};
+
+proto.setHighlightColour = function ( colour ) {
+    var className = this._config.classNames.highlight;
+    this.changeFormat( colour ? {
+        tag: 'SPAN',
+        attributes: {
+            'class': className,
+            style: 'background-color:' + colour
+        }
+    } : colour, {
+        tag: 'SPAN',
+        attributes: { 'class': className }
+    });
+    return this.focus();
+};
+
+proto.setTextAlignment = function ( alignment ) {
+    this.forEachBlock( function ( block ) {
+        var className = block.className
+            .split( /\s+/ )
+            .filter( function ( klass ) {
+                return !!klass && !/^align/.test( klass );
+            })
+            .join( ' ' );
+        if ( alignment ) {
+            block.className = className + ' align-' + alignment;
+            block.style.textAlign = alignment;
+        } else {
+            block.className = className;
+            block.style.textAlign = '';
+        }
+    }, true );
+    return this.focus();
+};
+
+proto.setTextDirection = function ( direction ) {
+    this.forEachBlock( function ( block ) {
+        if ( direction ) {
+            block.dir = direction;
+        } else {
+            block.removeAttribute( 'dir' );
+        }
+    }, true );
+    return this.focus();
+};
+
+// ---
+
+var addPre = function ( frag ) {
+    var root = this._root;
+    var document = this._doc;
+    var output = document.createDocumentFragment();
+    var walker = getBlockWalker( frag, root );
+    var node;
+    // 1. Extract inline content; drop all blocks and contains.
+    while (( node = walker.nextNode() )) {
+        // 2. Replace <br> with \n in content
+        var nodes = node.querySelectorAll( 'BR' );
+        var brBreaksLine = [];
+        var l = nodes.length;
+        var i, br;
+
+        // Must calculate whether the <br> breaks a line first, because if we
+        // have two <br>s next to each other, after the first one is converted
+        // to a block split, the second will be at the end of a block and
+        // therefore seem to not be a line break. But in its original context it
+        // was, so we should also convert it to a block split.
+        for ( i = 0; i < l; i += 1 ) {
+            brBreaksLine[i] = isLineBreak( nodes[i], false );
+        }
+        while ( l-- ) {
+            br = nodes[l];
+            if ( !brBreaksLine[l] ) {
+                detach( br );
+            } else {
+                replaceWith( br, document.createTextNode( '\n' ) );
+            }
+        }
+        // 3. Remove <code>; its format clashes with <pre>
+        nodes = node.querySelectorAll( 'CODE' );
+        l = nodes.length;
+        while ( l-- ) {
+            detach( nodes[l] );
+        }
+        if ( output.childNodes.length ) {
+            output.appendChild( document.createTextNode( '\n' ) );
+        }
+        output.appendChild( empty( node ) );
+    }
+    // 4. Replace nbsp with regular sp
+    walker = new TreeWalker( output, SHOW_TEXT );
+    while (( node = walker.nextNode() )) {
+        node.data = node.data.replace( / /g, ' ' ); // nbsp -> sp
+    }
+    output.normalize();
+    return fixCursor( this.createElement( 'PRE',
+        this._config.tagAttributes.pre, [
+            output
+        ]), root );
+};
+
+var removePre = function ( frag ) {
+    var document = this._doc;
+    var root = this._root;
+    var pres = frag.querySelectorAll( 'PRE' );
+    var l = pres.length;
+    var pre, walker, node, value, contents, index;
+    while ( l-- ) {
+        pre = pres[l];
+        walker = new TreeWalker( pre, SHOW_TEXT );
+        while (( node = walker.nextNode() )) {
+            value = node.data;
+            value = value.replace( / (?= )/g, ' ' ); // sp -> nbsp
+            contents = document.createDocumentFragment();
+            while (( index = value.indexOf( '\n' ) ) > -1 ) {
+                contents.appendChild(
+                    document.createTextNode( value.slice( 0, index ) )
+                );
+                contents.appendChild( document.createElement( 'BR' ) );
+                value = value.slice( index + 1 );
+            }
+            node.parentNode.insertBefore( contents, node );
+            node.data = value;
+        }
+        fixContainer( pre, root );
+        replaceWith( pre, empty( pre ) );
+    }
+    return frag;
+};
+
+proto.code = function () {
+    var range = this.getSelection();
+    if ( range.collapsed || isContainer( range.commonAncestorContainer ) ) {
+        this.modifyBlocks( addPre, range );
+    } else {
+        this.changeFormat({
+            tag: 'CODE',
+            attributes: this._config.tagAttributes.code
+        }, null, range );
+    }
+    return this.focus();
+};
+
+proto.removeCode = function () {
+    var range = this.getSelection();
+    var ancestor = range.commonAncestorContainer;
+    var inPre = getNearest( ancestor, this._root, 'PRE' );
+    if ( inPre ) {
+        this.modifyBlocks( removePre, range );
+    } else {
+        this.changeFormat( null, { tag: 'CODE' }, range );
+    }
+    return this.focus();
+};
+
+proto.toggleCode = function () {
+    if ( this.hasFormat( 'PRE' ) || this.hasFormat( 'CODE' ) ) {
+        this.removeCode();
+    } else {
+        this.code();
+    }
+    return this;
+};
+
+// ---
+
+function removeFormatting ( self, root, clean ) {
+    var node, next;
+    for ( node = root.firstChild; node; node = next ) {
+        next = node.nextSibling;
+        if ( isInline( node ) ) {
+            if ( node.nodeType === TEXT_NODE || node.nodeName === 'BR' || node.nodeName === 'IMG' ) {
+                clean.appendChild( node );
+                continue;
+            }
+        } else if ( isBlock( node ) ) {
+            clean.appendChild( self.createDefaultBlock([
+                removeFormatting(
+                    self, node, self._doc.createDocumentFragment() )
+            ]));
+            continue;
+        }
+        removeFormatting( self, node, clean );
+    }
+    return clean;
+}
+
+proto.removeAllFormatting = function ( range ) {
+    if ( !range && !( range = this.getSelection() ) || range.collapsed ) {
+        return this;
+    }
+
+    var root = this._root;
+    var stopNode = range.commonAncestorContainer;
+    while ( stopNode && !isBlock( stopNode ) ) {
+        stopNode = stopNode.parentNode;
+    }
+    if ( !stopNode ) {
+        expandRangeToBlockBoundaries( range, root );
+        stopNode = root;
+    }
+    if ( stopNode.nodeType === TEXT_NODE ) {
+        return this;
+    }
+
+    // Record undo point
+    this.saveUndoState( range );
+
+    // Avoid splitting where we're already at edges.
+    moveRangeBoundariesUpTree( range, stopNode, stopNode, root );
+
+    // Split the selection up to the block, or if whole selection in same
+    // block, expand range boundaries to ends of block and split up to root.
+    var doc = stopNode.ownerDocument;
+    var startContainer = range.startContainer;
+    var startOffset = range.startOffset;
+    var endContainer = range.endContainer;
+    var endOffset = range.endOffset;
+
+    // Split end point first to avoid problems when end and start
+    // in same container.
+    var formattedNodes = doc.createDocumentFragment();
+    var cleanNodes = doc.createDocumentFragment();
+    var nodeAfterSplit = split( endContainer, endOffset, stopNode, root );
+    var nodeInSplit = split( startContainer, startOffset, stopNode, root );
+    var nextNode, childNodes;
+
+    // Then replace contents in split with a cleaned version of the same:
+    // blocks become default blocks, text and leaf nodes survive, everything
+    // else is obliterated.
+    while ( nodeInSplit !== nodeAfterSplit ) {
+        nextNode = nodeInSplit.nextSibling;
+        formattedNodes.appendChild( nodeInSplit );
+        nodeInSplit = nextNode;
+    }
+    removeFormatting( this, formattedNodes, cleanNodes );
+    cleanNodes.normalize();
+    nodeInSplit = cleanNodes.firstChild;
+    nextNode = cleanNodes.lastChild;
+
+    // Restore selection
+    childNodes = stopNode.childNodes;
+    if ( nodeInSplit ) {
+        stopNode.insertBefore( cleanNodes, nodeAfterSplit );
+        startOffset = indexOf.call( childNodes, nodeInSplit );
+        endOffset = indexOf.call( childNodes, nextNode ) + 1;
+    } else {
+        startOffset = indexOf.call( childNodes, nodeAfterSplit );
+        endOffset = startOffset;
+    }
+
+    // Merge text nodes at edges, if possible
+    range.setStart( stopNode, startOffset );
+    range.setEnd( stopNode, endOffset );
+    mergeInlines( stopNode, range );
+
+    // And move back down the tree
+    moveRangeBoundariesDownTree( range );
+
+    this.setSelection( range );
+    this._updatePath( range, true );
+
+    return this.focus();
+};
+
+proto.increaseQuoteLevel = command( 'modifyBlocks', increaseBlockQuoteLevel );
+proto.decreaseQuoteLevel = command( 'modifyBlocks', decreaseBlockQuoteLevel );
+
+proto.makeUnorderedList = command( 'modifyBlocks', makeUnorderedList );
+proto.makeOrderedList = command( 'modifyBlocks', makeOrderedList );
+proto.removeList = command( 'modifyBlocks', removeList );
+
+// Node.js exports
+Squire.isInline = isInline;
+Squire.isBlock = isBlock;
+Squire.isContainer = isContainer;
+Squire.getBlockWalker = getBlockWalker;
+Squire.getPreviousBlock = getPreviousBlock;
+Squire.getNextBlock = getNextBlock;
+Squire.areAlike = areAlike;
+Squire.hasTagAttributes = hasTagAttributes;
+Squire.getNearest = getNearest;
+Squire.isOrContains = isOrContains;
+Squire.detach = detach;
+Squire.replaceWith = replaceWith;
+Squire.empty = empty;
+
+// Range.js exports
+Squire.getNodeBefore = getNodeBefore;
+Squire.getNodeAfter = getNodeAfter;
+Squire.insertNodeInRange = insertNodeInRange;
+Squire.extractContentsOfRange = extractContentsOfRange;
+Squire.deleteContentsOfRange = deleteContentsOfRange;
+Squire.insertTreeFragmentIntoRange = insertTreeFragmentIntoRange;
+Squire.isNodeContainedInRange = isNodeContainedInRange;
+Squire.moveRangeBoundariesDownTree = moveRangeBoundariesDownTree;
+Squire.moveRangeBoundariesUpTree = moveRangeBoundariesUpTree;
+Squire.getStartBlockOfRange = getStartBlockOfRange;
+Squire.getEndBlockOfRange = getEndBlockOfRange;
+Squire.contentWalker = contentWalker;
+Squire.rangeDoesStartAtBlockBoundary = rangeDoesStartAtBlockBoundary;
+Squire.rangeDoesEndAtBlockBoundary = rangeDoesEndAtBlockBoundary;
+Squire.expandRangeToBlockBoundaries = expandRangeToBlockBoundaries;
+
+// Clipboard.js exports
+Squire.onPaste = onPaste;
+
+// Editor.js exports
+Squire.addLinks = addLinks;
+Squire.splitBlock = splitBlock;
+Squire.startSelectionId = startSelectionId;
+Squire.endSelectionId = endSelectionId;
+
+if ( typeof exports === 'object' ) {
+    module.exports = Squire;
+} else if ( typeof define === 'function' && define.amd ) {
+    define( function () {
+        return Squire;
+    });
+} else {
+    win.Squire = Squire;
+
+    if ( top !== win &&
+            doc.documentElement.getAttribute( 'data-squireinit' ) === 'true' ) {
+        win.editor = new Squire( doc );
+        if ( win.onEditorLoad ) {
+            win.onEditorLoad( win.editor );
+            win.onEditorLoad = null;
+        }
+    }
+}
+
+}( document ) );
+
+module.export = sq;

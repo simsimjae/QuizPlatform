@@ -2,6 +2,7 @@ import './common';
 import Constants from './constant';
 import './leanModal';
 import './jsrender';
+import './routing';
 
 var ssj = ssj || {};
 ssj.view = ssj.view || {};
@@ -353,6 +354,8 @@ $(function () {
       $(window).scroll(this.onScroll.bind(this));
     },
     onScroll() {
+      if(!this.isOpened()) return;
+
       if (this.shouldTrigger() && !this.loading && !this.bEnded) {
         this.loading = true;
         const data = this._makeRequestData();
@@ -373,6 +376,9 @@ $(function () {
           });
 
       }
+    },
+    isOpened() {
+      return $('.main-sec').css('display') === 'block';
     },
     _makeRequestData() {
       return { mainCategory: 1, page: this.page };

@@ -18,6 +18,7 @@ workbox.routing.registerRoute(
     ]
   })
 );
+
 workbox.routing.registerRoute(new RegExp(`http://pickvs.com/(DevPickVs)?`), new workbox.strategies.NetworkFirst());
 
 workbox.routing.registerRoute(
