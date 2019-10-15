@@ -34,7 +34,10 @@ module.exports = (env, options) => {
           use: {
             loader: 'html-loader',
             options: {
-              interpolate: true
+              interpolate: true,
+              minimize: true,
+              removeComments: false,
+              collapseWhitespace: false
             }
           }
         },
@@ -52,8 +55,7 @@ module.exports = (env, options) => {
             {
               loader: 'css-loader',
               options: {
-                import: true,
-                modules: true
+                import: true
               }
             }
           ],
@@ -78,7 +80,12 @@ module.exports = (env, options) => {
       new CopyWebpackPlugin([
         {
           from: 'src/resources/img/favicon.ico',
-        to: 'img/favicon.ico'
+          to: 'img/favicon.ico'
+        },
+        {
+          from: 'src/**/write.*',
+          to: './',
+          flatten: true,
         }
       ])
     ],
@@ -113,7 +120,7 @@ module.exports = (env, options) => {
       }),
       new webpack.HotModuleReplacementPlugin(),
       new HtmlWebpackPlugin({
-        template: 'index.html',
+        template: 'src/index.html',
         filename: path.join(__dirname, 'dist/DevPickVs/resources/index.html'),
         showErrors: true // 에러 발생시 메세지가 브라우저 화면에 노출 된다.
       }),
@@ -144,7 +151,7 @@ module.exports = (env, options) => {
         chunkFilename: '[id].[hash].css'
       }),
       new HtmlWebpackPlugin({
-        template: 'index.html',
+        template: 'src/index.html',
         filename: path.join(__dirname, 'dist/resources/index.html'),
         showErrors: true // 에러 발생시 메세지가 브라우저 화면에 노출 된다.
       }),

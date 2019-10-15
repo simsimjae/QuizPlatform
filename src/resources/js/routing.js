@@ -1,16 +1,21 @@
 import page from 'page';
 
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+
 const closeAll = () => {
   $('.wrapper').children().hide();
 };
 
-const before = (context, next) => {
+const hideAll = (context, next) => {
   closeAll();
   next();
 }
 
-const openPage = ($page) => {
+const openPage = ($page, topPos = 0) => {
   $page.show();
+  window.scrollTo(0, topPos);
 }
 
 const write = () => {
@@ -20,7 +25,7 @@ const write = () => {
 
 const main = () => {
   const $main = $('.main-sec');
-  openPage($main);
+  openPage($main, window.sessionStorage.getItem('prevScroll'));
 }
 
 const notfound = (context) => {
@@ -33,14 +38,20 @@ const detail = (context) => {
   openPage($detail);
 };
 
-page.base('/DevPickVs/resources');
-page('/', main);
-page('/*', before);
-page('/detail/:id', detail);
-page('/write', write);
+const setScrollPos = (context, next) => {
+  window.sessionStorage.setItem('prevScroll', $(window).scrollTop());
+  next();
+};
 
-page.exit('/*', before);
+page.base('/DevPickVs/resources');
+
+page('/', main);
+page('/detail/:id', detail);
 page('*', notfound);
+
+page.exit('/', setScrollPos);
+page.exit('/*', hideAll);
+
 page.start();
 
 
