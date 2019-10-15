@@ -1,4 +1,6 @@
-import './resources/js/home';
-import './resources/css/home';
-import './resources/js/write';
+import './resources/css/main';
+import './resources/css/detail';
 import './resources/css/write';
+
+import './resources/js/main';
+import './resources/js/write';

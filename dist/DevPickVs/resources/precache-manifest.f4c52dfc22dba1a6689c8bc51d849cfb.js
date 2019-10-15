@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "605d5918bd46cb8a4e80",
+    "revision": "35093ff19f04fe5f46c6",
     "url": "/DevPickVs/resources/app.bundle.js"
   },
   {
-    "revision": "605d5918bd46cb8a4e80",
+    "revision": "35093ff19f04fe5f46c6",
     "url": "/DevPickVs/resources/app.css"
   },
   {
@@ -20,7 +20,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/DevPickVs/resources/img/new@2x.png"
   },
   {
-    "revision": "496b86e0ccf17f34d425",
+    "revision": "ae18bc845c1c67e6d354",
     "url": "/DevPickVs/resources/vendors.bundle.js"
   }
 ]);

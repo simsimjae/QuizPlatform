@@ -28,9 +28,15 @@ const notfound = (context) => {
   console.log('page not founded!!!');
 }
 
+const detail = (context) => {
+  const $detail = $('.detail-sec');
+  openPage($detail);
+};
+
 page.base('/DevPickVs/resources');
 page('/', main);
 page('/*', before);
+page('/detail/:id', detail);
 page('/write', write);
 
 page.exit('/*', before);

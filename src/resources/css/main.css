@@ -1,13 +1,13 @@
 @import url('./reset.css');
+@import url('./base.css');
 
-.main-sec{background-color:hsl(0, 0%, 94%);}
 /* icon */
+.main-sec{background-color:#f0f0f0;padding:88px 0;}
 .ic_sm{display:inline-block;width:38px;height:18px;vertical-align:middle;}
 .ic_sm.ic_hot{background:url(../img/hot@2x.png) no-repeat;}
 .ic_sm.ic_new{background:url(../img/new@2x.png) no-repeat;}
 
 /* card */
-.crdlst{padding: 88px 0;}
 .crd{position:relative;display:block;width:340px;border-radius:16px;box-shadow: 0 8px 22px 0 rgba(0, 0, 0, 0.12);
   background:white;overflow:hidden;line-height:1.3;margin:auto;}
 .crd + .crd {margin-top:28px;}

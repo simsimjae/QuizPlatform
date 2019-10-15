@@ -25,7 +25,6 @@
       enable_page_level_ads: true
     });
   </script>
-
 <body>
   <header class="home_header">
   </header>
@@ -81,6 +80,7 @@
         </li>
       </ul>
     </section>
+    <%= require('html-loader!./detail.html') %>
   </div>
   <footer>
   </footer>
@@ -193,7 +193,7 @@
   </div>-->
   <script id='cardTmpl' type="text/x-jsrender">
     <li class="crd">
-      <a href="./detail">
+      <a href="./detail/{{:writing_no}}">
         <div class="crd_stat">
             <span class="ic_sm ic_hot"></span>
             <span class="ic_sm ic_new"></span>

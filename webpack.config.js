@@ -46,13 +46,14 @@ module.exports = (env, options) => {
           }
         },
         {
-          test: /\.css$/,
+          test: /\.(css)$/,
           use: [
             MiniCssExtractPlugin.loader,
             {
               loader: 'css-loader',
               options: {
                 import: true,
+                modules: true
               }
             }
           ],
@@ -77,7 +78,7 @@ module.exports = (env, options) => {
       new CopyWebpackPlugin([
         {
           from: 'src/resources/img/favicon.ico',
-          to: 'img/favicon.ico'
+        to: 'img/favicon.ico'
         }
       ])
     ],
@@ -106,6 +107,10 @@ module.exports = (env, options) => {
 
     config.plugins = [
       ...config.plugins,
+      new MiniCssExtractPlugin({
+        filename: '[name].css',
+        chunkFilename: '[id].css'
+      }),
       new webpack.HotModuleReplacementPlugin(),
       new HtmlWebpackPlugin({
         template: 'index.html',
@@ -134,6 +139,10 @@ module.exports = (env, options) => {
     config.output.publicPath = "/resources/"
     config.plugins = [
       ...config.plugins,
+      new MiniCssExtractPlugin({
+        filename: '[name].[hash].css',
+        chunkFilename: '[id].[hash].css'
+      }),
       new HtmlWebpackPlugin({
         template: 'index.html',
         filename: path.join(__dirname, 'dist/resources/index.html'),
