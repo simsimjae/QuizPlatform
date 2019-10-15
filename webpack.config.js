@@ -29,26 +29,6 @@ module.exports = (env, options) => {
     module: {
       rules: [
         {
-          test: /\.(html)$/,
-          include: path.join(__dirname, 'src/'),
-          use: {
-            loader: 'html-loader',
-            options: {
-              interpolate: true,
-              minimize: true,
-              removeComments: false,
-              collapseWhitespace: false
-            }
-          }
-        },
-        {
-          test: /\.js$/,
-          exclude: /node_modules/,
-          use: {
-            loader: 'babel-loader'
-          }
-        },
-        {
           test: /\.(css)$/,
           use: [
             MiniCssExtractPlugin.loader,
@@ -59,6 +39,23 @@ module.exports = (env, options) => {
               }
             }
           ],
+        },
+        {
+          test: /\.(html)$/,
+          include: path.join(__dirname, 'src/'),
+          use: {
+            loader: 'html-loader',
+            options: {
+              interpolate: true
+            }
+          }
+        },
+        {
+          test: /\.js$/,
+          exclude: /node_modules/,
+          use: {
+            loader: 'babel-loader'
+          }
         },
         {
           test: /\.(png|jpe?g|gif)$/i,
