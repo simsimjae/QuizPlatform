@@ -11,8 +11,8 @@ module.exports = (env, options) => {
   const config = {
     entry: {
       app: ['@babel/polyfill', './src/index.js'],
-      write: ['./src/resources/write/index.js'],
-      share: ['./src/resources/js/kakaoShare.js']
+      write: ['./src/assets/write/index.js'],
+      share: ['./src/assets/js/kakaoShare.js']
     },
     output: {
       filename: '[name].bundle.js'
@@ -71,7 +71,7 @@ module.exports = (env, options) => {
           test: /\.(png|jpe?g|gif)$/i,
           loader: 'file-loader',
           options: {
-            context: 'src/resources/img',
+            context: 'src/assets/img',
             name: 'img/[name].[ext]'
           }
         },
@@ -106,7 +106,7 @@ module.exports = (env, options) => {
       }),
       new CopyWebpackPlugin([
         {
-          from: 'src/resources/img/favicon.ico',
+          from: 'src/assets/img/favicon.ico',
           to: 'img/favicon.ico'
         },
         // {
@@ -127,7 +127,7 @@ module.exports = (env, options) => {
 
     config.devtool = 'eval-source-map'; 
 
-    config.output.path = path.resolve(__dirname, './dist/resources'),
+    config.output.path = path.resolve(__dirname, './dist/assets'),
     config.output.publicPath = "/resources/"
 
     config.devServer = {
@@ -165,7 +165,7 @@ module.exports = (env, options) => {
     };
 
     config.output.path = path.resolve(__dirname, './dist/resources'),
-    config.output.publicPath = "/resources/"
+    config.output.publicPath = "/assets/"
     config.plugins = [
       ...config.plugins,
       new MiniCssExtractPlugin({

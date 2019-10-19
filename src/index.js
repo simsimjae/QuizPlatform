@@ -1,2 +1,2 @@
-import './resources/styles/index.scss';
-import './resources/js/main';
+import './assets/styles/index.scss';
+import './assets/js/main';
