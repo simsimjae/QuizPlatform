@@ -15,7 +15,9 @@ module.exports = (env, options) => {
       share: ['./src/assets/js/kakaoShare.js']
     },
     output: {
-      filename: '[name].bundle.js'
+      filename: '[name].bundle.js',
+      path : path.resolve(__dirname, './dist/resources/assets/'),
+      publicPath : "/resources/assets/"
     },
     optimization: {
       splitChunks: {
@@ -87,21 +89,21 @@ module.exports = (env, options) => {
       new HtmlWebpackPlugin({
           template: 'src/index.html',
           chunks: ['app', 'vendors'],
-          filename: path.join(__dirname, 'dist/index.html'),
+          filename: path.join(__dirname, 'dist/resources/index.html'),
           showErrors: true // 에러 발생시 메세지가 브라우저 화면에 노출 된다.
       }),
       new HtmlWebpackPlugin({
         template: 'src/write.html',
         inject: true,
         chunks: ['write', 'vendors'],
-        filename: path.join(__dirname, 'dist/write.html'),
+        filename: path.join(__dirname, 'dist/resources/write.html'),
         showErrors: true // 에러 발생시 메세지가 브라우저 화면에 노출 된다.
       }),
       new HtmlWebpackPlugin({
         template: 'src/kakaoShare.html',
         inject: true,
         chunks: ['share'],
-        filename: path.join(__dirname, 'dist/kakaoShare.html'),
+        filename: path.join(__dirname, 'dist/resources/kakaoShare.html'),
         showErrors: true // 에러 발생시 메세지가 브라우저 화면에 노출 된다.
       }),
       new CopyWebpackPlugin([
@@ -127,13 +129,10 @@ module.exports = (env, options) => {
 
     config.devtool = 'eval-source-map'; 
 
-    config.output.path = path.resolve(__dirname, './dist/assets'),
-    config.output.publicPath = "/resources/"
-
     config.devServer = {
       hot: true, // 서버에서 HMR을 켠다.
       //host: '0.0.0.0',  디폴트로는 "localhost" 로 잡혀있다. 외부에서 개발 서버에 접속해서 테스트하기 위해서는 '0.0.0.0'으로 설정해야 한다.
-      contentBase: './dist/', // 개발서버의 루트 경로
+      contentBase: './dist/resources/', // 개발서버의 루트 경로
       stats: {
         color: true
       }
@@ -164,8 +163,6 @@ module.exports = (env, options) => {
       }
     };
 
-    config.output.path = path.resolve(__dirname, './dist/resources'),
-    config.output.publicPath = "/assets/"
     config.plugins = [
       ...config.plugins,
       new MiniCssExtractPlugin({

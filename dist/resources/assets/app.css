@@ -143,9 +143,9 @@ label, select, button, textarea {
   height: 18px;
   vertical-align: middle; }
   .ic_sm.ic_hot {
-    background: url(/resources/img/hot@2x.png) no-repeat; }
+    background: url(/resources/assets/img/hot@2x.png) no-repeat; }
   .ic_sm.ic_new {
-    background: url(/resources/img/new@2x.png) no-repeat; }
+    background: url(/resources/assets/img/new@2x.png) no-repeat; }
 
 /* card */
 .crd {
@@ -297,7 +297,7 @@ label, select, button, textarea {
     align-items: center; }
   .howthink_img {
     display: block;
-    background: url(/resources/img/question@2x.png) no-repeat;
+    background: url(/resources/assets/img/question@2x.png) no-repeat;
     background-size: 100%;
     width: 76px;
     height: 56px;

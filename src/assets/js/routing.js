@@ -43,7 +43,7 @@ const setScrollPos = (context, next) => {
   next();
 };
 
-page.base('');
+page.base('/resources');
 
 page('/', main);
 page('/detail/:id', detail);
