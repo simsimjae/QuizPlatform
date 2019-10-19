@@ -218,7 +218,7 @@
   <script type="text/javascript">
     if('serviceWorker' in navigator){
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./assets/sw.js')
+        navigator.serviceWorker.register('./resources/sw.js')
           .then(console.log)
           .catch(console.error);
       });
