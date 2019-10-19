@@ -20,6 +20,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/resources/img/question@2x.png"
   },
   {
+    "revision": "cde4be54afa344c007cf",
+    "url": "/resources/share.bundle.js"
+  },
+  {
     "revision": "574ecfea6c03ddc6e218",
     "url": "/resources/vendors.bundle.js"
   },

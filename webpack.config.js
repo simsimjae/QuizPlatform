@@ -11,7 +11,8 @@ module.exports = (env, options) => {
   const config = {
     entry: {
       app: ['@babel/polyfill', './src/index.js'],
-      write: ['./src/resources/write/index.js']
+      write: ['./src/resources/write/index.js'],
+      share: ['./src/resources/js/kakaoShare.js']
     },
     output: {
       filename: '[name].bundle.js'
@@ -53,7 +54,9 @@ module.exports = (env, options) => {
           use: {
             loader: 'html-loader',
             options: {
-              interpolate: true
+              interpolate: true,
+              removeComments: true,
+              collapseWhitespace: true
             }
           }
         },
@@ -92,6 +95,13 @@ module.exports = (env, options) => {
         inject: true,
         chunks: ['write', 'vendors'],
         filename: path.join(__dirname, 'dist/write.html'),
+        showErrors: true // 에러 발생시 메세지가 브라우저 화면에 노출 된다.
+      }),
+      new HtmlWebpackPlugin({
+        template: 'src/kakaoShare.html',
+        inject: true,
+        chunks: ['share'],
+        filename: path.join(__dirname, 'dist/kakaoShare.html'),
         showErrors: true // 에러 발생시 메세지가 브라우저 화면에 노출 된다.
       }),
       new CopyWebpackPlugin([
