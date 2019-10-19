@@ -4968,3 +4968,5 @@ if ( typeof exports === 'object' ) {
 }
 
 }( document ) );
+
+export default sq;

@@ -31,4 +31,4 @@ const Constants = {
   TYPE_LOWCOMMENT: '111',
 };
 
-module.exports = Constants;
+export default Constants;

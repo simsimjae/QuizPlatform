@@ -1,15 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ec3594ce4d1eb97d9481",
+    "revision": "abe40413e5f06fc9dd79",
     "url": "/resources/app.bundle.js"
   },
   {
-    "revision": "ec3594ce4d1eb97d9481",
+    "revision": "abe40413e5f06fc9dd79",
     "url": "/resources/app.css"
   },
   {
     "revision": "38230fecd04026181cc7d8b121409eda",
     "url": "/resources/img/hot@2x.png"
+  },
+  {
+    "revision": "44ae4fdb16ba192549377318d3e93784",
+    "url": "/resources/img/jquery.minicolors.png"
   },
   {
     "revision": "eb0bf4fad6beb099f5391ebd6919357a",
@@ -24,11 +28,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/resources/share.bundle.js"
   },
   {
-    "revision": "574ecfea6c03ddc6e218",
+    "revision": "09f8a6af75ef47a0dd82",
     "url": "/resources/vendors.bundle.js"
   },
   {
-    "revision": "8294e187d1ff5311325b",
+    "revision": "afc7fdcec02106dc8993",
     "url": "/resources/write.bundle.js"
+  },
+  {
+    "revision": "afc7fdcec02106dc8993",
+    "url": "/resources/write.css"
   }
 ]);

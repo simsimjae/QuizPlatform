@@ -1,3 +1,6 @@
+import Constants from '../js/constant';
+import page from 'page';
+
 $(function () {
 
 $(".write_form").submit(function (e) {
@@ -20,7 +23,7 @@ $(".write_form").submit(function (e) {
     enctype: 'multipart/form-data',
     processData: false, contentType: false, cache: false,
     success: function (data) {
-      page('/');
+      window.location.href = URL_BASE;
     },
     done: function (data) {
       btnSubmit.prop('disabled', false);

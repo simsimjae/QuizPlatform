@@ -5,7 +5,7 @@
 //
 // Licensed under the MIT license: http://opensource.org/licenses/MIT
 //
-(function (factory) {
+const minicolors = (function (factory) {
   if(typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(['jquery'], factory);
@@ -1125,3 +1125,5 @@
       }, 1);
     });
 }));
+
+export default minicolors;
