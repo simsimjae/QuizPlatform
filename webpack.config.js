@@ -10,7 +10,8 @@ module.exports = (env, options) => {
 
   const config = {
     entry: {
-      app: ['@babel/polyfill', './src/index.js']
+      app: ['@babel/polyfill', './src/index.js'],
+      write: ['./src/resources/write/index.js']
     },
     output: {
       filename: '[name].bundle.js'
@@ -29,15 +30,21 @@ module.exports = (env, options) => {
     module: {
       rules: [
         {
-          test: /\.(css)$/,
+          test: /\.s[ac]ss$/i,
+          exclude: /node_modules/,
           use: [
             MiniCssExtractPlugin.loader,
-            {
-              loader: 'css-loader',
-              options: {
-                import: true
-              }
-            }
+            //'style-loader',
+            'css-loader',
+            'sass-loader'
+          ],
+        },
+        {
+          test: /\.css$/i,
+          exclude: /node_modules/,
+          use: [
+            'style-loader',
+            'css-loader',
           ],
         },
         {
@@ -74,21 +81,34 @@ module.exports = (env, options) => {
         swSrc: 'src/src-sw.js',
         swDest: 'sw.js'
       }),
+      new HtmlWebpackPlugin({
+          template: 'src/index.html',
+          chunks: ['app', 'vendors'],
+          filename: path.join(__dirname, 'dist/index.html'),
+          showErrors: true // 에러 발생시 메세지가 브라우저 화면에 노출 된다.
+      }),
+      new HtmlWebpackPlugin({
+        template: 'src/write.html',
+        inject: true,
+        chunks: ['write', 'vendors'],
+        filename: path.join(__dirname, 'dist/write.html'),
+        showErrors: true // 에러 발생시 메세지가 브라우저 화면에 노출 된다.
+      }),
       new CopyWebpackPlugin([
         {
           from: 'src/resources/img/favicon.ico',
           to: 'img/favicon.ico'
         },
-        {
-          from: 'src/**/write.*',
-          to: './',
-          flatten: true,
-        }
+        // {
+        //   from: 'src/**/write/*',
+        //   to: './write/',
+        //   flatten: true,
+        // }
       ])
     ],
     resolve: {
       modules: ['node_modules'],
-      extensions: ['.js', '.json', '.jsx', '.css'],
+      extensions: ['.js', '.json', '.jsx', '.css', '.scss'],
     },
     target: 'web'
   }
@@ -97,13 +117,13 @@ module.exports = (env, options) => {
 
     config.devtool = 'eval-source-map'; 
 
-    config.output.path = path.resolve(__dirname, './dist/DevPickVs/resources'),
-    config.output.publicPath = "/DevPickVs/resources/"
+    config.output.path = path.resolve(__dirname, './dist/resources'),
+    config.output.publicPath = "/resources/"
 
     config.devServer = {
       hot: true, // 서버에서 HMR을 켠다.
       //host: '0.0.0.0',  디폴트로는 "localhost" 로 잡혀있다. 외부에서 개발 서버에 접속해서 테스트하기 위해서는 '0.0.0.0'으로 설정해야 한다.
-      contentBase: './dist/DevPickVs/', // 개발서버의 루트 경로
+      contentBase: './dist/', // 개발서버의 루트 경로
       stats: {
         color: true
       }
@@ -116,13 +136,8 @@ module.exports = (env, options) => {
         chunkFilename: '[id].css'
       }),
       new webpack.HotModuleReplacementPlugin(),
-      new HtmlWebpackPlugin({
-        template: 'src/index.html',
-        filename: path.join(__dirname, 'dist/DevPickVs/resources/index.html'),
-        showErrors: true // 에러 발생시 메세지가 브라우저 화면에 노출 된다.
-      }),
       new webpack.DefinePlugin({
-        URL_BASE: JSON.stringify('http://pickvs.com/DevPickVs/')
+        URL_BASE: JSON.stringify('http://15.164.84.243/')
       })
     ];
 
@@ -146,11 +161,6 @@ module.exports = (env, options) => {
       new MiniCssExtractPlugin({
         filename: '[name].[hash].css',
         chunkFilename: '[id].[hash].css'
-      }),
-      new HtmlWebpackPlugin({
-        template: 'src/index.html',
-        filename: path.join(__dirname, 'dist/resources/index.html'),
-        showErrors: true // 에러 발생시 메세지가 브라우저 화면에 노출 된다.
       }),
       new webpack.DefinePlugin({
         URL_BASE: JSON.stringify('http://pickvs.com/')

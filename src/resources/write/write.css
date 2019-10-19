@@ -1,7 +1,4 @@
-@import url('./reset.css');
-@import url('./jquery.minicolors.css');
-
-.write_form{padding:10px 20px; display:none;}
+.write_form{padding:10px 20px;}
 .title{font-size:21px;margin:15px 0;}
 
 .write_tit{font-size:15px;}

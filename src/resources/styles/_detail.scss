@@ -1,0 +1,151 @@
+.detail-sec {
+    display: none;
+    background: white;
+    padding: 88px 0;
+
+    .crd {
+        border-radius: 0;
+        width: 100vw;
+        box-shadow: none;
+    }
+
+    .crd_img {
+        width: 100%;
+        height: 280px;
+    }
+
+    .crd_tit {
+        margin: 23px 0 0;
+    }
+
+    .title {
+        display: block;
+        color: #181818;
+        font-size: inherit;
+        margin-bottom: 13px;
+        font-weight: bold;
+        line-height: 16px;
+    }
+
+    .desc {
+        color: #5c5c5c;
+        font-size: inherit;
+        line-height: 26px;
+    }
+}
+
+.contents {
+    padding: 0 24px;
+    line-height: 1.3;
+    font-size: 17px;
+
+    &_content {
+        margin: 45px 0;
+    }
+}
+
+.content {
+    $this: &;
+
+    &_header {
+        @include font(17px, $color-main, bold);
+
+        margin-bottom: 10px;
+    }
+
+    &_desc {
+        @include font(17px, $color-gray);
+
+        line-height: 26px;
+    }
+}
+
+.xfile {
+    padding: 0 17px;
+    border-top: 1px solid $color-white3;
+
+    &_header {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 45px 0 30px;
+    }
+
+    &_tit {
+        @include font(16px, $color-green, bold);
+    }
+
+    &_subtit {
+        @include font(12px, $color-gray2, medium);
+
+        margin-bottom: 7px;
+    }
+
+    &_list {
+        margin: 30px 0 45px;
+
+        .on {
+            position: relative;
+
+            &:before {
+                content: '';
+                display: inline-block;
+                vertical-align: top;
+                width: 8px;
+                height: 8px;
+                margin-left: -8px;
+                background-color: $color-green;
+                border-radius: 50%;
+            }
+        }
+    }
+}
+
+.howthink {
+    $this: &;
+
+    @include flex(center, center, column);
+
+    background-color: $color-white2;
+
+    &_figure {
+        @include flex(center, center, column);
+    }
+
+    &_img {
+        display: block;
+        background: url("../img/question@2x.png") no-repeat;
+        background-size: 100%;
+        width: 76px;
+        height: 56px;
+        margin: 45px 0 0;
+    }
+
+    &_figcap {
+        text-align: center;
+        margin: 20px 0 40px;
+    }
+
+    &_desc {
+        @include font(20px, $color-gray2, bold);
+
+        & + & {
+            margin-top: 10px;
+        }
+	}
+	
+	&_btnarea {
+		@include flex(center, center);
+		width: 100%;
+		padding: 0 40px;
+	}
+
+	&_btn {
+		margin: 10px 0;
+		@include font(16px, $color-white, bold);
+		& + & {
+			margin-left: 20px;
+		}
+	}
+}

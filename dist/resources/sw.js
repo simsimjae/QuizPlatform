@@ -1,4 +1,4 @@
-importScripts("/resources/precache-manifest.b7fb9f227b07a26bb7ec4d4947c55c5b.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
+importScripts("/resources/precache-manifest.421cc7f3c918f3a679e39f04443554a3.js", "https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 workbox.precaching.precacheAndRoute(self.__precacheManifest);
 
@@ -20,11 +20,12 @@ workbox.routing.registerRoute(
     ]
   })
 );
+
 workbox.routing.registerRoute(new RegExp(`http://pickvs.com/(DevPickVs)?`), new workbox.strategies.NetworkFirst());
 
 workbox.routing.registerRoute(
   ({ event }) => event.request.mode === 'navigate',
-  async () => {
+  async function() {
     return caches
       .match(workbox.precaching.getCacheKeyForURL(pageUrl))
       .then(response => {
@@ -35,4 +36,3 @@ workbox.routing.registerRoute(
       });
   }
 );
-

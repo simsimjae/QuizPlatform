@@ -1,9 +1,0 @@
-@import url('./reset.css');
-
-.detail-sec{background:white;padding:88px 0;}
-.detail-sec .crd {border-radius:0;width:100vw;box-shadow:none;}
-.detail-sec .crd_img{width:100%;height:280px;}
-.detail-sec .crd_tit{margin-top:23px;}
-.detail-sec .contents{padding:0 24px;line-height:1.3;font-size:17px;}
-.detail-sec .title{display:block;color:#181818;font-size:inherit;margin-bottom:13px;font-weight:bold;line-height:16px;}
-.detail-sec .desc{color:#5c5c5c;font-size:inherit;line-height:26px;}

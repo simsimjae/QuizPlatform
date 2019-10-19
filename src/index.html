@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>닥전닥후(pickvs.com)</title>
-  <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+  <link rel="icon" href="./resources/img/favicon.ico" type="image/x-icon" />
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans:400,700|Roboto:400,500,700&display=swap" rel="stylesheet">
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -32,7 +32,7 @@
     <section class="main-sec">
       <ul class="crdlst">
         <li class="crd">
-          <a href="./detail">
+          <a href="./detail/1">
             <div class="crd_stat">
               <span class="ic_sm ic_hot"></span>
               <span class="ic_sm ic_new"></span>
@@ -55,7 +55,7 @@
           </a>
         </li>
         <li class="crd">
-          <a href="./detail">
+          <a href="./detail/2">
             <div class="crd_stat">
               <span class="ic_sm ic_hot"></span>
               <span class="ic_sm ic_new"></span>
@@ -218,7 +218,7 @@
   <script type="text/javascript">
     if('serviceWorker' in navigator){
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
+        navigator.serviceWorker.register('./resources/sw.js')
           .then(console.log)
           .catch(console.error);
       });

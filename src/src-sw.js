@@ -23,7 +23,7 @@ workbox.routing.registerRoute(new RegExp(`http://pickvs.com/(DevPickVs)?`), new 
 
 workbox.routing.registerRoute(
   ({ event }) => event.request.mode === 'navigate',
-  async () => {
+  async function() {
     return caches
       .match(workbox.precaching.getCacheKeyForURL(pageUrl))
       .then(response => {

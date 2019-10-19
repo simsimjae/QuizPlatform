@@ -1,4 +1,2 @@
-import './resources/css/main';
-import './resources/css/detail';
-
+import './resources/styles/index.scss';
 import './resources/js/main';

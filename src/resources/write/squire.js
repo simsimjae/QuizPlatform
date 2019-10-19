@@ -4968,5 +4968,3 @@ if ( typeof exports === 'object' ) {
 }
 
 }( document ) );
-
-module.export = sq;
