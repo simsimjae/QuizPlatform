@@ -4,6 +4,7 @@ const Constants = {
   ID_TMPL_MAIN_CARD: "#cardTmpl",
   ID_TMPL_SUBREPLY: "#subReplyTmpl",
   ID_TMPL_RECOMCOUNTTX: "#recomCountTx",
+  ID_TMPL_DETAILPAGE: "#page_detail",
 
   URL_CREATE_COMMENT: `${URL_BASE}writeComment`,
   URL_CREATE_COMPLAIN: `${URL_BASE}reportWriting`,
@@ -15,7 +16,7 @@ const Constants = {
   URL_UPDATE_RECOMCOUNT: `${URL_BASE}commentPreferUpdate`,
 
   URL_READ_SLIDE_DATA: `${URL_BASE}getDetailDtoList`,
-  URL_READ_FIRST_SLIDE_DATA: `${URL_BASE}getWritingDtlDto`,
+  URL_READ_DETAIL_DATA: `${URL_BASE}getWritingDtlDto`,
   URL_READ_MAIN_CARD_DATA: `${URL_BASE}getPagingList`,
   URL_READ_SEARCH_CARD_DATA: `${URL_BASE}searchWrtingList`,
   URL_READ_NICKNAME: `${URL_BASE} + 'getNickname'`,

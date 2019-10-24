@@ -9,7 +9,7 @@
         line-height: 26px;
 
         & + & {
-            margin: 10px 0;
+            margin: 10px 0 0;
         }
 
         &:before {
@@ -79,5 +79,36 @@
 
     &--cons {
         background-color: $color-red;
+    }
+}
+
+.btnarea {
+    $this: &;
+
+    background: $color-white2;
+
+    &--fixBottom {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    &--row {
+        @include flex(center, center);
+
+        width: 100%;
+        padding: 0 40px;
+        border-top: 1px solid $color-gray2;
+
+        #{$this}_btn {
+            margin: 10px 0;
+
+            @include font(16px, $color-white, bold);
+        }
+
+        #{$this}_btn + #{$this}_btn {
+            margin-left: 20px;
+        }
     }
 }

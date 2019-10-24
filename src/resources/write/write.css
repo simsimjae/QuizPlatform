@@ -5,7 +5,7 @@
 .write_tit,
 
 .write_cont{display:block;width:100%;padding:10px;border:1px solid black;box-sizing:border-box;margin-top:20px;}
-.write_cont{min-height:30vh;}
+.write_cont{min-height:15vh;}
 .write_cont.ty_summary{min-height:10vh;}
 .write_cont b{font-weight:bold;}
 .write_cont li{padding-left:5px;word-break:break-all;}
@@ -21,3 +21,5 @@
 
 .fontsize input{border:1px solid black; width:30px; margin-left:5px;}
 .submit{display:block;margin:auto;border:1px solid black; border-radius:20px; padding: 10px 80px; margin: 50px auto;}
+
+.factlink{display: block; width: 100%; min-height: 15vh; border:1px solid black;}

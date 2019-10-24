@@ -1,0 +1,25 @@
+<script id='cardTmpl' type="text/x-jsrender">
+    <li class="crd" id="{{:writing_no}}">
+      <a href="./detail/{{:writing_no}}">
+        <div class="crd_stat">
+            <span class="ic_sm ic_hot"></span>
+            <span class="ic_sm ic_new"></span>
+        </div>
+        <div class="crd_img">
+        <span class="img" style="background-image:url('http://pickvs.com{{:title_img_path}}')" alt="카드이미지">
+        </div>
+        <div class="crd_conts">
+          <div class="crd_infos">
+            <div class="left">
+              <span class="crd_time">{{:reg_dts}}</span>
+            </div>
+            <div class="right">
+              <span class="crd_comment">댓글 <span class="count">{{:sum_comment}}</span></span>
+              <span class="crd_vote">투표 <span class="count">{{:sum_vote}}</span></span>
+            </div>
+          </div>
+          <p class="crd_tit">{{:title}}</p>
+        </div>
+      </a>
+    </li>
+  </script>

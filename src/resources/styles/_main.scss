@@ -1,97 +1,144 @@
 /* icon */
 
 .main-sec {
-  background-color: #f0f0f0;
-  padding: 88px 0;
+    background-color: #f0f0f0;
+    padding: 88px 0;
+    min-height: 100vh;
 }
 
 .ic_sm {
-  display: inline-block;
-  width: 38px;
-  height: 18px;
-  vertical-align: middle;
+    display: inline-block;
+    width: 38px;
+    height: 18px;
+    vertical-align: middle;
 
-  &.ic_hot {
-    background: url(../img/hot@2x.png) no-repeat;
-  }
+    &.ic_hot {
+        background: url(../img/hot@2x.png) no-repeat;
+    }
 
-  &.ic_new {
-    background: url(../img/new@2x.png) no-repeat;
-  }
+    &.ic_new {
+        background: url(../img/new@2x.png) no-repeat;
+    }
 }
 
 /* card */
 
 .crd {
-  position: relative;
-  display: block;
-  width: 340px;
-  border-radius: 16px;
-  box-shadow: 0 8px 22px 0 rgba(0, 0, 0, 0.12);
-  background: white;
-  overflow: hidden;
-  line-height: 1.3;
-  margin: auto;
+    $this: &;
 
-  + .crd {
-    margin-top: 28px;
-  }
+    position: relative;
+    display: block;
+    width: 340px;
+    border-radius: 16px;
+    box-shadow: 0 8px 22px 0 rgba(0, 0, 0, 0.12);
+    background: white;
+    overflow: hidden;
+    line-height: 1.3;
+    margin: auto;
+
+    & + & {
+        margin-top: 28px;
+    }
+
+    &--pros, &--cons {
+        position: relative;
+
+        #{$this}_img {
+            &:before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.6);
+            }
+
+            &:after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 184px;
+                height: 80px;
+            }
+        }
+    }
+
+    &--pros {
+        #{$this}_img {
+            &:after {
+                background: url("../img/agree@2x.png") no-repeat;
+                background-size: 100% 100%;
+            }
+        }
+    }
+
+    &--cons {
+        #{$this}_img {
+            &:after {
+                background: url("../img/disagree@2x.png") no-repeat;
+                background-size: 100% 100%;
+            }
+        }
+    }
 }
 
 .crd_stat {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  position: absolute;
-  left: 10px;
-  top: 7.5px;
-  z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    left: 10px;
+    top: 7.5px;
+    z-index: 1;
 
-  .ic_sm + .ic_sm {
-    margin-top: 6px;
-  }
+    .ic_sm + .ic_sm {
+        margin-top: 6px;
+    }
 }
 
 .crd_img {
-  position: relative;
-  width: 340px;
-  height: 340px;
-  overflow: hidden;
+    position: relative;
+    width: 340px;
+    height: 340px;
+    overflow: hidden;
 
-  .img {
-    display: block;
-    background-size: cover;
-    height: 100%;
-    background-position: 50% 50%;
-  }
+    .img {
+        display: block;
+        background-size: cover;
+        height: 100%;
+        background-position: 50% 50%;
+    }
 }
 
 .crd_conts {
-  padding: 10px 25px;
+    padding: 10px 25px;
 }
 
 .crd_infos {
-  display: flex;
-  justify-content: space-between;
-  color: #c7c7c7;
-  font-size: 13px;
+    display: flex;
+    justify-content: space-between;
+    color: #c7c7c7;
+    font-size: 13px;
 
-  .right .crd_comment + .crd_vote {
-    margin-left: 8px;
-  }
+    .right .crd_comment + .crd_vote {
+        margin-left: 8px;
+    }
 }
 
 .crd_tit {
-  font-size: 22px;
-  color: #181818;
-  font-weight: bold;
-  margin: 9px 0 15px;
-  word-break: keep-all;
-  word-wrap: break-word;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+    font-size: 22px;
+    color: #181818;
+    font-weight: bold;
+    margin: 9px 0 15px;
+    word-break: keep-all;
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }

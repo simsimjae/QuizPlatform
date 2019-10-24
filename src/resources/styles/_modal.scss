@@ -1,0 +1,62 @@
+.modal {
+    $this: &;
+    display: none;
+
+    &--fix {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top: 0;
+        z-index: 3000;
+        padding-top: 50px;
+        background-color: $color-dimmed;
+
+        #{$this}_header {
+            @include font(18px, $color-gray2, bold);
+
+            position: relative;
+            background: $color-white;
+            height: 45px;
+            line-height: 45px;
+            padding: 0 15px;
+            text-align: center;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+        }
+
+        #{$this}_conts {
+            background: $color-white;
+            height: 100%;
+        }
+
+        #{$this}_close {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-60%);
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+
+            &:before, &:after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 2px;
+                top: 50%;
+                left: 0;
+                bottom: 0;
+                background-color: $color-main;
+            }
+
+            &:before {
+                transform: rotate(45deg);
+            }
+
+            &:after {
+                transform: rotate(-45deg);
+            }
+        }
+    }
+}

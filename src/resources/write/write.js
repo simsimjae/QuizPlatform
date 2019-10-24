@@ -10,10 +10,16 @@ $(".write_form").submit(function (e) {
   var btnSubmit = $('button.submit');
 
   var data = new FormData(form);
+  debugger;
   var summaryBlob = new Blob([oEditorSum.getHTML()], { type: "text/xml" });
-  var contentBlob = new Blob([oEditorConts.getHTML()], { type: "text/xml" });
+  var prosBlob = new Blob([oEditorPros.getHTML()], { type: "text/xml" });
+  var consBlob = new Blob([oEditorCons.getHTML()], { type: "text/xml" });
+  var factBlob = new Blob([oEditorFact.getHTML()], { type: "text/xml" });
+
   data.append('summary_file', summaryBlob);
-  data.append('content_file', contentBlob);
+  data.append('pros_file', prosBlob);
+  data.append('cons_file', consBlob);
+  data.append('fact_file', factBlob);
   console.log("전송할 데이터 \n", ...data);
 
   btnSubmit.prop('disabled', true);
@@ -25,12 +31,20 @@ $(".write_form").submit(function (e) {
     success: function (data) {
       window.location.href = URL_BASE;
     },
+    error: function(e) {
+      alert('글 작성 실패');
+      console.log(e);
+      btnSubmit.prop('disabled', false);
+    },
     done: function (data) {
       btnSubmit.prop('disabled', false);
     }
   });
 
 });
+
+
+
 
 function toggleBold() {
   const bold = $(this).data('bold');
@@ -65,23 +79,44 @@ function getImage(input) {
 }
 
   const $target = $('.write_cont');
+
+  /* 요약 */
   const oEditorSum = new Squire($target.get(0),
     {
       blockTag: 'P',
-      blockAttributes: { style: 'font-size: 16px;', class: "summary" }
+      blockAttributes: { style: 'font-size: 16px;', class: "content_desc" }
     }
   );
-  const oEditorConts = new Squire($target.get(1),
+
+  /* 찬성측 의견 */
+  const oEditorPros = new Squire($target.get(1),
   {
-    blockTag: 'P',
-    blockAttributes: { style: 'font-size: 16px;', class: "contents" }
+    blockTag: 'li',
+    blockAttributes: { style: 'font-size: 16px;', class: "list_item" }
   })
-  let oEditor = oEditorSum;
+
+  /* 반대측 의견 */
+  const oEditorCons = new Squire($target.get(2),
+  {
+    blockTag: 'li',
+    blockAttributes: { style: 'font-size: 16px;', class: "list_item" }
+  })
+
+  /* 팩트 링크 */
+  const oEditorFact = new Squire($target.get(3),
+  {
+    blockTag: 'li',
+    blockAttributes: { style: 'font-size: 16px;', class: "list_item on" }
+  })
+
+  const editors = [oEditorSum, oEditorPros, oEditorCons, oEditorFact];
+
+  let oEditor = editors[0];
 
   $('.write_cont').click(function (e) {
     const $target = $(e.delegateTarget);
     const index = $('.write_cont').index($target);
-    oEditor = index === 0 ? oEditorSum : oEditorConts;
+    oEditor = editors[index];
   })
 
   $('.colorpicker').each(function () {
@@ -134,5 +169,6 @@ function getImage(input) {
   $('.indent').click(function () {
     oEditor.increaseListLevel();
   });
+
 
 });

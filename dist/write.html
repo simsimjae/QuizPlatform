@@ -25,17 +25,28 @@
       <button type="button" class="btn fontsize">size<input type="text" placeholder="16"></button>
       <button type="button" class="btn underline">밑줄</button>
     </div>
-    <div class="btnarea">
+    <!-- <div class="btnarea">
       <p>리스트</p>
       <button type="button" class="btn unordered">순서X</button>
       <button type="button" class="btn ordered">순서O</button>
       <button type="button" class="btn indent">들여쓰기</button>
-    </div>
+    </div> -->
     <p class="title">요약</p>
     <div class="write_cont ty_summary"></div>
-    <p class="title">본문</p>
+
+    <p class="title">찬성측 의견(엔터당 항목 한개로 인식됨)</p>
     <div class="write_cont ty_contents"></div>
+
+    <p class="title">반대측 의견(번호 붙이지말고 쓸 것)</p>
+    <div class="write_cont ty_contents"></div>
+
+    <p class="title">팩트체크 링크(제목만 입력)</p>
+    <div class="write_cont ty_fact"></div>
+
+    <p class="title">팩트체크 링크(링크만 순서대로 입력, 엔터로 구분)</p>
+    <textarea name="fact_link" id="" class="fact_link"></textarea>
     <button class="submit">제출</button>
+
   </form>
 <script type="text/javascript" src="/resources/vendors.bundle.js"></script><script type="text/javascript" src="/resources/write.bundle.js"></script></body>
 
