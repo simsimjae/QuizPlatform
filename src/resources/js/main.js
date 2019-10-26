@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import Constants from './constant';
 import './routing';
-import './modal';
+import modal from './modal';
 
 require('./jsrender')($);
 
@@ -95,5 +95,5 @@ ssj.view.infiniteScroll.prototype = {
 
 $(function () {
   window.oSsjViewInfinite = new ssj.view.infiniteScroll();
-
+  window.oModal = new modal();
 });

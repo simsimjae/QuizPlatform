@@ -1,7 +1,6 @@
-var ssj = ssj || {};
-ssj.view = ssj.view || {};
+import $ from 'jquery';
 
-ssj.view.modal = function (options) {
+const modal = function (options) {
     const df = {
         sOpen: '.modal_fix_open',
         sClose : '.modal_close',
@@ -9,19 +8,34 @@ ssj.view.modal = function (options) {
     };
     $.extend(this, df, options || {});
 
-    $modal !== null && this.init();
+    this.init();
 }
 
-ssj.view.modal.prototype = {
+modal.prototype = {
     init() {
         this.assignElements();
         this.attachEventHandler();
     },
     assignElements() {
-        this.$openBtn = $(sOpen);
+        this.$openBtn = $(this.sOpen);
     },
     attachEventHandler() {
-        this.$openBtn.on('click', this.onShow.call(this, e));
+        this.$openBtn.on('click', e => this.onShow.call(this, e));
+
+        $(document).on('modal.iframe.open', 
+            (e, data) => this.onIframeOpen.call(this, data));
+    },
+    onIframeOpen(data) {
+        const { modalId, link } = data;
+
+        this.$modal = $(modalId);
+        if(!this.$modal.length) return false;
+
+        this.freeze();
+        this.assignModalElements();
+        this.attachModalEventHandler();
+        this.setIframe(link);
+        this.show();
     },
     onShow(e) {
         this.$modal = $(e.target).data('targetLayer');
@@ -30,12 +44,20 @@ ssj.view.modal.prototype = {
             return false;
         }
 
+        this.freeze();
         this.assignModalElements();
         this.attachModalEventHandler();
-        this.freeze();
+        this.show();
+    },
+    setIframe(link) {
+        const $iframe = this.$modal.find('iframe');
+        $iframe.get(0).src = link;
+    },
+    show() {
+        this.$modal.show();
     },
     assignModalElements() {
-        this.$closeBtn = this.$modal.find(sClose);
+        this.$closeBtn = this.$modal.find(this.sClose);
     },
     attachModalEventHandler() {
         this.$closeBtn.on('click', this.onClose.bind(this));
@@ -51,6 +73,8 @@ ssj.view.modal.prototype = {
         document.addEventListener('touchmove', this.prevent, {passive : false});
     },
     unfreeze() {
-        document.addEventListener('touchmove', this.prevent, { passive: true });
+        document.removeEventListener('touchmove', this.prevent);
     }
 };
+
+export default modal;

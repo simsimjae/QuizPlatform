@@ -7,7 +7,7 @@
     "workbox": "workbox injectManifest workbox-config.js",
     "build-prod": "webpack --mode production",
     "build": "webpack --mode development",
-    "start": "webpack-dev-server --open --inline --mode development --host 0.0.0.0"
+    "start": "webpack-dev-server --open --mode development --host 0.0.0.0"
   },
   "repository": {
     "type": "git",
@@ -34,6 +34,7 @@
     "@babel/core": "^7.6.3",
     "@babel/polyfill": "^7.6.0",
     "@babel/preset-env": "^7.6.3",
+    "autoprefixer": "^9.7.0",
     "axios": "^0.19.0",
     "babel-loader": "^8.0.6",
     "classnames": "^2.2.6",
@@ -44,6 +45,9 @@
     "html-loader": "^0.5.5",
     "jquery": "^3.4.1",
     "node-sass": "^4.12.0",
+    "postcss-flexbugs-fixes": "^4.1.0",
+    "postcss-loader": "^3.0.0",
+    "postcss-preset-env": "^6.7.0",
     "query-string": "^6.8.3",
     "style-loader": "^1.0.0",
     "webpack-dev-server": "^3.8.2",

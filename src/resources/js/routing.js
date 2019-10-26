@@ -69,18 +69,14 @@ const detail = (context, next) => {
 };
 
 const makeLink = (context, next) => {
-  let markup = context.data.fact_content;
-  let linkArr = markup.match(/\((.*?)\)/g);
-  markup = markup.replace(/\((.*?)\)/g, '');
-
+  const markup = context.data.fact_content.replace(/\((.*?)\)/g, '');
+  const linkArr = context.data.fact_link.split('\n');
   const $xFileList = $('.xfile_list');
   $xFileList.append(markup);
-  
 
-  $xFileList.each( (index, link) => {
-    
-    $xFileList.data('link', markup);
-    $(link).data('link', linkArr[index]);
+  const $xFileItems = $xFileList.children();
+  $xFileItems.each( (index, item) => {
+    $(item).data('link', linkArr[index]);
   });
 };
 

@@ -36,10 +36,24 @@ module.exports = (env, options) => {
           test: /\.s[ac]ss$/i,
           exclude: /node_modules/,
           use: [
-            MiniCssExtractPlugin.loader,
-            //'style-loader',
+            //MiniCssExtractPlugin.loader,
+            'style-loader',
             'css-loader',
-            'sass-loader'
+            { 
+              loader : 'postcss-loader',
+              options: {
+                plugins: () => [
+                  require('postcss-flexbugs-fixes'),
+                  require('postcss-preset-env')({
+                    autoprefixer: {
+                      flexbox: 'no-2009',
+                    },
+                    stage: 3,
+                  })
+                ]
+              }
+            },
+            'sass-loader',
           ],
         },
         {
@@ -72,7 +86,7 @@ module.exports = (env, options) => {
           }
         },
         {
-          test: /\.(png|jpe?g|gif)$/i,
+          test: /\.(png|jpe?g|gif|svg)$/i,
           loader: 'file-loader',
           options: {
             context: 'src/resources/img',
@@ -113,6 +127,11 @@ module.exports = (env, options) => {
           from: 'src/resources/img/favicon.ico',
           to: 'img/favicon.ico'
         },
+        {
+          from: 'src/resources/img/*.svg',
+          to: 'img/',
+          flatten: true
+        }
         // {
         //   from: 'src/**/write/*',
         //   to: './write/',
@@ -160,6 +179,7 @@ module.exports = (env, options) => {
 
     config.devServer = {
       hot: true, // 서버에서 HMR을 켠다.
+      inline: true,
       host: '0.0.0.0', // 디폴트로는 "localhost" 로 잡혀있다. 외부에서 개발 서버에 접속해서 테스트하기 위해서는 '0.0.0.0'으로 설정해야 한다.
       port: 8080,
       contentBase: './dist/', // 개발서버의 루트 경로

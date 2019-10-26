@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"><head><link href="/resources/app.css" rel="stylesheet"></head>
+<html lang="en">
 
 <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
@@ -34,10 +34,12 @@
     </section>
     <section class="detail-sec">
     </section>
-    <section class="modal modal--fix">
+    <section class="modal modal--fix" id="_modal_xfile">
     <header class="modal_header">
         <h1 class="modal_tit">X파일</h1>
-        <i class="modal_close"></i>
+        <button type="button" class="modal_close">
+            <i class="modal_close-icon"></i>
+        </button>
     </header>
     <div class="modal_conts">
         <iframe src="" frameborder="0" class="modal_iframe"></iframe>
@@ -214,12 +216,14 @@
     <div class="contents ty_after detail-sec_contents">
         <section class="vote-result vote-result--pros">
             <header class="vote-result_header">
-                <h1 class="vote-result_tit">찬성 <span class="count">30</span>%</h1>
+                <h1 class="vote-result_tit">찬성 <span class="vote-result_count">30</span>%</h1>
                 <p class="vote-result_subtit">
                     <span class="total">1,320</span>명 중 <span class="current">396</span>명
                 </p>
             </header>
-            <div class="vote-result_progbar"></div>
+            <div class="vote-result_progbar">
+                <div class="vote-result_progfill"></div>
+            </div>
         </section>
 
         <button type="button" class="expand-detail contents_expand-detail">
@@ -228,66 +232,104 @@
         </button>
 
         <ul class="comment-bestlist">
-            <section class="comment comment--pros">
-                <header class="comment_header">
-                    <p class="comment_headerwrap">
-                        <span class="comment_nick">아이디최대길이알파베타감마15</span>
-                        <span class="comment_refcnt">820</span>
-                    </p>
-                    <span class="comment_badge">BEST</span>
-                </header>
-                <section class="comment_subheader">
-                    <p class="comment_optionwrap">
-                        <span class="comment_option">정시 확대</span>
-                        <span class="comment_option">수시 확대</span>
-                    </p>
+            <li class="comment-bestlist_item">
+                <section class="comment comment--pros">
+                    <header class="comment_header">
+                        <p class="comment_headerwrap">
+                            <span class="comment_nick">아이디최대길이알파베타감마15</span>
+                            <span class="comment_refcnt">820</span>
+                        </p>
+                        <span class="comment_badge">BEST</span>
+                    </header>
+                    <section class="comment_subheader">
+                        <p class="comment_optionwrap">
+                            <span class="comment_option">정시 확대</span>
+                            <span class="comment_option">수시 확대</span>
+                        </p>
+                    </section>
+                    <section class="comment_contents">
+                        <p class="comment_maintx">
+                            댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔
+                        </p>
+                    </section>
+                    <footer class="comment_footer">
+                        <time class="comment_time">2019.11.28 23:30:20</time>
+                    </footer>
                 </section>
-                <section class="comment_contents">
-                    <p class="comment_maintx">
-                        댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔
-                    </p>
+            </li>
+            <li class="comment-bestlist_item">
+                <section class="comment comment--cons">
+                    <header class="comment_header">
+                        <p class="comment_headerwrap">
+                            <span class="comment_nick">아이디최대길이알파베타감마15</span>
+                            <span class="comment_refcnt">820</span>
+                        </p>
+                        <span class="comment_badge">BEST</span>
+                    </header>
+                    <section class="comment_subheader">
+                        <p class="comment_optionwrap">
+                            <span class="comment_option">정시 확대</span>
+                            <span class="comment_option">수시 확대</span>
+                        </p>
+                    </section>
+                    <section class="comment_contents">
+                        <p class="comment_maintx">
+                            댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔
+                        </p>
+                    </section>
+                    <footer class="comment_footer">
+                        <time class="comment_time">2019.11.28 23:30:20</time>
+                    </footer>
                 </section>
-                <footer class="comment_footer">
-                    <time class="comment_time">2019.11.28 23:30:20</time>
-                </footer>
-            </section>
-
-            <section class="comment comment--cons">
-                <header class="comment_header">
-                    <p class="comment_headerwrap">
-                        <span class="comment_nick">아이디최대길이알파베타감마15</span>
-                        <span class="comment_refcnt">820</span>
-                    </p>
-                    <span class="comment_badge">BEST</span>
-                </header>
-                <section class="comment_subheader">
-                    <p class="comment_optionwrap">
-                        <span class="comment_option">정시 확대</span>
-                        <span class="comment_option">수시 확대</span>
-                    </p>
-                </section>
-                <section class="comment_contents">
-                    <p class="comment_maintx">
-                        댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔
-                    </p>
-                </section>
-                <footer class="comment_footer">
-                    <time class="comment_time">2019.11.28 23:30:20</time>
-                </footer>
-            </section>
+            </li>
         </ul>
 
         <ul class="comment-list">
-            <li class="comment-item"></li>
+            <li class="comment-list_item">
+
+                <section class="comment comment--cons">
+                    <header class="comment_header">
+                        <p class="comment_headerwrap">
+                            <span class="comment_nick">아이디최대길이알파베타감마15</span>
+                            <span class="comment_refcnt">820</span>
+                        </p>
+                        <div class="comment_header-optbar">
+                            <button type="button" class="comment_hdopts">
+                                <i class="comment_header-up"></i>
+                            </button>
+                            <button type="button" class="comment_hdopts">
+                                <object class="comment_header-down" type="image/svg+xml" data="/resources/img/downbtn.svg">비추천</object>
+                            </button>
+                            <button type="button" class="comment_hdopts">
+                                <object class="comment_header-reply" type="image/svg+xml" data="/resources/img/replybtn.svg">댓글달기</object>
+                            </button>
+                        </div>
+                    </header>
+                    <section class="comment_subheader">
+                        <p class="comment_optionwrap">
+                            <span class="comment_option">정시 확대</span>
+                            <span class="comment_option">수시 확대</span>
+                        </p>
+                    </section>
+                    <section class="comment_contents">
+                        <p class="comment_maintx">
+                            댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔 댓글을 좔좔좔좔
+                        </p>
+                    </section>
+                    <footer class="comment_footer">
+                        <time class="comment_time">2019.11.28 23:30:20</time>
+                    </footer>
+                </section>
+
+            </li>
         </ul>
 
 
     </div>
 
-   <div class="contents ty_before detail-sec_contents">
+   <div class="contents ty_before on detail-sec_contents">
         <section class="content contents_content">
             <header class="content_header">
-                <h1 class="content_title">요약</h1>
             </header>
             {{:summary}}
         </section>
@@ -311,7 +353,7 @@
             </ul>
         </section>
 
-        <section class="xfile contents_xfile">
+        <section class="xfile contents_xfile" data-target-layer="#_modal_xfile">
             <header class="xfile_header">
                 <p class="xfile_subtit">신중한 당신을 위해</p>
                 <h1 class="xfile_tit">4개의 X파일</h1>

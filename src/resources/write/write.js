@@ -10,7 +10,6 @@ $(".write_form").submit(function (e) {
   var btnSubmit = $('button.submit');
 
   var data = new FormData(form);
-  debugger;
   var summaryBlob = new Blob([oEditorSum.getHTML()], { type: "text/xml" });
   var prosBlob = new Blob([oEditorPros.getHTML()], { type: "text/xml" });
   var consBlob = new Blob([oEditorCons.getHTML()], { type: "text/xml" });

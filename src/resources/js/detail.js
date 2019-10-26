@@ -12,12 +12,20 @@ $(function() {
 		const sTarget = '.xfile';
 
 		const showModal = e => {
-			const $link = $(e.target);
-			const sLink = $link.data('link');
-			debugger;
+			const $xfile = $(e.target).closest('.xfile');
+			const $xfileLink = $(e.target);
+			const modalId = $xfile.data('targetLayer');
+			const link = $xfileLink.data('link');
+
+			const data = { modalId, link};
+			$(document).trigger('modal.iframe.open', data);
 		};
 
-		$(document).on('click', sTarget, e => showModal(e));
+		const onClickLink = e => {
+			showModal(e);
+		}
+
+		$(document).on('click', sTarget, e => onClickLink(e));
 	})();
 
 	prosandcons = (function () {
@@ -25,21 +33,36 @@ $(function() {
 		const sBtnArea = '.prosandcons';
 		const $btnArea = $(sBtnArea);
 
+		const updateProgress = () => {
+			const $result = $('.vote-result_progfill');
+			const $total = $('.vote-result_count');
+			const nTotal = $total.text();
+
+			$result.css('width', nTotal + '%');
+		};
+
 		const toggleUI = () => {
 			const $howThink = $('.howthink');
 			const $beforeArea = $('.contents.ty_before');
 			const $afterArea = $('.contents.ty_after');
 			const $btnArea = $('.prosandcons');
+			const $appendTarget = $('.expand-detail');
 
 			$howThink.remove();
 			$btnArea.remove();
 
-			$beforeArea.hide();
-			$afterArea.show();
+			$beforeArea.removeClass('on').detach();
+			$afterArea.addClass('on');
+
+			$appendTarget.after($beforeArea);
+			$appendTarget.on('click', () => $beforeArea.toggle());
+
+			updateProgress();
+			window.scroll(0, 0);
 		}
 
 		const attachEventHandlers = () => {
-			$(document).one('prosandcons.clicked', toggleUI);
+			$(document).on('prosandcons.clicked', toggleUI);
 			$(document).on('click', sBtnArea, e => handleClick(e));
 		}
 

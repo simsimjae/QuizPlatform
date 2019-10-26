@@ -22,4 +22,4 @@
 .fontsize input{border:1px solid black; width:30px; margin-left:5px;}
 .submit{display:block;margin:auto;border:1px solid black; border-radius:20px; padding: 10px 80px; margin: 50px auto;}
 
-.factlink{display: block; width: 100%; min-height: 15vh; border:1px solid black;}
+.fact_link{display: block; width: 100%; min-height: 15vh; border:1px solid black;}
