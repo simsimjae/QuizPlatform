@@ -45,7 +45,7 @@ const loadDetailData = async (context, next) => {
   try {
     const result = await Axios.get(Constants.URL_READ_DETAIL_DATA, {
       params: {
-        writingNo: context.params.id
+        writing_no: context.params.id
       }
     });
     context.data = result.data;
@@ -69,10 +69,13 @@ const detail = (context, next) => {
 };
 
 const makeLink = (context, next) => {
-  const markup = context.data.fact_content.replace(/\((.*?)\)/g, '');
-  const linkArr = context.data.fact_link.split('\n');
+  const {fact_content, fact_link} = context.data;
+  const markup = fact_content.replace(/\((.*?)\)/g, '');
+  const linkArr = fact_link !== null && fact_link.split('\n');
   const $xFileList = $('.xfile_list');
-  $xFileList.append(markup);
+  const $xFile = $xFileList.closest('.xfile');
+  
+  fact_link === null ? $xFile.remove() : $xFileList.append(markup);
 
   const $xFileItems = $xFileList.children();
   $xFileItems.each( (index, item) => {

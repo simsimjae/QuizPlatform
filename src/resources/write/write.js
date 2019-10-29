@@ -83,7 +83,7 @@ function getImage(input) {
   const oEditorSum = new Squire($target.get(0),
     {
       blockTag: 'P',
-      blockAttributes: { style: 'font-size: 16px;', class: "content_desc" }
+      blockAttributes: {class: "content_desc" }
     }
   );
 
@@ -91,21 +91,21 @@ function getImage(input) {
   const oEditorPros = new Squire($target.get(1),
   {
     blockTag: 'li',
-    blockAttributes: { style: 'font-size: 16px;', class: "list_item" }
+    blockAttributes: {class: "list_item" }
   })
 
   /* 반대측 의견 */
   const oEditorCons = new Squire($target.get(2),
   {
     blockTag: 'li',
-    blockAttributes: { style: 'font-size: 16px;', class: "list_item" }
+    blockAttributes: {class: "list_item" }
   })
 
   /* 팩트 링크 */
   const oEditorFact = new Squire($target.get(3),
   {
     blockTag: 'li',
-    blockAttributes: { style: 'font-size: 16px;', class: "list_item on" }
+    blockAttributes: {class: "list_item on" }
   })
 
   const editors = [oEditorSum, oEditorPros, oEditorCons, oEditorFact];

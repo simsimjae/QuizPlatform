@@ -4,39 +4,31 @@
     counter-reset: list;
 
     &_item {
-        @include font(17px, $color-gray);
+        @include font(17px !important, $color-detail);
 
-        line-height: 26px;
+        line-height: 30px;
+        padding-left: 16px;
+        position: relative;
 
         & + & {
             margin: 10px 0 0;
         }
-
-        &:before {
-            display: inline-block;
-            vertical-align: top;
-            margin-right: 5px;
-            font-size: 12px;
-            font-weight: bold;
-        }
     }
 
-    &--pros {
+    &--1, &--2 {
         #{$this}_item {
             &:before {
                 counter-increment: list;
                 content: counter(list);
-                color: $color-blue;
-            }
-        }
-    }
-
-    &--cons {
-        #{$this}_item {
-            &:before {
-                counter-increment: list;
-                content: counter(list);
-                color: $color-red;
+                color: $color-blue;            
+                position: absolute;
+                left:0;
+                display: inline-block;
+                vertical-align: top;
+                margin-right: 8px;
+                font-size: 12px;
+                font-weight: bold;
+                line-height: 30px;
             }
         }
     }
@@ -65,6 +57,34 @@
 
     @include flex(center, center);
 
+    &--before, &--after {
+        background: $color-white;
+        font-size: 19px;
+        font-weight: bold;
+
+        .ic--stamp {
+            margin-left: 6px;
+        }
+    }
+
+    &--before {
+        color: $color-blue;
+    }
+
+    &--after {
+        color: $color-blue;
+        background: $color-gray3;
+        border-radius: 24px;
+    }
+
+    &_tx{
+        letter-spacing: 3px;
+    }
+
+    &_ic-stamp {
+        margin-left: 6px;
+    }
+
     &--oval {
         border-radius: 21px;
     }
@@ -73,11 +93,19 @@
         height: 40px;
     }
 
-    &--pros {
+    &--size_m {
+        height: 48px;
+    }
+
+    &--size_l {
+        height: 64px;
+    }
+
+    &--1 {
         background-color: $color-blue;
     }
 
-    &--cons {
+    &--2 {
         background-color: $color-red;
     }
 }
@@ -87,19 +115,81 @@
 
     background: $color-white2;
 
+    &_before {
+        position: relative;
+
+        #{$this}.on & {
+            display: none;
+        }
+    }
+
+    &_after {
+        display: none;
+        position: relative;
+        padding: 15px 15px 30px;
+
+        #{$this}.on & {
+            display: block;
+        }
+    }
+
+    &_after-conts {
+        margin-top: 16px;
+        .btn + .btn {
+            margin-top: 8px;
+        }
+    }
+
+    &_after-header {
+        @include flex(center, center);
+        @include font(19px, $color-gray2, bold);
+    }
+
+    &_tit {
+        margin-right: 6px;
+        letter-spacing: 3px;
+    }
+
+    &_after-close {
+        color: $color-main;
+        position: absolute;
+        top: 9px;
+        right: 9px;
+        width: 32px;
+        height: 32px;
+    }
+
     &--fixBottom {
         position: fixed;
         left: 0;
         right: 0;
         bottom: 0;
+        border-top: 1px solid $color-gray3;
+
+        &.on {
+            border-top: 0;
+            background: $color-white;
+
+            &:before {
+                display: block;
+                position: absolute;
+                background-color: rgba(0, 0, 0, 0.7);
+                width: 100vw;
+                height: 100vh;
+                transform: translateY(-100%);
+                content: '';
+            }
+        }
+    }
+
+    &--them1 {
+        
     }
 
     &--row {
         @include flex(center, center);
 
         width: 100%;
-        padding: 0 40px;
-        border-top: 1px solid $color-gray2;
 
         #{$this}_btn {
             margin: 10px 0;

@@ -2,23 +2,23 @@ import $ from 'jquery';
 
 export const card = (function () {
 
-    const addType = (sType, writingNo) => {
-        const sModifier = 'crd--' + sType;
+    const addType = (voteNum, writingNo) => {
+        const sModifier = 'crd--' + voteNum;
         const $card = $(`#${writingNo}`);
 
         $card.addClass(sModifier);
     };
 
-    const handlePaC = (e, { sType, writingNo }) => {
+    const handlePaC = (e, { voteNum, writingNo }) => {
 
         $(window).one('popstate', e => {
-            addType(sType, writingNo);
+            addType(voteNum, writingNo);
         });
 
     };
 
     const attachEventHandlers = () => {
-        $(document).on('prosandcons.clicked', handlePaC);
+        $(document).on('voted', handlePaC);
     };
     
     return {

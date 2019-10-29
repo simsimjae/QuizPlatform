@@ -1,10 +1,11 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack');
+const SvgSpriteHtmlWebpackPlugin = require('svg-sprite-html-webpack');
 
 module.exports = (env, options) => {
 
@@ -16,8 +17,8 @@ module.exports = (env, options) => {
     },
     output: {
       filename: '[name].bundle.js',
-      path : path.resolve(__dirname, './dist/resources/'),
-      publicPath : "/resources/"
+      path: path.resolve(__dirname, './dist/resources/'),
+      publicPath: "/resources/"
     },
     optimization: {
       splitChunks: {
@@ -39,8 +40,8 @@ module.exports = (env, options) => {
             //MiniCssExtractPlugin.loader,
             'style-loader',
             'css-loader',
-            { 
-              loader : 'postcss-loader',
+            {
+              loader: 'postcss-loader',
               options: {
                 plugins: () => [
                   require('postcss-flexbugs-fixes'),
@@ -86,12 +87,17 @@ module.exports = (env, options) => {
           }
         },
         {
-          test: /\.(png|jpe?g|gif|svg)$/i,
+          test: /\.(png|jpe?g|gif)$/i,
           loader: 'file-loader',
           options: {
             context: 'src/resources/img',
             name: 'img/[name].[ext]'
           }
+        },
+        {
+          test: /\.svg?$/,
+          exclude: /node_modules/,
+          use: SvgSpriteHtmlWebpackPlugin.getLoader(),
         },
       ],
     },
@@ -101,12 +107,6 @@ module.exports = (env, options) => {
       new WorkboxWebpackPlugin.InjectManifest({
         swSrc: 'src/src-sw.js',
         swDest: 'sw.js'
-      }),
-      new HtmlWebpackPlugin({
-          template: 'src/index.html',
-          chunks: ['app', 'vendors'],
-          filename: path.join(__dirname, 'dist/index.html'),
-          showErrors: true // 에러 발생시 메세지가 브라우저 화면에 노출 된다.
       }),
       new HtmlWebpackPlugin({
         template: 'src/write.html',
@@ -126,18 +126,24 @@ module.exports = (env, options) => {
         {
           from: 'src/resources/img/favicon.ico',
           to: 'img/favicon.ico'
-        },
-        {
-          from: 'src/resources/img/*.svg',
-          to: 'img/',
-          flatten: true
         }
         // {
         //   from: 'src/**/write/*',
         //   to: './write/',
         //   flatten: true,
 
-      ])
+      ]),
+      new HtmlWebpackPlugin({
+        template: 'src/index.html',
+        chunks: ['app', 'vendors'],
+        filename: path.join(__dirname, 'dist/index.html'),
+        showErrors: true // 에러 발생시 메세지가 브라우저 화면에 노출 된다.
+      }),
+      new SvgSpriteHtmlWebpackPlugin({
+        includeFiles: [
+          'src/resources/img/*.svg',
+        ]
+      }),
     ],
     resolve: {
       modules: ['node_modules'],
@@ -146,9 +152,9 @@ module.exports = (env, options) => {
     target: 'web'
   }
 
-  if (options.mode === 'development') { 
+  if (options.mode === 'development') {
 
-    config.devtool = 'eval-source-map'; 
+    config.devtool = 'eval-source-map';
 
     config.devServer = {
       hot: true,
@@ -169,13 +175,13 @@ module.exports = (env, options) => {
       }),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.DefinePlugin({
-        URL_BASE: JSON.stringify('http://15.164.84.243/')
+        URL_BASE: JSON.stringify('https://pickvs.com/')
       })
     ];
 
-  } 
+  }
 
-  if (options.mode === 'production') {  
+  if (options.mode === 'production') {
 
     config.devServer = {
       hot: true, // 서버에서 HMR을 켠다.
@@ -202,5 +208,5 @@ module.exports = (env, options) => {
   }
 
 
-  return config; 
+  return config;
 };

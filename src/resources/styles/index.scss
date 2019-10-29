@@ -1,7 +1,8 @@
 @import './_reset';
 
-@import './utils/_mixin.scss';
-@import './utils/_variables.scss';
+@import './utils/_mixin';
+@import './utils/_variables';
+@import './utils/icon';
 
 @import './modal';
 @import './module';

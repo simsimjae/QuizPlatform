@@ -1,10 +1,12 @@
 const Constants = {
   ID_TMPL_SLIDE: "#slideTmpl",
   ID_TMPL_REPLY: "#replyTmpl",
+  ID_TMPL_BEST_REPLY: "#bestReplyTmpl",
   ID_TMPL_MAIN_CARD: "#cardTmpl",
   ID_TMPL_SUBREPLY: "#subReplyTmpl",
   ID_TMPL_RECOMCOUNTTX: "#recomCountTx",
   ID_TMPL_DETAILPAGE: "#page_detail",
+  ID_TMPL_DETAILPAGE_AFTER: "#page_detail-after",
 
   URL_CREATE_COMMENT: `${URL_BASE}writeComment`,
   URL_CREATE_COMPLAIN: `${URL_BASE}reportWriting`,
@@ -21,6 +23,7 @@ const Constants = {
   URL_READ_SEARCH_CARD_DATA: `${URL_BASE}searchWrtingList`,
   URL_READ_NICKNAME: `${URL_BASE} + 'getNickname'`,
   URL_READ_USERINFO: `${URL_BASE}getUserInfo`,
+  URL_READ_COMMENT_LIST: `${URL_BASE}getCommentDtoList`,
 
   URL_REMOVE_SESSION: `${URL_BASE}logout`,
   URL_REMOVE_COMMENT: `${URL_BASE}deleteComment`,
