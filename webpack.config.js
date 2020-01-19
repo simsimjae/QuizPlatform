@@ -10,14 +10,14 @@ const SvgSpriteHtmlWebpackPlugin = require('svg-sprite-html-webpack');
 module.exports = (env, options) => {
 	const config = {
 		entry: {
-			app: ['@babel/polyfill', './src/index.js'],
-			write: ['./src/resources/write/index.js'],
-			share: ['./src/resources/js/kakaoShare.js']
+			app: ['@babel/polyfill', './src/issueTeller/index.js'],
+			write: ['./src/issueTeller/resources/write/index.js'],
+			share: ['./src/issueTeller/resources/js/kakaoShare.js']
 		},
 		output: {
 			filename: '[name].bundle.js',
 			path: path.resolve(__dirname, './dist/resources/'),
-			publicPath: '/resources/'
+			publicPath: '/issueTeller/resources/'
 		},
 		optimization: {
 			splitChunks: {
@@ -63,7 +63,7 @@ module.exports = (env, options) => {
 				},
 				{
 					test: /\.(html)$/,
-					include: path.join(__dirname, 'src/'),
+					include: path.join(__dirname, 'src/issueTeller/'),
 					use: [
 						{
 							loader: 'html-loader',
@@ -86,7 +86,7 @@ module.exports = (env, options) => {
 					test: /\.(png|jpe?g|gif)$/i,
 					loader: 'file-loader',
 					options: {
-						context: 'src/resources/img',
+						context: 'src/issueTeller/resources/img',
 						name: 'img/[name].[ext]'
 					}
 				},
@@ -101,18 +101,18 @@ module.exports = (env, options) => {
 			new MiniCssExtractPlugin(),
 			new CleanWebpackPlugin(),
 			new WorkboxWebpackPlugin.InjectManifest({
-				swSrc: 'src/src-sw.js',
+				swSrc: 'src/issueTeller/src-sw.js',
 				swDest: 'sw.js'
 			}),
 			new HtmlWebpackPlugin({
-				template: 'src/write.html',
+				template: 'src/issueTeller/write.html',
 				inject: true,
 				chunks: ['write', 'vendors'],
 				filename: path.join(__dirname, 'dist/write.html'),
 				showErrors: true // 에러 발생시 메세지가 브라우저 화면에 노출 된다.
 			}),
 			new HtmlWebpackPlugin({
-				template: 'src/kakaoShare.html',
+				template: 'src/issueTeller/kakaoShare.html',
 				inject: true,
 				chunks: ['share'],
 				filename: path.join(__dirname, 'dist/kakaoShare.html'),
@@ -120,22 +120,22 @@ module.exports = (env, options) => {
 			}),
 			new CopyWebpackPlugin([
 				{
-					from: 'src/resources/img/favicon.ico',
+					from: 'src/issueTeller/resources/img/favicon.ico',
 					to: 'img/favicon.ico'
 				}
 				// {
-				//   from: 'src/**/write/*',
+				//   from: 'src/issueTeller/**/write/*',
 				//   to: './write/',
 				//   flatten: true,
 			]),
 			new HtmlWebpackPlugin({
-				template: 'src/index.html',
+				template: 'src/issueTeller/index.html',
 				chunks: ['app', 'vendors'],
 				filename: path.join(__dirname, 'dist/index.html'),
 				showErrors: true // 에러 발생시 메세지가 브라우저 화면에 노출 된다.
 			}),
 			new SvgSpriteHtmlWebpackPlugin({
-				includeFiles: ['src/resources/img/*.svg']
+				includeFiles: ['src/issueTeller/resources/img/*.svg']
 			})
 		],
 		resolve: {
@@ -167,7 +167,7 @@ module.exports = (env, options) => {
 			}),
 			new webpack.HotModuleReplacementPlugin(),
 			new webpack.DefinePlugin({
-				URL_BASE: JSON.stringify('http://2weeks.io/pickvs/')
+				URL_BASE: JSON.stringify('http://2weeks.io/issueTeller/')
 			})
 		];
 	}
@@ -191,7 +191,7 @@ module.exports = (env, options) => {
 				chunkFilename: '[id].[hash].css'
 			}),
 			new webpack.DefinePlugin({
-				URL_BASE: JSON.stringify('http://2weeks.io/pickvs/')
+				URL_BASE: JSON.stringify('http://2weeks.io/issueTeller/')
 			})
 		];
 	}

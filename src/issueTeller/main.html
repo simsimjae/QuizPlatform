@@ -1,12 +1,16 @@
 <script id='cardTmpl' type="text/x-jsrender">
-    <li class="crd" id="{{:writing_no}}">
+    <li class="crd {{if vote}} on {{/if}}" id="{{:writing_no}}">
       <a href="./detail/{{:writing_no}}">
         <div class="crd_stat">
             <span class="ic_sm ic_hot"></span>
             <span class="ic_sm ic_new"></span>
         </div>
         <div class="crd_img">
-        <span class="img" style="background-image:url('http://2weeks.io/pickvs/{{:title_img_path}}')" alt="카드이미지">
+          <span class="img" style="background-image:url('http://2weeks.io{{:title_img_path}}')" alt="카드이미지">
+              <video loop muted autoplay playsinline class="crd_video">
+                <source src="http://2weeks.io{{:title_img_path}}" type="video/mp4">
+              </video>
+          </span>
         </div>
         <div class="crd_conts">
           <div class="crd_infos">

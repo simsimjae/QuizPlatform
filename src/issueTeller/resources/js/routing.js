@@ -1,5 +1,5 @@
-import $ from 'jquery';
 import page from 'page';
+import $ from 'jquery';
 import Constants from './constant';
 import Axios from 'axios';
 
@@ -52,6 +52,8 @@ const loadDetailData = async (context, next) => {
 		});
 		context.data = result.data;
 		await next();
+
+		console.log('상세 데이터 로드', result);
 	} catch (e) {
 		console.log(e);
 	}
@@ -83,6 +85,20 @@ const makeLink = (context, next) => {
 	$xFileItems.each((index, item) => {
 		$(item).data('link', linkArr[index]);
 	});
+
+	next();
+};
+
+const initComment = (context, next) => {
+	const $after = $('.contents.ty_after');
+
+	if ($after.css('display') === 'block') {
+		const vote = $after.data('vote');
+		const writing_no = context.params.id;
+
+		$(document).trigger('appendBestCommentList', [vote, writing_no]);
+		$(document).trigger('voted.detail');
+	}
 };
 
 const removeChilds = (context, next) => {
@@ -91,23 +107,28 @@ const removeChilds = (context, next) => {
 	const className = context.path.substr(firstIdx, secondIdx - 1);
 	const rmContainer = '.' + className + '-sec';
 	const $container = $(rmContainer);
+	const $after = $container.find('.contents.ty_after');
+	const isVote = $after.data('vote').length > 0;
+
+	context.data.isVote = isVote;
+
 	$container.empty();
 	next();
 };
 
-const checkReferrer = (context, next) => {
-	document.referrer === '' ? (window.location.href = 'http://2weeks.io/pickvs/') : window.history.back();
+const triggerEvents = (context, next) => {
+	context.data.isVote && $(document).trigger('card.setVoted', context.params.id);
 	next();
 };
 
 page.base('');
 
 page('/*', hideAll);
-page('/', main);
-page('/detail/:id', loadDetailData, detail, makeLink);
+page('/issueTeller', main);
+page('/issueTeller/detail/:id', loadDetailData, detail, makeLink, initComment);
 page('*', notfound);
 
-page.exit('/', setScrollPos);
-page.exit('/detail/:id', removeChilds);
+page.exit('/issueTeller', setScrollPos);
+page.exit('/issueTeller/detail/:id', removeChilds, triggerEvents);
 
 page.start();

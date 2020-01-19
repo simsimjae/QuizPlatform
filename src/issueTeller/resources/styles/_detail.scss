@@ -1,7 +1,8 @@
 .detail-sec {
     display: none;
     background: white;
-    padding: 88px 0 60px;
+    padding-top: 56px;
+    padding-bottom: 90px;
 
     .crd {
         border-radius: 0;
@@ -12,6 +13,10 @@
     .crd_img {
         width: 100%;
         height: 280px;
+
+        .img {
+            overflow: hidden;
+        }
     }
 
     .crd_tit {
@@ -31,6 +36,55 @@
         color: $color-gray;
         font-size: inherit;
         line-height: 26px;
+    }
+}
+
+.detail-sec_header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 23px;
+    padding-right: 14px;
+    height: 56px;
+    background: #f5f5f5;
+    z-index: 999;
+
+    .logo {
+        transform: translateX(8px);
+
+        .ic--logo {
+            display: block;
+            width: 86px;
+            height: 24px;
+            color: $color-blue;
+        }
+    }
+
+    .ic--arrow-left {
+        display: block;
+        width: 12px;
+        height: 20px;
+        color: $color-blue;
+    }
+
+    .ic--kakao {
+        display: block;
+        visibility: hidden;
+        width: 32px;
+        height: 32px;
+        background: url("../img/kakao.png") no-repeat;
+        background-size: 100% 100%;
+    }
+
+    .back {
+        @include flex(center, center);
+
+        width: 24px;
+        height: 40px;
     }
 }
 
@@ -159,6 +213,7 @@
 .howthink {
     @include flex(center, center, column);
 
+    margin: 0 -15px;
     background-color: $color-gray3;
 }
 
@@ -211,11 +266,11 @@
 }
 
 .vote-result_tit {
-    @include font(16px, $color-main, bold);
+    @include font(17px, $color-main, bold);
 }
 
 .vote-result_subtit {
-    @include font(16px, $color-gray2);
+    @include font(13px, $color-gray2, medium);
 
     margin-left: 8px;
 }
@@ -276,38 +331,62 @@
         }
     }
 
-    &--pros {
-        .comment_badge {
-            background-color: $color-blue;
-        }
-
+    &.comment--pros {
         .comment_refcnt {
             color: $color-blue;
         }
 
-        .comment_option {
-            &:first-child {
-                color: $color-blue;
+        &.comment--before {
+            .comment_option {
+                &.pros {
+                    color: $color-blue;
+                }
+
+                &.cons {
+                    color: $color-white4;
+                }
+            }
+        }
+
+        &.comment--after {
+            .comment_option {
+                &.pros {
+                    color: $color-white4;
+                }
+
+                &.cons {
+                    color: $color-blue;
+                }
             }
         }
     }
 
-    &--cons {
-        .comment_subheader {
-            margin-top: 4px;
-        }
-
-        .comment_badge {
-            background-color: $color-red;
-        }
-
+    &.comment--cons {
         .comment_refcnt {
             color: $color-red;
         }
 
-        .comment_option {
-            &:last-child {
-                color: $color-red;
+        &.comment--before {
+            .comment_option {
+                &.pros {
+                    color: $color-red;
+                }
+
+                &.cons {
+                    color: $color-white4;
+                }
+            }
+        }
+
+        &.comment--after {
+            .comment_option {
+                &.pros {
+                    color: $color-white4;
+                }
+
+                &.cons {
+                    color: $color-red;
+                }
             }
         }
     }
@@ -330,13 +409,27 @@
                 color: $color-blue;
             }
 
-            .comment_option {
-                &:first-child {
-                    color: $color-blue;
-                }
+            &.comment--before {
+                .comment_option {
+                    &.pros {
+                        color: $color-blue;
+                    }
 
-                &:last-child {
-                    color: $color-white4;
+                    &.cons {
+                        color: $color-white4;
+                    }
+                }
+            }
+
+            &.comment--after {
+                .comment_option {
+                    &.pros {
+                        color: $color-white4;
+                    }
+
+                    &.cons {
+                        color: $color-blue;
+                    }
                 }
             }
         }
@@ -346,20 +439,28 @@
                 color: $color-red;
             }
 
-            .comment_option {
-                &:first-child {
-                    color: $color-white4;
-                }
+            &.comment--before {
+                .comment_option {
+                    &.pros {
+                        color: $color-red;
+                    }
 
-                &:last-child {
-                    color: $color-red;
+                    &.cons {
+                        color: $color-white4;
+                    }
                 }
             }
-        }
 
-        .comment_hdopts {
-            &:last-child {
-                display: none;
+            &.comment--after {
+                .comment_option {
+                    &.pros {
+                        color: $color-white4;
+                    }
+
+                    &.cons {
+                        color: $color-red;
+                    }
+                }
             }
         }
 

@@ -19,7 +19,7 @@ workbox.routing.registerRoute(
 	})
 );
 
-workbox.routing.registerRoute(new RegExp(`http://2weeks.io/pickvs/`), new workbox.strategies.NetworkFirst());
+workbox.routing.registerRoute(new RegExp(`http://2weeks.io/issueTeller`), new workbox.strategies.NetworkFirst());
 
 workbox.routing.registerRoute(
 	({ event }) => event.request.mode === 'navigate',

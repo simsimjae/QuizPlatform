@@ -24,6 +24,7 @@ const Constants = {
   URL_READ_NICKNAME: `${URL_BASE} + 'getNickname'`,
   URL_READ_USERINFO: `${URL_BASE}getUserInfo`,
   URL_READ_COMMENT_LIST: `${URL_BASE}getCommentDtoList`,
+  URL_READ_BESTCOMMENT_LIST: `${URL_BASE}getBestCommentList`,
 
   URL_REMOVE_SESSION: `${URL_BASE}logout`,
   URL_REMOVE_COMMENT: `${URL_BASE}deleteComment`,

@@ -2,8 +2,18 @@
 
 .main-sec {
     background-color: #f0f0f0;
-    padding: 88px 0;
+    padding: 121px 0 21px;
     min-height: 100vh;
+
+    .logo {
+        display: block;
+        width: 205px;
+        height: 57px;
+        position: absolute;
+        top: 32px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
 }
 
 .ic_sm {
@@ -40,29 +50,16 @@
         margin-top: 28px;
     }
 
-    &--pros, &--cons {
-        position: relative;
-
-        #{$this}_img {
-            &:before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                background-color: rgba(0, 0, 0, 0.6);
-            }
-
-            &:after {
-                content: '';
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                width: 184px;
-                height: 80px;
-            }
+    &.on {
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1;
         }
     }
 
@@ -111,7 +108,21 @@
         background-size: cover;
         height: 100%;
         background-position: 50% 50%;
+        overflow: hidden;
     }
+}
+
+.crd_video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
 }
 
 .crd_conts {
